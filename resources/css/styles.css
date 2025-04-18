@@ -23,45 +23,173 @@ body {
 }
 
 /* HEADER: grid mobile-first */
-header {
-    display: grid;
-    grid-template-columns: auto auto;
-    align-items: center;
-    padding: var(--space);
-    background: var(--bg);
+/*header {*/
+/*    display: grid;*/
+/*    grid-template-columns: auto auto;*/
+/*    align-items: center;*/
+/*    padding: var(--space);*/
+/*    background: var(--bg);*/
+/*    position: sticky;*/
+/*    top: 0;*/
+/*    z-index: 10;*/
+/*}*/
+
+/*.logo > img{*/
+/*    width: 100px;*/
+/*}*/
+
+/*#menu-toggle {*/
+/*    font-size: 1.5rem;*/
+/*    background: none;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*nav {*/
+/*    display: none;*/
+/*    grid-column: 1 / -1;*/
+/*    margin-top: var(--space);*/
+/*    gap: var(--space);*/
+/*    flex-direction: column;*/
+/*}*/
+
+/*nav a {*/
+/*    text-decoration: none;*/
+/*    color: var(--fg);*/
+/*    font-weight: 500;*/
+/*    transition: color .3s;*/
+/*}*/
+/*nav a:hover {*/
+/*    color: var(--accent);*/
+/*}*/
+
+/* --- HEADER ENHANCEMENTS --- */
+:root {
+    --header-bg: #fff;
+    --header-shadow: 0 4px 24px rgba(125,91,166,0.07);
+    --header-radius: 16px;
+}
+/* Container utility */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1180px;
+    padding: 0 1.3rem;
+}
+.main-header {
+    background: var(--header-bg);
     position: sticky;
     top: 0;
-    z-index: 10;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: var(--header-shadow);
+    border-bottom: 1.5px solid #e8a5c2;
+    transition: box-shadow 0.18s;
 }
-
-.logo > img{
-    width: 100px;
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+    position: relative;
 }
-
+.logo img {
+    width: 110px;
+    border-radius: 7px;
+    box-shadow: 0 0 6px rgba(232,165,194,0.10);
+    background: #f9f6fa;
+    transition: box-shadow .22s;
+}
+.logo img:hover {
+    box-shadow: 0 0 16px rgba(228,160,190,0.24);
+}
 #menu-toggle {
-    font-size: 1.5rem;
-    background: none;
+    background: #fdeff6;
+    color: #cc7faa;
     border: none;
+    border-radius: 8px;
+    padding: 0.48em 1em;
+    font-size: 1.5em;
+    line-height: 1;
     cursor: pointer;
+    display: block;
+    transition: background .18s;
+    margin-left: 1em;
 }
-
-nav {
+#menu-toggle.open,
+#menu-toggle:focus {
+    background: #e8a5c2;
+    color: #fff;
+    outline: none;
+}
+.header-nav {
     display: none;
-    grid-column: 1 / -1;
-    margin-top: var(--space);
-    gap: var(--space);
     flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 8px 24px rgba(125,91,166,0.12);
+    overflow: hidden;
+    min-width: 160px;
+    transition: max-height 0.30s cubic-bezier(.46,.03,.52,.96), opacity 0.20s;
+    opacity: 0;
+    max-height: 0;
+}
+.header-nav.open {
+    display: flex;
+    opacity: 1;
+    max-height: 320px;
+    padding: 0.9em 0 0.6em 0;
+    z-index: 5;
+}
+.header-nav a {
+    color: var(--fg);
+    padding: 1em 2.2em 1em 1.3em;
+    text-align: right;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 1.08rem;
+    border-bottom: 1px solid #f0e7ef;
+    transition: background .13s, color .18s;
+    display: block;
+}
+.header-nav a:last-child {
+    border-bottom: none;
+}
+.header-nav a:hover, .header-nav a:focus {
+    background: #f1daf1;
+    color: #cc7faa;
+    outline: none;
 }
 
-nav a {
-    text-decoration: none;
-    color: var(--fg);
-    font-weight: 500;
-    transition: color .3s;
+@media (min-width: 768px) {
+    .header-inner {
+        justify-content: flex-start;
+    }
+    #menu-toggle {
+        display: none;
+    }
+    .header-nav, .header-nav.open {
+        display: flex !important;
+        flex-direction: row;
+        align-items: center;
+        position: static;
+        background: none;
+        box-shadow: none;
+        opacity: 1;
+        padding: 0;
+        max-height: none;
+    }
+    .header-nav a {
+        padding: 0.6em 1.3em;
+        font-size: 1.02rem;
+        border-bottom: none;
+    }
 }
-nav a:hover {
-    color: var(--accent);
-}
+
 
 /* HERO */
 #hero {
