@@ -1,0 +1,88 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Belyni</title>
+    <!-- Fuente moderna -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./resources/css/styles.css" />
+</head>
+<body>
+<header>
+    <a href="#" class="logo"><img src="./resources/img/logo.png" alt="Belyni Logo"></a>
+    <button id="menu-toggle" aria-label="Menú">☰</button>
+    <nav id="nav">
+        <a href="#servicios">Servicios</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+</header>
+
+<main>
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Redefine tu estilo</h1>
+            <p>Experiencias de belleza únicas y personalizadas.</p>
+            <a href="#contacto" class="btn">Reserva ahora</a>
+        </div>
+    </section>
+
+    <section id="servicios">
+        <h2>Servicios</h2>
+        <ul class="grid servicios-grid">
+            <li>
+                <div class="icon">💇‍♀️</div>
+                <p>Corte & Peinado</p>
+            </li>
+            <li>
+                <div class="icon">💅</div>
+                <p>Manicura</p>
+            </li>
+            <li>
+                <div class="icon">💆‍♂️</div>
+                <p>Masajes</p>
+            </li>
+            <li>
+                <div class="icon">🌿</div>
+                <p>Tratamientos</p>
+            </li>
+        </ul>
+    </section>
+
+    <section id="equipo">
+        <h2>Nuestro equipo</h2>
+        <div class="grid equipo-grid">
+            <div class="card">
+                <div class="avatar"></div>
+                <p class="name">Ana Gómez</p>
+                <p class="role">Estilista Senior</p>
+            </div>
+            <div class="card">
+                <div class="avatar"></div>
+                <p class="name">Luis Torres</p>
+                <p class="role">Manicurista</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <form>
+            <div class="form-grid">
+                <input type="text" placeholder="Nombre" required />
+                <input type="tel" placeholder="Teléfono" required />
+            </div>
+            <button type="submit" class="btn">Enviar</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 Belleza</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
