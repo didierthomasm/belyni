@@ -6,6 +6,9 @@
     --radius: 12px;
     --space: 1.25rem;
     --font: 'Poppins', sans-serif;
+    --header-bg: #fff;
+    --header-shadow: 0 4px 24px rgba(125,91,166,0.07);
+    --header-radius: 16px;
 }
 
 *,
@@ -22,53 +25,7 @@ body {
     line-height: 1.6;
 }
 
-/* HEADER: grid mobile-first */
-/*header {*/
-/*    display: grid;*/
-/*    grid-template-columns: auto auto;*/
-/*    align-items: center;*/
-/*    padding: var(--space);*/
-/*    background: var(--bg);*/
-/*    position: sticky;*/
-/*    top: 0;*/
-/*    z-index: 10;*/
-/*}*/
-
-/*.logo > img{*/
-/*    width: 100px;*/
-/*}*/
-
-/*#menu-toggle {*/
-/*    font-size: 1.5rem;*/
-/*    background: none;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*nav {*/
-/*    display: none;*/
-/*    grid-column: 1 / -1;*/
-/*    margin-top: var(--space);*/
-/*    gap: var(--space);*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*nav a {*/
-/*    text-decoration: none;*/
-/*    color: var(--fg);*/
-/*    font-weight: 500;*/
-/*    transition: color .3s;*/
-/*}*/
-/*nav a:hover {*/
-/*    color: var(--accent);*/
-/*}*/
-
-/* --- HEADER ENHANCEMENTS --- */
-:root {
-    --header-bg: #fff;
-    --header-shadow: 0 4px 24px rgba(125,91,166,0.07);
-    --header-radius: 16px;
-}
+/* HEADER*/
 /* Container utility */
 .container {
     width: 100%;
@@ -317,4 +274,36 @@ footer {
     #menu-toggle {
         display: none;
     }
+}
+/* Elegant Service Card for Belyni Beauty Salon */
+.belyni-service-card {
+    background: rgba(255,255,255,0.86);
+    backdrop-filter: blur(4px);
+    border-radius: 1.2em;
+    box-shadow: 0 4px 24px rgba(232,165,194,0.10), 0 1.5px 3px rgba(232,165,194,0.08);
+    transition: box-shadow 0.3s, transform 0.3s;
+    padding: 2em 1.5em;
+    text-align: center;
+    margin: 1em;
+    border: 1.5px solid #e8a5c2;
+}
+
+.belyni-service-card:hover {
+    box-shadow: 0 8px 32px rgba(232,165,194,0.19), 0 6px 24px rgba(232,165,194,0.16);
+    transform: translateY(-10px) scale(1.025);
+    border-color: #cc7faa;
+    cursor: pointer;
+}
+
+.belyni-service-card h3 {
+    color: #cc7faa;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 0.7em;
+    font-size: 1.4em;
+}
+
+.belyni-service-card p {
+    color: #444;
+    font-size: 1em;
+    margin: 0;
 }
