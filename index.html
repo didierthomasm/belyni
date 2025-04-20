@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Belyni</title>
-    <!-- Fuente moderna -->
+    <!-- Fuente -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/styles.css" />
 </head>
@@ -14,6 +15,7 @@
         <a href="#" class="logo">
             <img src="./resources/img/logo.png" alt="Belyni Logo" />
         </a>
+        <h1 class="name">Belyni</h1>
         <button id="menu-toggle" aria-label="Abrir menú de navegación" aria-controls="nav" aria-expanded="false" aria-haspopup="true">
             ☰
         </button>
@@ -42,11 +44,11 @@
     </section>
 
     <!-- ENHANCED SERVICIOS SECTION WITH SERVICE CARDS -->
-    <section id="servicios" style="background: linear-gradient(135deg, #fdeff6 0%, #e8a5c2 100%); padding: 2.5em 1em;">
-        <h2 style="text-align: center; color: #cc7faa; font-family: 'Playfair Display', serif; margin-bottom: 1.5em;">
+    <section id="servicios" class="servicios-section">
+        <h2 class="servicios-title">
             Servicios Destacados
         </h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5em;">
+        <div class="servicios-cards">
             <div class="belyni-service-card">
                 <h3>💇‍♀️ Corte & Peinado</h3>
                 <p>Transforma tu estilo con cortes modernos y peinados a la moda, realizados por nuestros expertos estilistas.</p>
@@ -71,15 +73,15 @@
         <h2>Nuestro equipo</h2>
         <div class="grid equipo-grid">
             <div class="card">
-                <div class="avatar"></div>
-                <p class="name">Ana Gómez</p>
+                <div class="avatar"><img src="./resources/img/nieves.jpg" alt="Nieves Perfil" /></div>
+                <p class="name">Nieves Muñoz</p>
                 <p class="role">Estilista Senior</p>
             </div>
-            <div class="card">
-                <div class="avatar"></div>
-                <p class="name">Luis Torres</p>
-                <p class="role">Manicurista</p>
-            </div>
+<!--            <div class="card">-->
+<!--                <div class="avatar"></div>-->
+<!--                <p class="name">Luis Torres</p>-->
+<!--                <p class="role">Manicurista</p>-->
+<!--            </div>-->
         </div>
     </section>
 
