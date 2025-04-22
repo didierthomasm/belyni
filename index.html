@@ -8,6 +8,9 @@
     <!-- Fuente -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/styles.css" />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </head>
 <body class="fade-in">
 <header class="main-header fade-in">
@@ -30,8 +33,27 @@
 <main>
     <section id="hero">
         <div class="hero-content">
-            <h1>Redefine tu estilo</h1>
-            <p>Experiencias de belleza únicas y personalizadas.</p>
+            <!-- Carousel/Slider -->
+            <div class="hero-carousel swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="./resources/img/corte.jpg" alt="Corte">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./resources/img/manicure.jpg" alt="Manicure">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./resources/img/tratamientos.jpeg" alt="Tratamientos">
+                    </div>
+                </div>
+                <!-- Navigation Buttons -->
+<!--                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>-->
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- Reservation Button -->
             <a href="https://wa.me/5212292258060?text=Hola%2C%20quiero%20reservar%20una%20cita%20en%20Belyni"
                class="btn"
                target="_blank"
@@ -85,7 +107,7 @@
         </div>
     </section>
 
-    <section id="contacto">
+<!--    <section id="contacto">
         <h2>Contacto</h2>
         <form>
             <div class="form-grid">
@@ -94,7 +116,7 @@
             </div>
             <button type="submit" class="btn">Enviar</button>
         </form>
-    </section>
+    </section>-->
 </main>
 
 <footer>

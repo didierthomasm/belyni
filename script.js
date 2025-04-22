@@ -31,3 +31,17 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("fade-in");
 });*/
+document.addEventListener("DOMContentLoaded", function () {
+  const swiper = new Swiper('.swiper', {
+    loop: true,
+    mousewheel: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+      type: 'bullets',
+    },
+    autoplay: {
+      delay: 5000,
+    },
+  });
+});
