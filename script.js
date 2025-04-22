@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const swiper = new Swiper('.swiper', {
     loop: true,
-    mousewheel: true,
     pagination: {
       el: '.swiper-pagination',
       clickable: true,

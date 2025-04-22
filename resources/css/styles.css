@@ -244,6 +244,7 @@ html {
     height: 100%;
     object-fit: cover;
 }
+
 /* Swiper Pagination Bullets */
 span.swiper-pagination-bullet-active {
     background-color: #cc7faa;
@@ -436,6 +437,50 @@ footer p:hover {
     fill: #cc7faa; /* Change color on hover */
     transform: scale(1.1); /* Add a slight zoom effect */
 }
+
+
+/* Floating WhatsApp Button (bottom-right corner) */
+.whatsapp-button {
+    position: sticky;
+    right: 1.6rem;           /* changed from left to right */
+    bottom: 1.6rem;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    background: #25D366;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 4px 14px #25d36630, 0 1.5px 0 #ddd;
+    transition: background 0.16s, box-shadow 0.18s, transform 0.18s;
+    font-size: 2rem;
+    text-decoration: none;
+    outline: none;
+    border: none;
+}
+.whatsapp-button:hover,
+.whatsapp-button:focus {
+    background: #128C7E;
+    box-shadow: 0 8px 24px #128c7e22;
+    transform: scale(1.06);
+}
+
+.whatsapp-button svg {
+    display: block;
+}
+
+@media (max-width: 640px) {
+    .whatsapp-button {
+        right: 1rem;
+        bottom: 1rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.6rem;
+    }
+}
+
 
 /* Keyframes for fade-in animation */
 @keyframes fadeIn {
