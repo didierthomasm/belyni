@@ -1,46 +1,38 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const menuToggle = document.getElementById('menu-toggle');
-  const nav = document.getElementById('nav');
-  // Toggle nav on mobile
-  menuToggle.addEventListener('click', function() {
-    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', (!expanded).toString());
-    nav.classList.toggle('open');
-    menuToggle.classList.toggle('open');
+document.addEventListener('DOMContentLoaded', () => {
+  // Quitar clase de carga
+  document.body.classList.remove('is-loading');
+  // Toggle del burger
+  const burger = document.querySelector('.navbar-burger');
+  const menu = document.getElementById(burger.dataset.target);
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('is-active');
+    menu.classList.toggle('is-active');
   });
-  // Close nav after clicking a link (mobile)
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      if(window.innerWidth < 768) {
-        nav.classList.remove('open');
-        menuToggle.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
+  // Modales
+  document.querySelectorAll('.modal-button').forEach(btn => {
+    const target = document.getElementById(btn.dataset.target);
+    btn.addEventListener('click', () => target.classList.add('is-active'));
   });
-  // Close nav on ESC for accessibility
-  document.addEventListener('keydown', function(e) {
-    if(e.key === 'Escape') {
-      nav.classList.remove('open');
-      menuToggle.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
+  document.querySelectorAll('.modal-close, .modal-background').forEach(close => {
+    const modal = close.closest('.modal');
+    close.addEventListener('click', () => modal.classList.remove('is-active'));
   });
+  // Calendly
+  const head = document.querySelector('head');
+  const cScript = document.createElement('script');
+  cScript.src = 'https://assets.calendly.com/assets/external/widget.js';
+  head.appendChild(cScript);
 });
-/*
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.classList.add("fade-in");
-});*/
-document.addEventListener("DOMContentLoaded", function () {
-  const swiper = new Swiper('.swiper', {
-    loop: true,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-      type: 'bullets',
-    },
-    autoplay: {
-      delay: 5000,
-    },
-  });
+// Banner
+document.addEventListener('DOMContentLoaded', () => {
+  // Desde aquí comienza tu funcionalidad
+  document.body.classList.remove('is-loading');
+
+  // Espera 3 segundos antes de cambiar la imagen del fondo
+  setTimeout(() => {
+    // Cambia el fondo del banner dinámicamente
+    document.querySelector('.hero').style.background =
+      'linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)), url(../resources/img/bannerBelyni.png) no-repeat center center';
+    document.querySelector('.hero').style.backgroundSize = 'cover';
+  }, 2500); // Cambiará a los 2.5 segundos
 });

@@ -1,162 +1,222 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Belyni</title>
-    <!-- Fuente -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./resources/css/styles.css" />
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- CSS -->
+    <link href="resources/css/styles.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </head>
-<body class="fade-in">
-<header class="main-header fade-in">
-    <div class="container header-inner">
-        <a href="#" class="logo">
-            <img src="./resources/img/logo-name.png" alt="Belyni Logo" />
+<body class="is-loading has-navbar-fixed-top">
+<!-- Navbar -->
+<nav class="navbar is-spaced is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand is-align-items-center">
+        <a class="navbar-item" href="#">
+            <img src="./resources/img/logo-name.png" alt="Logo Salón">
         </a>
-        <button id="menu-toggle" aria-label="Abrir menú de navegación" aria-controls="nav" aria-expanded="false" aria-haspopup="true">
-            ☰
-        </button>
-        <nav id="nav" class="header-nav">
-            <a href="#hero" tabindex="0">Reservar</a>
-            <a href="#servicios" tabindex="0">Servicios</a>
-            <a href="#equipo" tabindex="0">Equipo</a>
-            <a href="#contacto" tabindex="0">Contacto</a>
-        </nav>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
     </div>
-</header>
+    <div id="navbarMenu" class="navbar-menu">
+        <div class="navbar-end">
+            <a class="navbar-item" href="#services">Servicios</a>
+            <a class="navbar-item" href="#brands">Marcas</a>
+            <a class="navbar-item" href="#contact">Contacto</a>
+            <a class="navbar-item" href="#appointments">Citas</a>
+        </div>
+    </div>
+</nav>
 
-<main>
-    <section id="hero">
-        <div class="hero-content">
-            <!-- Carousel/Slider -->
-            <div class="hero-carousel swiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="./resources/img/corte.jpg" alt="Corte">
+<!-- Banner -->
+<section class="hero is-medium is-bold">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+<!--            <h1 class="title">Bienvenidos a Belyni</h1>-->
+<!--            <h2 class="subtitle">Tu belleza en manos expertas</h2>-->
+
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Servicios -->
+<section id="services" class="section">
+    <div class="container">
+        <h2 class="title has-text-centered">Nuestros Servicios</h2>
+        <div class="columns is-multiline">
+            <!-- Ejemplo de servicio -->
+            <div class="column is-full-mobile is-one-third-tablet">
+                <div class="card">
+                    <!-- Imagen solo en pantallas grandes -->
+                    <div class="card-image is-hidden-mobile">
+                        <figure class="image is-4by3">
+                            <img src="./resources/img/corteBelyni.jpg" alt="Corte Dama">
+                        </figure>
                     </div>
-                    <div class="swiper-slide">
-                        <img src="./resources/img/manicure.jpg" alt="Manicure">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="./resources/img/tratamientos.jpeg" alt="Tratamientos">
+                    <div class="card-content">
+                        <p class="title is-4">Corte Dama</p>
+                        <p>Lavado, secado y estilizado</p>
+                        <button class="button is-link modal-button" data-target="modal-corte-dama">Ver más</button>
                     </div>
                 </div>
-                <!-- Navigation Buttons -->
-<!--                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>-->
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
             </div>
-
-            <!-- Reservation Button -->
-            <a href="https://wa.me/5212292258060?text=Hola%2C%20quiero%20reservar%20una%20cita%20en%20Belyni"
-               class="btn"
-               target="_blank"
-               id="whatsapp-reserva"
-               rel="noopener"
-               title="Reserva por WhatsApp">
-                Reserva ahora
-            </a>
-        </div>
-    </section>
-
-    <!-- ENHANCED SERVICIOS SECTION WITH SERVICE CARDS -->
-    <section id="servicios" class="servicios-section">
-        <h2 class="servicios-title">
-            Servicios Destacados
-        </h2>
-        <div class="servicios-cards">
-            <div class="belyni-service-card">
-                <h3>💇‍♀️ Corte & Peinado</h3>
-                <p>Transforma tu estilo con cortes modernos y peinados a la moda, realizados por nuestros expertos estilistas.</p>
-            </div>
-            <div class="belyni-service-card">
-                <h3>💅 Manicura</h3>
-                <p>Manos elegantes con nuestros servicios de manicura utilizando productos de alta calidad.</p>
-            </div>
-            <div class="belyni-service-card">
-                <h3>💆‍♂️ Masajes</h3>
-                <p>Relájate con masajes exclusivos diseñados para liberar el estrés y revitalizar tu cuerpo.</p>
-            </div>
-            <div class="belyni-service-card">
-                <h3>🌿 Tratamientos</h3>
-                <p>Cuida tu piel y cabello con tratamientos naturales y personalizados.</p>
-            </div>
-        </div>
-    </section>
-    <!-- FIN ENHANCED SERVICIOS SECTION -->
-
-    <section id="equipo">
-        <h2>Nuestro equipo</h2>
-        <div class="grid equipo-grid">
-            <div class="card">
-                <div class="avatar"><img src="./resources/img/nieves.jpg" alt="Nieves Perfil" /></div>
-                <p class="name">Nieves Muñoz</p>
-                <p class="role">Estilista Senior</p>
-            </div>
-<!--            <div class="card">-->
-<!--                <div class="avatar"></div>-->
-<!--                <p class="name">Luis Torres</p>-->
-<!--                <p class="role">Manicurista</p>-->
-<!--            </div>-->
-        </div>
-    </section>
-
-<!--    <section id="contacto">
-        <h2>Contacto</h2>
-        <form>
-            <div class="form-grid">
-                <input type="text" placeholder="Nombre" required />
-                <input type="tel" placeholder="Teléfono" required />
-            </div>
-            <button type="submit" class="btn">Enviar</button>
-        </form>
-    </section>-->
-</main>
-
-<footer>
-    <div class="footer-location">
-        <p>&copy; 2025 Belleza</p>
-        <div class="location">
-            <p><strong>Ubicación:</strong> Juan Enríquez #431, Ricardo Flores Magón, Veracruz, Ver.</p>
-            <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.633225233502!2d-96.1289616249451!3d19.18634728204117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85c346cc65298d87%3A0xbfc4904f9770a6ac!2sBelyni!5e1!3m2!1ses-419!2sus!4v1745218076842!5m2!1ses-419!2sus"
-                    width="100%"
-                    height="200"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            <!-- Repetir columnas para otros servicios -->
         </div>
     </div>
-    <div class="footer-social">
-        <a href="https://www.instagram.com/belynisalon/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
-                <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
-            </svg>
-            <a href="https://www.facebook.com/salonbelyni" target="_blank" rel="noopener" aria-label="Facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
-                </svg>
-            </a>
-        </a>
+
+    <!-- Modal de ejemplo -->
+    <div id="modal-corte-dama" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content box">
+            <h3 class="title is-4">Corte Dama</h3>
+            <p>Incluye: Lavado, secado y estilizado</p>
+            <p><strong>$500 MXN</strong></p>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+</section>
+
+<!-- Imágenes de servicios (solo móvil) -->
+<section id="mobile-service-images" class="section">
+    <div class="container">
+        <div class="columns is-mobile is-multiline">
+            <div class="column is-half-mobile">
+                <figure class="image is-4by5">
+                    <img src="./resources/img/corteBelyni.jpg" alt="Corte Dama">
+                </figure>
+            </div>
+            <!-- Repetir para otras imágenes -->
+        </div>
+    </div>
+</section>
+
+<!-- Marcas -->
+<section id="brands" class="section">
+    <div class="container has-text-centered">
+        <h2 class="title">Nuestras marcas</h2>
+        <div class="columns is-multiline is-mobile is-centered">
+            <div class="column is-3-desktop is-4-tablet is-6-mobile">
+                <figure class="image is-128x128 is-inline-block">
+                    <img src="./resources/img/olaplex-seeklogo.png" alt="Olaplex">
+                </figure>
+            </div>
+            <!-- Repetir para otras marcas -->
+        </div>
+    </div>
+</section>
+
+<!-- Contacto -->
+<section id="contact" class="section">
+    <div class="container">
+        <h2 class="title has-text-centered">Contacto</h2>
+        <form action="#" method="POST">
+            <div class="field">
+                <label class="label">Nombre</label>
+                <div class="control">
+                    <input class="input" type="text" name="name" placeholder="Tu nombre" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Correo Electrónico</label>
+                <div class="control">
+                    <input class="input" type="email" name="email" placeholder="tu@correo.com" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Teléfono</label>
+                <div class="control">
+                    <input class="input" type="tel" name="phone" placeholder="(55) 1234-5678">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Mensaje</label>
+                <div class="control">
+                    <textarea class="textarea" name="message" placeholder="¿En qué podemos ayudarte?"></textarea>
+                </div>
+            </div>
+            <div class="field is-grouped is-justify-content-center">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Enviar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Agendar cita (Calendly) -->
+<!--<section id="appointments" class="section">
+    <div class="container has-text-centered">
+        <h2 class="title">Agendar Cita</h2>
+        &lt;!&ndash; Widget de Calendly &ndash;&gt;
+        <div class="calendly-inline-widget" data-url="https://calendly.com/tu-salon" style="min-width:320px;height:630px;"></div>
+    </div>
+</section>-->
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="content has-text-centered">
+        <!-- Ubicación con mapa -->
+        <p><strong>Ubicación:</strong> Juan Enríquez #431, Ricardo Flores Magón, Veracruz, Ver.</p>
+        <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.633225233502!2d-96.1289616249451!3d19.18634728204117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85c346cc65298d87%3A0xbfc4904f9770a6ac!2sBelyni!5e1!3m2!1ses-419!2sus!4v1745218076842!5m2!1ses-419!2sus"
+                width="100%"
+                height="200"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+<!--        <p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.633225233502!2d-96.1289616249451!3d19.18634728204117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85c346cc65298d87%3A0xbfc4904f9770a6ac!2sBelyni!5e1!3m2!1ses-419!2sus!4v1745218076842!5m2!1ses-419!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </p>-->
+        <p class="button">
+            <button class="button is-ghost">
+                <span class="icon">
+                    <i class="fab fa-facebook"></i>
+                </span>
+            </button>
+        </p>
+        <p class="button">
+            <button class="button is-ghost">
+                <span class="icon">
+                    <i class="fab fa-instagram"></i>
+                </span>
+            </button>
+        </p>
+        <p class="button">
+            <button class="button">
+                <span class="icon">
+                    <i class="fas fa-envelope"></i>
+                </span>
+            </button>
+        </p>
+        <p class="button">
+            <button class="button">
+                <span class="icon">
+                    <i class="fas fa-phone"></i>
+                </span>
+            </button>
+        </p>
+        <p>
+            <a href="https://instagram.com/tu_salon" target="_blank">Instagram</a> |
+            <a href="https://facebook.com/tu_salon" target="_blank">Facebook</a>
+        </p>
+        <p><strong>Email:</strong> contacto@tusalon.com.mx | <strong>Tel:</strong> +52 123 456 7890</p>
     </div>
 </footer>
-<a href="https://wa.me/5212292258060?text=Hola%2C%20quiero%20reservar%20una%20cita%20en%20Belyni"
-   class="whatsapp-button"
-   target="_blank"
-   rel="noopener"
-   aria-label="Contact us on WhatsApp">
-    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
-        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-    </svg>
+
+<!-- Botón WhatsApp -->
+<a id="whatsapp-btn" href="https://api.whatsapp.com/send?phone=521234567890&text=Hola%2C%20quiero%20agendar%20una%20cita" target="_blank" class="button is-success">
+    <span class="icon"><i class="fab fa-whatsapp"></i></span>
 </a>
+
+<!-- Scripts Bulma JS personalizado -->
 <script src="script.js"></script>
 </body>
 </html>
