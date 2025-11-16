@@ -11,17 +11,17 @@
     color: white;
     padding: 2rem;
     text-align: center;
-    height: auto;
+    height: 60vw;
     max-width: 100%;
 }
 /* Estilo del texto del banner */
-/*.hero h1, .hero h2{
+.hero h1, .hero h2{
     color: #FF69B4;
     background-image: linear-gradient(315deg, #FF69B4 , #FF61A7 , #FF589A , #FF4F8D , #FF4680 , #FF3D73 , #FF3466 );
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}*/
+}
 
 /* Animación al cargar */
 body.is-loading .hero {
