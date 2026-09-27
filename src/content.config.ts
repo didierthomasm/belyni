@@ -70,7 +70,6 @@ const services = defineCollection({
       image: z.preprocess(emptyToUndefined, image().optional()),
       imageAlt: optionalText,
       order,
-      featured: z.boolean().default(false),
     }),
 });
 

@@ -240,7 +240,6 @@ export default config({
         image: image('Foto (opcional)', 'services', false),
         imageAlt: fields.text({ label: 'Descripción de la foto' }),
         order,
-        featured: fields.checkbox({ label: 'Destacado', defaultValue: false }),
       },
     }),
     team: collection({
