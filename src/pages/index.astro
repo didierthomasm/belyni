@@ -6,6 +6,11 @@ import Footer from '../components/layout/Footer.astro';
 import WhatsAppFab from '../components/layout/WhatsAppFab.astro';
 import Hero from '../components/sections/Hero.astro';
 import Services from '../components/sections/Services.astro';
+import Highlights from '../components/sections/Highlights.astro';
+import Team from '../components/sections/Team.astro';
+import Gallery from '../components/sections/Gallery.astro';
+import Brands from '../components/sections/Brands.astro';
+import Reviews from '../components/sections/Reviews.astro';
 import { getSite } from '../lib/site';
 import { byOrder } from '../lib/order';
 import { navItems } from '../lib/nav';
@@ -45,6 +50,11 @@ const nav = navItems([
         />
       )
     }
+    {site.highlights.length > 0 && <Highlights items={site.highlights} />}
+    {team.length > 0 && <Team members={team} />}
+    {gallery.length > 0 && <Gallery items={gallery} />}
+    {brands.length > 0 && <Brands items={brands} />}
+    {reviews.length > 0 && <Reviews items={reviews} />}
     <section id="ubicacion" class="min-h-screen"></section>
     <section id="contacto" class="min-h-screen"></section>
   </main>
