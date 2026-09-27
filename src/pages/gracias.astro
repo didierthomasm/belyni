@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import { getSite } from '../lib/site';
+
+const site = await getSite();
+---
+
+<BaseLayout title={`Gracias | ${site.name}`} description="Recibimos tu mensaje." noindex>
+  <main id="contenido" class="grid min-h-screen place-items-center px-4 text-center">
+    <div>
+      <h1 class="text-5xl font-semibold text-plum-900">¡Gracias por escribirnos!</h1>
+      <p class="mt-4 text-muted">Te responderemos lo antes posible en horario de atención.</p>
+      <Button href="/" class="mt-8">
+        Volver al inicio
+      </Button>
+    </div>
+  </main>
+</BaseLayout>

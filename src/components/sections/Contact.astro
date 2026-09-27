@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import Section from '../ui/Section.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
+import ContactForm from './ContactForm.astro';
 import { formatMxPhone, telHref } from '../../lib/phone';
 import type { SiteData } from '../../lib/site';
 
@@ -10,6 +11,7 @@ interface Props {
   bookingHref: string;
 }
 const { site, bookingHref } = Astro.props;
+const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 
 interface Channel {
   label: string;
@@ -102,4 +104,5 @@ const channels: Channel[] = [
       </li>
     ))}
   </ul>
+  {formKey && <ContactForm accessKey={formKey} siteName={site.name} />}
 </Section>

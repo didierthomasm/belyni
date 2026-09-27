@@ -54,3 +54,24 @@ test('promotion banner respects dates in salon time', async ({ page }) => {
   await page.goto('/');
   await expect(promoText).toHaveCount(0);
 });
+
+test.describe('contact form', () => {
+  test.skip(!process.env.PUBLIC_WEB3FORMS_KEY, 'form disabled (no PUBLIC_WEB3FORMS_KEY)');
+
+  test('requires fields, has a honeypot, and redirects to /gracias/', async ({ page }) => {
+    await page.route('https://api.web3forms.com/submit', (route) =>
+      route.fulfill({ status: 303, headers: { location: 'http://localhost:4322/gracias/' } }),
+    );
+    await page.goto('/');
+    const form = page.locator('#contacto form');
+    await expect(form.locator('input[name="botcheck"]')).toBeHidden();
+    await expect(form.getByLabel('Nombre')).toHaveAttribute('required', '');
+
+    await form.getByLabel('Nombre').fill('Ana López');
+    await form.getByLabel('Teléfono').fill('229 111 2233');
+    await form.getByLabel('Mensaje').fill('¿Tienen disponibilidad el sábado?');
+    await form.getByRole('button', { name: 'Enviar mensaje' }).click();
+    await expect(page).toHaveURL(/\/gracias\/$/);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Gracias');
+  });
+});
