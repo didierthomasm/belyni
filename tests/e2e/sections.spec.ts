@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
-import { countEntries, readSite } from './content';
+import { countEntries, hoursCount, readSite } from './content';
 
 const servicesDir = join(process.cwd(), 'src', 'content', 'services');
 const services = readdirSync(servicesDir)
@@ -65,4 +65,39 @@ test('services without image render no <img> and no broken image', async ({ page
     const card = page.locator('[data-service]', { has: page.getByRole('heading', { name: s.name, exact: true }) });
     await expect(card.locator('img')).toHaveCount(0);
   }
+});
+
+test('map loads only after the visitor asks for it', async ({ page }) => {
+  await page.goto('/');
+  const section = page.locator('#ubicacion');
+  await expect(section.locator('iframe')).toHaveCount(0);
+  await section.getByRole('button', { name: 'Ver mapa' }).click();
+  await expect(section.locator('iframe')).toHaveAttribute('src', /google\.com\/maps\/embed/);
+  await expect(section.locator('iframe')).toHaveAttribute('title', /Mapa/);
+});
+
+test('directions link opens Google Maps', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#ubicacion').getByRole('link', { name: 'Cómo llegar' })).toHaveAttribute(
+    'href',
+    /google\.com\/maps/,
+  );
+});
+
+test('schedule: 7-day table when hours exist, WhatsApp hint otherwise', async ({ page }) => {
+  await page.goto('/');
+  const section = page.locator('#ubicacion');
+  if (hoursCount() > 0) {
+    await expect(section.locator('table tbody tr')).toHaveCount(7);
+  } else {
+    await expect(section.locator('table')).toHaveCount(0);
+    await expect(section).toContainText('Escríbenos para confirmar el horario');
+  }
+});
+
+test('contact offers WhatsApp and phone with valid links', async ({ page }) => {
+  await page.goto('/');
+  const section = page.locator('#contacto');
+  await expect(section.getByRole('link', { name: /WhatsApp/ })).toHaveAttribute('href', /^https:\/\/wa\.me\/52\d{10}/);
+  await expect(section.getByRole('link', { name: /Llamar/ })).toHaveAttribute('href', /^tel:\+52\d{10}$/);
 });

@@ -11,6 +11,8 @@ import Team from '../components/sections/Team.astro';
 import Gallery from '../components/sections/Gallery.astro';
 import Brands from '../components/sections/Brands.astro';
 import Reviews from '../components/sections/Reviews.astro';
+import Location from '../components/sections/Location.astro';
+import Contact from '../components/sections/Contact.astro';
 import { getSite } from '../lib/site';
 import { byOrder } from '../lib/order';
 import { navItems } from '../lib/nav';
@@ -55,8 +57,8 @@ const nav = navItems([
     {gallery.length > 0 && <Gallery items={gallery} />}
     {brands.length > 0 && <Brands items={brands} />}
     {reviews.length > 0 && <Reviews items={reviews} />}
-    <section id="ubicacion" class="min-h-screen"></section>
-    <section id="contacto" class="min-h-screen"></section>
+    <Location site={site} />
+    <Contact site={site} bookingHref={bookingHref} />
   </main>
   <Footer site={site} />
   <WhatsAppFab href={bookingHref} />

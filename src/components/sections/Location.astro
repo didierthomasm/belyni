@@ -1,0 +1,92 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Button from '../ui/Button.astro';
+import { weeklySchedule } from '../../lib/hours';
+import type { SiteData } from '../../lib/site';
+
+interface Props {
+  site: SiteData;
+}
+const { site } = Astro.props;
+const schedule = site.hours.length > 0 ? weeklySchedule(site.hours) : [];
+---
+
+<Section id="ubicacion" class="bg-white">
+  <SectionHeading id="ubicacion-titulo" eyebrow="Visítanos" title="Ubicación y horario" />
+  <div class="grid gap-10 md:grid-cols-2">
+    <div class="space-y-8">
+      <div class="flex gap-3">
+        <Icon name="lucide:map-pin" class="mt-1 size-5 shrink-0 text-plum-500" aria-hidden="true" />
+        <address class="not-italic">
+          <p class="font-semibold">{site.address.street}</p>
+          <p>{site.address.neighborhood}</p>
+          <p>{site.address.city}, {site.address.region} {site.address.postalCode}</p>
+        </address>
+      </div>
+
+      <div class="flex gap-3">
+        <Icon name="lucide:clock" class="mt-1 size-5 shrink-0 text-plum-500" aria-hidden="true" />
+        <div class="w-full">
+          <!-- Parte 2: indicador "Abierto ahora" -->
+          <p data-open-status hidden class="mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold"></p>
+          {
+            schedule.length > 0 ? (
+              <table class="w-full max-w-sm text-sm">
+                <caption class="sr-only">Horario de atención</caption>
+                <tbody>
+                  {schedule.map((row) => (
+                    <tr class="border-b border-plum-100 last:border-0">
+                      <th scope="row" class="py-2 text-left font-medium">{row.label}</th>
+                      <td class:list={['py-2 text-right', row.text === 'Cerrado' && 'text-muted']}>{row.text}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p class="text-muted">Escríbenos para confirmar el horario de atención.</p>
+            )
+          }
+        </div>
+      </div>
+
+      <Button href={site.mapsUrl} external variant="secondary" data-umami-event="directions">
+        <Icon name="lucide:navigation" class="size-4" aria-hidden="true" />
+        Cómo llegar
+      </Button>
+    </div>
+
+    <div class="relative aspect-[4/3] overflow-hidden rounded-3xl bg-plum-50">
+      <button
+        type="button"
+        data-map-load={site.mapsEmbedUrl}
+        class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-plum-700 hover:bg-plum-100"
+      >
+        <Icon name="lucide:map" class="size-10" aria-hidden="true" />
+        <span class="font-semibold">Ver mapa</span>
+        <span class="text-xs text-muted">Se cargará Google Maps</span>
+      </button>
+    </div>
+  </div>
+</Section>
+
+<script>
+  // El mapa de Google (~500 KB) solo se carga cuando la visitante lo pide
+  document.querySelectorAll<HTMLButtonElement>('[data-map-load]').forEach((button) => {
+    button.addEventListener(
+      'click',
+      () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = button.dataset.mapLoad ?? '';
+        iframe.title = 'Mapa de ubicación del salón';
+        iframe.loading = 'lazy';
+        iframe.referrerPolicy = 'no-referrer-when-downgrade';
+        iframe.allowFullscreen = true;
+        iframe.className = 'absolute inset-0 h-full w-full border-0';
+        button.replaceWith(iframe);
+      },
+      { once: true },
+    );
+  });
+</script>
