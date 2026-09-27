@@ -4,6 +4,9 @@ import { join } from 'node:path';
 import { parse } from 'yaml';
 import { countEntries, hoursCount, readSite } from './content';
 
+// Escapa caracteres especiales de regex en nombres de servicio como "Uñas (gel)" o "Corte + peinado"
+const escapeRegExp = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 const servicesDir = join(process.cwd(), 'src', 'content', 'services');
 const services = readdirSync(servicesDir)
   .filter((f) => f.endsWith('.yaml'))
@@ -54,8 +57,8 @@ test('every service from content is rendered with price or "Precio a consultar"'
     } else {
       await expect(card).toContainText('Precio a consultar');
     }
-    const link = card.getByRole('link', { name: new RegExp(`Agendar ${s.name}`) });
-    await expect(link).toHaveAttribute('href', new RegExp(encodeURIComponent(s.name)));
+    const link = card.getByRole('link', { name: new RegExp(`Agendar ${escapeRegExp(s.name)}`) });
+    await expect(link).toHaveAttribute('href', new RegExp(escapeRegExp(encodeURIComponent(s.name))));
   }
 });
 

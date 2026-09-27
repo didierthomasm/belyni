@@ -775,7 +775,7 @@ test.describe('contact form', () => {
 
   test('requires fields, has a honeypot, and redirects to /gracias/', async ({ page }) => {
     await page.route('https://api.web3forms.com/submit', (route) =>
-      route.fulfill({ status: 303, headers: { location: 'http://localhost:4321/gracias/' } }),
+      route.fulfill({ status: 303, headers: { location: 'http://localhost:4322/gracias/' } }),
     );
     await page.goto('/');
     const form = page.locator('#contacto form');
@@ -1504,7 +1504,7 @@ npm pkg set scripts.lhci="lhci autorun"
     "collect": {
       "startServerCommand": "npm run serve:dist",
       "startServerReadyPattern": "Accepting connections",
-      "url": ["http://localhost:4321/"],
+      "url": ["http://localhost:4322/"],
       "numberOfRuns": 3
     },
     "assert": {

@@ -10,7 +10,7 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "check": "astro check",
-    "serve:dist": "serve dist -l 4321 --no-clipboard",
+    "serve:dist": "serve dist -l 4322 --no-clipboard",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
