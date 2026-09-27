@@ -1,1 +1,44 @@
 @import 'tailwindcss';
+
+/* Tokens de marca: plum del logo (#A44C7E) y blush del banner (#EDB7B4) */
+@theme {
+  --color-plum-50: #fbf4f8;
+  --color-plum-100: #f5e4ee;
+  --color-plum-200: #ebc9dc;
+  --color-plum-500: #a44c7e;
+  --color-plum-600: #8c3f6b;
+  --color-plum-700: #733356;
+  --color-plum-900: #3d1a2f;
+  --color-blush-50: #fdf6f5;
+  --color-blush-100: #fbeceb;
+  --color-blush-300: #edb7b4;
+  --color-ink: #1f1a1d;
+  --color-muted: #6b5f66;
+
+  --font-display: 'Cormorant Garamond Variable', ui-serif, Georgia, serif;
+  --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-blush-50 font-sans text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-balance;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-plum-500;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

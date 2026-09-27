@@ -1,15 +1,9 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Belyni</title>
-  </head>
-  <body>
-    <h1 class="p-8 text-4xl text-pink-700">Belyni: en construcción</h1>
-  </body>
-</html>
+<BaseLayout title="Belyni" description="Salón de belleza en Veracruz">
+  <main id="contenido">
+    <h1 class="p-8 text-5xl font-semibold text-plum-900">Belyni</h1>
+  </main>
+</BaseLayout>
