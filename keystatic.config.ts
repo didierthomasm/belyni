@@ -214,5 +214,21 @@ export default config({
         order,
       },
     }),
+    promotions: collection({
+      label: 'Promociones',
+      path: 'src/content/promotions/*',
+      slugField: 'title',
+      format: { data: 'yaml' },
+      columns: ['startDate', 'endDate'],
+      schema: {
+        title: fields.slug({
+          name: { label: 'Título', validation: { length: { min: 1, max: 60 } } },
+        }),
+        text: text('Texto', 160, { multiline: true }),
+        startDate: fields.date({ label: 'Empieza', validation: { isRequired: true } }),
+        endDate: fields.date({ label: 'Termina (incluido)', validation: { isRequired: true } }),
+        order,
+      },
+    }),
   },
 });

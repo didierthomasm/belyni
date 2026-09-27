@@ -1,3 +1,4 @@
+import { readdirSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 import { readSite } from './content';
 
@@ -37,4 +38,19 @@ test.describe('open-now badge', () => {
     await page.goto('/');
     await expect(page.locator('[data-open-status]')).toHaveText('Cerrado ahora');
   });
+});
+
+const hasPromos = () => readdirSync('src/content/promotions').some((f) => f.endsWith('.yaml'));
+
+test('promotion banner respects dates in salon time', async ({ page }) => {
+  test.skip(!hasPromos(), 'no promotions in content');
+  const promoText = page.locator('[data-promo]:visible');
+
+  await page.clock.setFixedTime(new Date('2099-12-31T12:00:00Z'));
+  await page.goto('/');
+  await expect(promoText).toHaveCount(1);
+
+  await page.clock.setFixedTime(new Date('2100-01-01T12:00:00Z'));
+  await page.goto('/');
+  await expect(promoText).toHaveCount(0);
 });

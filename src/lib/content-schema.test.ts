@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  dateOnlySchema,
   emptyToUndefined,
   openingHoursSchema,
   optionalInt,
@@ -62,5 +63,19 @@ describe('timeSchema / openingHoursSchema', () => {
     expect(
       openingHoursSchema.safeParse({ day: 'monday', open: '10:00', close: '19:00' }).success,
     ).toBe(false);
+  });
+});
+
+describe('dateOnlySchema', () => {
+  it('accepts YYYY-MM-DD strings', () => {
+    expect(dateOnlySchema.parse('2026-10-31')).toBe('2026-10-31');
+  });
+  it('accepts Date objects produced by YAML parsers and keeps the calendar day', () => {
+    expect(dateOnlySchema.parse(new Date('2026-10-31T00:00:00Z'))).toBe('2026-10-31');
+  });
+  it('rejects other formats with a Spanish message', () => {
+    const result = dateOnlySchema.safeParse('31/10/2026');
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toMatch(/AAAA-MM-DD/);
   });
 });

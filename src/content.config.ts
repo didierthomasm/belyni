@@ -3,6 +3,7 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { CATEGORY_IDS } from './lib/categories';
 import {
+  dateOnlySchema,
   emptyToUndefined,
   openingHoursSchema,
   optionalInt,
@@ -106,4 +107,20 @@ const reviews = defineCollection({
   }),
 });
 
-export const collections = { site, services, team, gallery, brands, reviews };
+const promotions = defineCollection({
+  loader: yamlIn('promotions'),
+  schema: z
+    .object({
+      title: z.string().min(1).max(60),
+      text: z.string().min(1).max(160),
+      startDate: dateOnlySchema,
+      endDate: dateOnlySchema,
+      order,
+    })
+    .refine((p) => p.startDate <= p.endDate, {
+      message: 'La fecha de fin debe ser igual o posterior a la de inicio',
+      path: ['endDate'],
+    }),
+});
+
+export const collections = { site, services, team, gallery, brands, reviews, promotions };

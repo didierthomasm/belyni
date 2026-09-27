@@ -35,3 +35,9 @@ export const openingHoursSchema = z
     message: 'La hora de cierre debe ser posterior a la de apertura',
     path: ['close'],
   });
+
+// Fechas sin hora; algunos parsers de YAML convierten 2026-10-31 en Date (a medianoche UTC)
+export const dateOnlySchema = z.preprocess(
+  (v) => (v instanceof Date ? v.toISOString().slice(0, 10) : v),
+  z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Usa el formato de fecha AAAA-MM-DD'),
+);

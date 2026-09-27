@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { whatsappUrl } from '../../lib/whatsapp';
+
+interface Props {
+  promos: CollectionEntry<'promotions'>['data'][];
+  whatsapp: string;
+}
+const { promos, whatsapp } = Astro.props;
+---
+
+<div class="bg-plum-900 text-sm text-white">
+  {promos.map((promo) => (
+    <p
+      data-promo
+      data-start={promo.startDate}
+      data-end={promo.endDate}
+      hidden
+      class="mx-auto max-w-6xl px-4 py-2 text-center"
+    >
+      <strong class="font-semibold">{promo.title}:</strong> {promo.text}{' '}
+      <a
+        href={whatsappUrl(whatsapp, `Hola, me interesa la promoción: ${promo.title}`)}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-umami-event="whatsapp-promo"
+        class="font-semibold underline underline-offset-2"
+      >
+        Aprovéchala
+      </a>
+    </p>
+  ))}
+</div>
+
+<script>
+  import { isPromotionActive } from '../../lib/promotions';
+
+  // Muestra solo la primera promoción vigente hoy (hora de Veracruz)
+  const now = new Date();
+  const active = Array.from(document.querySelectorAll<HTMLElement>('[data-promo]')).find((el) =>
+    isPromotionActive({ startDate: el.dataset.start ?? '', endDate: el.dataset.end ?? '' }, now),
+  );
+  if (active) active.hidden = false;
+</script>
