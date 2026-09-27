@@ -34,6 +34,7 @@ const schedule = site.hours.length > 0 ? weeklySchedule(site.hours) : [];
           <!-- Parte 2: indicador "Abierto ahora" -->
           <p
             data-open-status
+            data-hours={JSON.stringify(site.hours)}
             hidden
             class="mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold"
           ></p>
@@ -97,4 +98,21 @@ const schedule = site.hours.length > 0 ? weeklySchedule(site.hours) : [];
       { once: true },
     );
   });
+</script>
+
+<script>
+  import { isOpenAt, type OpeningHours } from '../../lib/hours';
+
+  // Se calcula en el navegador para que no dependa de cuándo se hizo el build
+  const badge = document.querySelector<HTMLElement>('[data-open-status]');
+  const hours = JSON.parse(badge?.dataset.hours ?? '[]') as OpeningHours[];
+
+  if (badge && hours.length > 0) {
+    const open = isOpenAt(hours, new Date());
+    badge.textContent = open ? 'Abierto ahora' : 'Cerrado ahora';
+    badge.classList.add(
+      ...(open ? ['bg-green-100', 'text-green-800'] : ['bg-plum-100', 'text-plum-700']),
+    );
+    badge.hidden = false;
+  }
 </script>
