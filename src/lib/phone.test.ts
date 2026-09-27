@@ -17,6 +17,13 @@ describe('normalizeMxPhone', () => {
   it.each(['', '12345', '229 225 806', '+1 555 123 4567 89', 'llámanos'])('rejects %s', (raw) => {
     expect(() => normalizeMxPhone(raw)).toThrow(/Número de teléfono inválido/);
   });
+
+  it.each(['+52 1 229 225 806', '0229225806', '1229225806'])(
+    'rejects impossible national numbers starting with 0 or 1: %s',
+    (raw) => {
+      expect(() => normalizeMxPhone(raw)).toThrow(/Número de teléfono inválido/);
+    },
+  );
 });
 
 describe('isValidMxPhone', () => {
