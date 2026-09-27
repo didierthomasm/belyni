@@ -29,6 +29,8 @@ Astro 7 static site + Tailwind 4 (`@tailwindcss/vite`, tokens in `src/styles/glo
 - **Icons**: astro-icon; any icon used must be listed in `src/lib/icons.ts` (`ICON_INCLUDE`).
 - **Client JS**: only the mobile menu (`Header.astro`) and the click-to-load map (`Location.astro`).
 - Adding a service = add `src/content/services/<slug>.yaml`. Categories are fixed in `src/lib/categories.ts`.
+- **CMS**: Keystatic (`keystatic.config.ts`) edits the same YAML files at `/keystatic` (local mode in dev, GitHub mode in production). Any schema change must be made in **both** `keystatic.config.ts` and `src/content.config.ts`.
+- `@astrojs/netlify` is only there for Keystatic's on-demand routes (`imageCDN: false`). Public pages are prerendered; `astro preview` is not supported, so use `npm run serve:dist`.
 
 ## Known state / gotchas
 
