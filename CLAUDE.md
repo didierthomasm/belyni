@@ -10,13 +10,13 @@ Static, single-page marketing site for **Belyni**, a beauty salon in Veracruz, M
 
 Requires Node ≥ 22.12.
 
-```
+```bash
 npm install
 npm run dev            # http://localhost:4321
 npm run build          # astro check + static build to dist/
 npm test               # Vitest unit tests (src/lib)
 npm run test:coverage  # coverage, 80% threshold on src/lib
-npm run test:e2e       # Playwright against the built dist/ (mobile + desktop)
+npm run test:e2e       # Playwright against the built dist/, served on :4322 (mobile + desktop)
 ```
 
 ## Architecture
