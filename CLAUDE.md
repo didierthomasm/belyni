@@ -37,3 +37,4 @@ Astro 7 static site + Tailwind 4 (`@tailwindcss/vite`, tokens in `src/styles/glo
 - Fields marked `# PENDIENTE` in `src/content/` are unconfirmed with the owner.
 - Empty optional fields may be `''` or `null` (Keystatic's convention); schemas treat both as missing.
 - E2E tests read the YAML content to build their expectations, so they follow content edits.
+- Images must live at `src/assets/img/<folder>/<slug>/<field>.<ext>` (singleton: `src/assets/img/site/<field>.<ext>`) or Keystatic won't show them in the admin and a save will drop the reference.

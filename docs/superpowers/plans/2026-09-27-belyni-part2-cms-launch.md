@@ -1189,7 +1189,7 @@ import sharp from 'sharp';
 const WIDTH = 1200;
 const HEIGHT = 630;
 
-const hero = await sharp('src/assets/img/site/hero.png')
+const hero = await sharp('src/assets/img/site/heroImage.png')
   .resize(HEIGHT, HEIGHT, { fit: 'cover' })
   .toBuffer();
 const logo = await sharp('src/assets/img/logo-name.png').resize({ width: 460 }).toBuffer();

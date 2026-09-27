@@ -1,7 +1,7 @@
 name: Belyni
 tagline: Tu belleza en manos expertas
 intro: Salón de belleza en Veracruz. Cortes, color, uñas y tratamientos con productos profesionales y atención personalizada. # PENDIENTE: validar texto con la dueña
-heroImage: ../../assets/img/site/hero.png
+heroImage: ../../assets/img/site/heroImage.png
 heroImageAlt: Mujer con corte bob ondulado sobre fondo rosa
 phone: 229 225 8060 # PENDIENTE: confirmar número para llamadas (tomado del WhatsApp del sitio anterior)
 whatsapp: 229 225 8060 # PENDIENTE: confirmar (sitio anterior, abril 2025)
