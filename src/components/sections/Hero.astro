@@ -13,11 +13,13 @@ const { site, bookingHref } = Astro.props;
 
 <section id="inicio" class="overflow-hidden bg-blush-100">
   <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 md:grid-cols-2 md:py-20">
-    <div class="text-center md:text-left">
+    <div class="min-w-0 text-center md:text-left">
       <p class="mb-3 text-xs font-semibold tracking-[0.2em] text-plum-600 uppercase">
         {site.name} · Salón de belleza en {site.address.city}
       </p>
-      <h1 class="text-5xl leading-tight font-semibold text-plum-900 sm:text-6xl">{site.tagline}</h1>
+      <h1 class="text-5xl leading-tight font-semibold break-words text-plum-900 hyphens-auto sm:text-6xl">
+        {site.tagline}
+      </h1>
       <p class="mx-auto mt-5 max-w-md text-lg text-muted md:mx-0">{site.intro}</p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center md:justify-start">
         <Button href={bookingHref} external data-umami-event="whatsapp-hero">

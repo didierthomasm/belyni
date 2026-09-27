@@ -44,3 +44,26 @@ test('first-load transfer stays under 1 MB', async ({ page }) => {
   await page.waitForLoadState('networkidle');
   expect(bytes).toBeLessThan(1_000_000);
 });
+
+test.describe('mobile viewport (375px)', () => {
+  test.use({ viewport: { width: 375, height: 800 } });
+
+  test('long Spanish text never gets clipped off-screen inside main', async ({ page }) => {
+    await page.goto('/');
+    const overflowing = await page.evaluate(() => {
+      const isInsideHorizontalScroller = (el: Element): boolean => {
+        for (let node = el.parentElement; node; node = node.parentElement) {
+          const overflowX = getComputedStyle(node).overflowX;
+          if (overflowX === 'auto' || overflowX === 'scroll') return true;
+        }
+        return false;
+      };
+      const viewportWidth = window.innerWidth;
+      return Array.from(document.querySelectorAll('main *'))
+        .filter((el) => el.getBoundingClientRect().right > viewportWidth + 1)
+        .filter((el) => !isInsideHorizontalScroller(el))
+        .map((el) => el.tagName.toLowerCase());
+    });
+    expect(overflowing).toEqual([]);
+  });
+});
