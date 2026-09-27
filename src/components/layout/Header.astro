@@ -14,15 +14,29 @@ const { items, bookingHref, siteName } = Astro.props;
 ---
 
 <header class="sticky top-0 z-40 border-b border-plum-100 bg-blush-50/90 backdrop-blur">
-  <nav aria-label="Principal" class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+  <nav
+    aria-label="Principal"
+    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3"
+  >
     <a href="#inicio" class="shrink-0">
       <Image src={logo} alt={siteName} width={140} class="h-10 w-auto" loading="eager" />
     </a>
     <ul class="hidden items-center gap-6 text-sm font-medium md:flex">
-      {items.map((item) => <li><a href={item.href} class="hover:text-plum-600">{item.label}</a></li>)}
+      {items.map((item) => (
+        <li>
+          <a href={item.href} class="hover:text-plum-600">
+            {item.label}
+          </a>
+        </li>
+      ))}
     </ul>
     <div class="flex items-center gap-2">
-      <Button href={bookingHref} external class="hidden sm:inline-flex" data-umami-event="whatsapp-header">
+      <Button
+        href={bookingHref}
+        external
+        class="hidden sm:inline-flex"
+        data-umami-event="whatsapp-header"
+      >
         Agendar cita
       </Button>
       <button
@@ -32,17 +46,31 @@ const { items, bookingHref, siteName } = Astro.props;
         aria-controls="menu-movil"
         data-menu-toggle
       >
-        <span class="sr-only" data-menu-label>Abrir menú</span>
-        <span data-icon-open><Icon name="lucide:menu" class="size-6" aria-hidden="true" /></span>
-        <span data-icon-close class="hidden"><Icon name="lucide:x" class="size-6" aria-hidden="true" /></span>
+        <span class="sr-only" data-menu-label>
+          Abrir menú
+        </span>
+        <span data-icon-open>
+          <Icon name="lucide:menu" class="size-6" aria-hidden="true" />
+        </span>
+        <span data-icon-close class="hidden">
+          <Icon name="lucide:x" class="size-6" aria-hidden="true" />
+        </span>
       </button>
     </div>
   </nav>
   <div id="menu-movil" class="hidden border-t border-plum-100 md:hidden" data-menu>
     <ul class="flex flex-col px-4 py-2">
-      {items.map((item) => <li><a href={item.href} class="block py-3 text-lg">{item.label}</a></li>)}
+      {items.map((item) => (
+        <li>
+          <a href={item.href} class="block py-3 text-lg">
+            {item.label}
+          </a>
+        </li>
+      ))}
       <li class="py-3">
-        <Button href={bookingHref} external class="w-full" data-umami-event="whatsapp-menu">Agendar cita</Button>
+        <Button href={bookingHref} external class="w-full" data-umami-event="whatsapp-menu">
+          Agendar cita
+        </Button>
       </li>
     </ul>
   </div>

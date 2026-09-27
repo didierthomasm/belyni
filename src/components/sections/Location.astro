@@ -22,7 +22,9 @@ const schedule = site.hours.length > 0 ? weeklySchedule(site.hours) : [];
         <address class="not-italic">
           <p class="font-semibold">{site.address.street}</p>
           <p>{site.address.neighborhood}</p>
-          <p>{site.address.city}, {site.address.region} {site.address.postalCode}</p>
+          <p>
+            {site.address.city}, {site.address.region} {site.address.postalCode}
+          </p>
         </address>
       </div>
 
@@ -30,24 +32,30 @@ const schedule = site.hours.length > 0 ? weeklySchedule(site.hours) : [];
         <Icon name="lucide:clock" class="mt-1 size-5 shrink-0 text-plum-500" aria-hidden="true" />
         <div class="w-full">
           <!-- Parte 2: indicador "Abierto ahora" -->
-          <p data-open-status hidden class="mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold"></p>
-          {
-            schedule.length > 0 ? (
-              <table class="w-full max-w-sm text-sm">
-                <caption class="sr-only">Horario de atención</caption>
-                <tbody>
-                  {schedule.map((row) => (
-                    <tr class="border-b border-plum-100 last:border-0">
-                      <th scope="row" class="py-2 text-left font-medium">{row.label}</th>
-                      <td class:list={['py-2 text-right', row.text === 'Cerrado' && 'text-muted']}>{row.text}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p class="text-muted">Escríbenos para confirmar el horario de atención.</p>
-            )
-          }
+          <p
+            data-open-status
+            hidden
+            class="mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold"
+          ></p>
+          {schedule.length > 0 ? (
+            <table class="w-full max-w-sm text-sm">
+              <caption class="sr-only">Horario de atención</caption>
+              <tbody>
+                {schedule.map((row) => (
+                  <tr class="border-b border-plum-100 last:border-0">
+                    <th scope="row" class="py-2 text-left font-medium">
+                      {row.label}
+                    </th>
+                    <td class:list={['py-2 text-right', row.text === 'Cerrado' && 'text-muted']}>
+                      {row.text}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p class="text-muted">Escríbenos para confirmar el horario de atención.</p>
+          )}
         </div>
       </div>
 

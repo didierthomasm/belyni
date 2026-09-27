@@ -27,7 +27,9 @@ describe('whatsappUrl', () => {
 
 describe('bookingMessage', () => {
   it('returns the base message when there is no service', () => {
-    expect(bookingMessage('  Hola, quiero agendar una cita. ')).toBe('Hola, quiero agendar una cita.');
+    expect(bookingMessage('  Hola, quiero agendar una cita. ')).toBe(
+      'Hola, quiero agendar una cita.',
+    );
   });
   it('appends the service name', () => {
     expect(bookingMessage('Hola, quiero agendar una cita.', 'Corte Dama')).toBe(

@@ -1,11 +1,19 @@
 import { describe, expect, it } from 'vitest';
 import { groupServices } from './services';
 
-const s = (name: string, category: 'cabello' | 'unas' | 'masajes', order = 100) => ({ name, category, order });
+const s = (name: string, category: 'cabello' | 'unas' | 'masajes', order = 100) => ({
+  name,
+  category,
+  order,
+});
 
 describe('groupServices', () => {
   it('groups in CATEGORIES order and drops empty categories', () => {
-    const groups = groupServices([s('Masaje', 'masajes'), s('Manicura', 'unas'), s('Corte', 'cabello')]);
+    const groups = groupServices([
+      s('Masaje', 'masajes'),
+      s('Manicura', 'unas'),
+      s('Corte', 'cabello'),
+    ]);
     expect(groups.map((g) => g.id)).toEqual(['cabello', 'unas', 'masajes']);
     expect(groups[1].label).toBe('Uñas');
   });

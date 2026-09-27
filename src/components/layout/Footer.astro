@@ -21,30 +21,42 @@ const year = new Date().getFullYear();
       <p class="mt-2">{site.tagline}</p>
     </div>
     <address class="not-italic">
-      <p>{site.address.street}, {site.address.neighborhood}</p>
-      <p>{site.address.city}, {site.address.region}</p>
-      <p class="mt-2"><a href={telHref(site.phone)} class="hover:text-white">{formatMxPhone(site.phone)}</a></p>
-      {site.email && <p><a href={`mailto:${site.email}`} class="hover:text-white">{site.email}</a></p>}
+      <p>
+        {site.address.street}, {site.address.neighborhood}
+      </p>
+      <p>
+        {site.address.city}, {site.address.region}
+      </p>
+      <p class="mt-2">
+        <a href={telHref(site.phone)} class="hover:text-white">
+          {formatMxPhone(site.phone)}
+        </a>
+      </p>
+      {site.email && (
+        <p>
+          <a href={`mailto:${site.email}`} class="hover:text-white">
+            {site.email}
+          </a>
+        </p>
+      )}
     </address>
-    {
-      socials.length > 0 && (
-        <ul class="flex gap-3 sm:justify-end">
-          {socials.map((s) => (
-            <li>
-              <a
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={s.label}
-                class="grid size-10 place-items-center rounded-full bg-plum-700 hover:bg-plum-500"
-              >
-                <Icon name={s.icon} class="size-5" aria-hidden="true" />
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+    {socials.length > 0 && (
+      <ul class="flex gap-3 sm:justify-end">
+        {socials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              class="grid size-10 place-items-center rounded-full bg-plum-700 hover:bg-plum-500"
+            >
+              <Icon name={s.icon} class="size-5" aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
   </div>
   <p class="mx-auto mt-10 max-w-6xl border-t border-plum-700 pt-6 text-xs text-plum-200">
     © {year} {site.name}. Todos los derechos reservados.

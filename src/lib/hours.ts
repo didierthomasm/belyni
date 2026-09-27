@@ -49,7 +49,8 @@ function localDayAndMinutes(date: Date, timeZone: string): { day: DayId; minutes
     minute: '2-digit',
     hourCycle: 'h23',
   }).formatToParts(date);
-  const get = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? '';
+  const get = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((p) => p.type === type)?.value ?? '';
   return {
     day: WEEKDAY_TO_DAY[get('weekday')],
     minutes: Number(get('hour')) * 60 + Number(get('minute')),
@@ -72,9 +73,7 @@ export function weeklySchedule(hours: readonly OpeningHours[]): HoursRow[] {
     const shifts = hours
       .filter((h) => h.day === id)
       .toSorted((a, b) => toMinutes(a.open) - toMinutes(b.open));
-    const text = shifts.length
-      ? shifts.map((s) => `${s.open} – ${s.close}`).join(', ')
-      : 'Cerrado';
+    const text = shifts.length ? shifts.map((s) => `${s.open} – ${s.close}`).join(', ') : 'Cerrado';
     return { day: id, label, text };
   });
 }

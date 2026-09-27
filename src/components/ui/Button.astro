@@ -25,5 +25,7 @@ const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' 
     className,
   ]}
   {...externalAttrs}
-  {...rest}><slot /></a
+  {...rest}
 >
+  <slot />
+</a>

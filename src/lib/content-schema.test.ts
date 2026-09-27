@@ -59,6 +59,8 @@ describe('timeSchema / openingHoursSchema', () => {
     expect(result.error?.issues[0].message).toMatch(/cierre/);
   });
   it('rejects unknown days', () => {
-    expect(openingHoursSchema.safeParse({ day: 'monday', open: '10:00', close: '19:00' }).success).toBe(false);
+    expect(
+      openingHoursSchema.safeParse({ day: 'monday', open: '10:00', close: '19:00' }).success,
+    ).toBe(false);
   });
 });

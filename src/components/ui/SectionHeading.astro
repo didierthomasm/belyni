@@ -9,7 +9,11 @@ const { id, title, eyebrow, intro } = Astro.props;
 ---
 
 <header class="mx-auto mb-10 max-w-2xl text-center">
-  {eyebrow && <p class="mb-2 text-xs font-semibold tracking-[0.2em] text-plum-600 uppercase">{eyebrow}</p>}
-  <h2 id={id} class="text-4xl font-semibold text-plum-900 sm:text-5xl">{title}</h2>
+  {eyebrow && (
+    <p class="mb-2 text-xs font-semibold tracking-[0.2em] text-plum-600 uppercase">{eyebrow}</p>
+  )}
+  <h2 id={id} class="text-4xl font-semibold text-plum-900 sm:text-5xl">
+    {title}
+  </h2>
   {intro && <p class="mt-4 text-muted">{intro}</p>}
 </header>

@@ -19,67 +19,78 @@ const groups = groupServices(services);
 ---
 
 <Section id="servicios" class="bg-white">
-  <SectionHeading id="servicios-titulo" eyebrow="Lo que hacemos" title="Nuestros servicios" intro={note} />
+  <SectionHeading
+    id="servicios-titulo"
+    eyebrow="Lo que hacemos"
+    title="Nuestros servicios"
+    intro={note}
+  />
 
-  {
-    groups.length > 1 && (
-      <nav aria-label="Categorías de servicios" class="mb-10 flex gap-2 overflow-x-auto pb-2 md:justify-center">
-        {groups.map((g) => (
-          <a
-            href={`#servicios-${g.id}`}
-            class="shrink-0 rounded-full border border-plum-200 px-4 py-2 text-sm font-medium text-plum-700 hover:bg-plum-50"
-          >
-            {g.label}
-          </a>
-        ))}
-      </nav>
-    )
-  }
+  {groups.length > 1 && (
+    <nav
+      aria-label="Categorías de servicios"
+      class="mb-10 flex gap-2 overflow-x-auto pb-2 md:justify-center"
+    >
+      {groups.map((g) => (
+        <a
+          href={`#servicios-${g.id}`}
+          class="shrink-0 rounded-full border border-plum-200 px-4 py-2 text-sm font-medium text-plum-700 hover:bg-plum-50"
+        >
+          {g.label}
+        </a>
+      ))}
+    </nav>
+  )}
 
   <div class="space-y-14">
-    {
-      groups.map((group) => (
-        <div id={`servicios-${group.id}`} class="scroll-mt-24">
-          <h3 class="mb-6 text-3xl font-semibold text-plum-900">{group.label}</h3>
-          <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {group.items.map((service) => (
-              <li class="flex flex-col overflow-hidden rounded-3xl border border-plum-100 bg-blush-50" data-service>
-                {service.image && (
-                  <Image
-                    src={service.image}
-                    alt={service.imageAlt ?? service.name}
-                    widths={[400, 800]}
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    class="aspect-[4/3] w-full object-cover"
-                  />
-                )}
-                <div class="flex flex-1 flex-col gap-3 p-6">
-                  <h4 class="font-display text-2xl font-semibold break-words text-plum-900">{service.name}</h4>
-                  <p class="text-muted">{service.description}</p>
-                  <p class="mt-auto flex flex-wrap items-baseline gap-x-2 text-sm">
-                    <span class="text-lg font-semibold text-plum-700">
-                      {service.priceFrom !== undefined ? `Desde ${formatPrice(service.priceFrom)}` : 'Precio a consultar'}
-                    </span>
-                    {service.durationMin !== undefined && (
-                      <span class="text-muted">· {formatDuration(service.durationMin)}</span>
-                    )}
-                  </p>
-                  <a
-                    href={whatsappUrl(whatsapp, bookingMessage(whatsappMessage, service.name))}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-umami-event="whatsapp-service"
-                    class="inline-flex items-center gap-2 self-start text-sm font-semibold text-plum-600 hover:text-plum-700"
-                  >
-                    <Icon name="simple-icons:whatsapp" class="size-4" aria-hidden="true" />
-                    Agendar<span class="sr-only"> {service.name}</span>
-                  </a>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))
-    }
+    {groups.map((group) => (
+      <div id={`servicios-${group.id}`} class="scroll-mt-24">
+        <h3 class="mb-6 text-3xl font-semibold text-plum-900">{group.label}</h3>
+        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {group.items.map((service) => (
+            <li
+              class="flex flex-col overflow-hidden rounded-3xl border border-plum-100 bg-blush-50"
+              data-service
+            >
+              {service.image && (
+                <Image
+                  src={service.image}
+                  alt={service.imageAlt ?? service.name}
+                  widths={[400, 800]}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  class="aspect-[4/3] w-full object-cover"
+                />
+              )}
+              <div class="flex flex-1 flex-col gap-3 p-6">
+                <h4 class="font-display text-2xl font-semibold break-words text-plum-900">
+                  {service.name}
+                </h4>
+                <p class="text-muted">{service.description}</p>
+                <p class="mt-auto flex flex-wrap items-baseline gap-x-2 text-sm">
+                  <span class="text-lg font-semibold text-plum-700">
+                    {service.priceFrom !== undefined
+                      ? `Desde ${formatPrice(service.priceFrom)}`
+                      : 'Precio a consultar'}
+                  </span>
+                  {service.durationMin !== undefined && (
+                    <span class="text-muted">· {formatDuration(service.durationMin)}</span>
+                  )}
+                </p>
+                <a
+                  href={whatsappUrl(whatsapp, bookingMessage(whatsappMessage, service.name))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-umami-event="whatsapp-service"
+                  class="inline-flex items-center gap-2 self-start text-sm font-semibold text-plum-600 hover:text-plum-700"
+                >
+                  <Icon name="simple-icons:whatsapp" class="size-4" aria-hidden="true" />
+                  Agendar<span class="sr-only"> {service.name}</span>
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </div>
 </Section>

@@ -71,10 +71,12 @@ docs/guia-del-propietario.md             # Task 10
 ### Task 1: Keystatic admin (local mode) on the existing content
 
 **Files:**
+
 - Create: `keystatic.config.ts`, `tests/e2e/cms.spec.ts`
 - Modify: `astro.config.ts`, `package.json`, `CLAUDE.md`
 
 **Interfaces:**
+
 - Consumes: `CATEGORIES` (`src/lib/categories.ts`), `DAYS` (`src/lib/hours.ts`), `HIGHLIGHT_ICONS` (`src/lib/icons.ts`), content layout from Part 1 Task 7
 - Produces: `keystatic.config.ts` default export (a Keystatic `config`) with singleton `site` and collections `services`, `team`, `gallery`, `brands`, `reviews`; admin at `/keystatic` in `npm run dev`
 
@@ -126,7 +128,11 @@ const image = (label: string, folder: string, isRequired = true) =>
     validation: { isRequired },
   });
 
-const text = (label: string, max: number, opts: { multiline?: boolean; description?: string; min?: number } = {}) =>
+const text = (
+  label: string,
+  max: number,
+  opts: { multiline?: boolean; description?: string; min?: number } = {},
+) =>
   fields.text({
     label,
     description: opts.description,
@@ -159,7 +165,9 @@ export default config({
         heroImageAlt: text('Descripción de la foto principal', 140, {
           description: 'Qué se ve en la foto (para personas con discapacidad visual y para Google)',
         }),
-        phone: text('Teléfono para llamadas', 25, { description: '10 dígitos, por ejemplo 229 225 8060' }),
+        phone: text('Teléfono para llamadas', 25, {
+          description: '10 dígitos, por ejemplo 229 225 8060',
+        }),
         whatsapp: text('WhatsApp', 25, { description: '10 dígitos, por ejemplo 229 225 8060' }),
         whatsappMessage: text('Mensaje inicial de WhatsApp', 200, { multiline: true }),
         email: fields.text({ label: 'Correo (opcional)' }),
@@ -180,8 +188,14 @@ export default config({
           },
           { label: 'Coordenadas (para Google)' },
         ),
-        mapsUrl: fields.url({ label: 'Enlace "Cómo llegar" (Google Maps)', validation: { isRequired: true } }),
-        mapsEmbedUrl: fields.url({ label: 'Enlace del mapa incrustado', validation: { isRequired: true } }),
+        mapsUrl: fields.url({
+          label: 'Enlace "Cómo llegar" (Google Maps)',
+          validation: { isRequired: true },
+        }),
+        mapsEmbedUrl: fields.url({
+          label: 'Enlace del mapa incrustado',
+          validation: { isRequired: true },
+        }),
         instagram: fields.url({ label: 'Instagram (opcional)' }),
         facebook: fields.url({ label: 'Facebook (opcional)' }),
         hours: fields.array(
@@ -196,8 +210,10 @@ export default config({
           }),
           {
             label: 'Horario',
-            description: 'Un renglón por turno. Si cierran a mediodía, agrega dos renglones para ese día.',
-            itemLabel: (p) => `${p.fields.day.value} ${p.fields.open.value}–${p.fields.close.value}`,
+            description:
+              'Un renglón por turno. Si cierran a mediodía, agrega dos renglones para ese día.',
+            itemLabel: (p) =>
+              `${p.fields.day.value} ${p.fields.open.value}–${p.fields.close.value}`,
           },
         ),
         highlights: fields.array(
@@ -216,7 +232,10 @@ export default config({
             validation: { length: { max: 4 } },
           },
         ),
-        servicesNote: fields.text({ label: 'Nota bajo "Nuestros servicios" (opcional)', multiline: true }),
+        servicesNote: fields.text({
+          label: 'Nota bajo "Nuestros servicios" (opcional)',
+          multiline: true,
+        }),
       },
     }),
   },
@@ -228,15 +247,23 @@ export default config({
       format: { data: 'yaml' },
       columns: ['category', 'priceFrom'],
       schema: {
-        name: fields.slug({ name: { label: 'Nombre', validation: { length: { min: 1, max: 60 } } } }),
+        name: fields.slug({
+          name: { label: 'Nombre', validation: { length: { min: 1, max: 60 } } },
+        }),
         category: fields.select({
           label: 'Categoría',
           options: CATEGORIES.map((c) => ({ label: c.label, value: c.id })),
           defaultValue: 'cabello',
         }),
         description: text('Descripción', 160, { multiline: true }),
-        priceFrom: fields.integer({ label: 'Precio desde (MXN, opcional)', validation: { min: 0 } }),
-        durationMin: fields.integer({ label: 'Duración en minutos (opcional)', validation: { min: 0 } }),
+        priceFrom: fields.integer({
+          label: 'Precio desde (MXN, opcional)',
+          validation: { min: 0 },
+        }),
+        durationMin: fields.integer({
+          label: 'Duración en minutos (opcional)',
+          validation: { min: 0 },
+        }),
         image: image('Foto (opcional)', 'services', false),
         imageAlt: fields.text({ label: 'Descripción de la foto' }),
         order,
@@ -248,7 +275,9 @@ export default config({
       slugField: 'name',
       format: { data: 'yaml' },
       schema: {
-        name: fields.slug({ name: { label: 'Nombre', validation: { length: { min: 1, max: 60 } } } }),
+        name: fields.slug({
+          name: { label: 'Nombre', validation: { length: { min: 1, max: 60 } } },
+        }),
         role: text('Puesto', 60),
         photo: image('Foto', 'team'),
         photoAlt: fields.text({ label: 'Descripción de la foto' }),
@@ -261,7 +290,9 @@ export default config({
       slugField: 'alt',
       format: { data: 'yaml' },
       schema: {
-        alt: fields.slug({ name: { label: 'Descripción de la foto', validation: { length: { min: 1, max: 140 } } } }),
+        alt: fields.slug({
+          name: { label: 'Descripción de la foto', validation: { length: { min: 1, max: 140 } } },
+        }),
         image: image('Foto', 'gallery'),
         order,
       },
@@ -272,7 +303,9 @@ export default config({
       slugField: 'name',
       format: { data: 'yaml' },
       schema: {
-        name: fields.slug({ name: { label: 'Marca', validation: { length: { min: 1, max: 40 } } } }),
+        name: fields.slug({
+          name: { label: 'Marca', validation: { length: { min: 1, max: 40 } } },
+        }),
         logo: image('Logo', 'brands'),
         url: fields.url({ label: 'Sitio web (opcional)' }),
         order,
@@ -284,9 +317,15 @@ export default config({
       slugField: 'author',
       format: { data: 'yaml' },
       schema: {
-        author: fields.slug({ name: { label: 'Nombre de la clienta', validation: { length: { min: 1, max: 60 } } } }),
+        author: fields.slug({
+          name: { label: 'Nombre de la clienta', validation: { length: { min: 1, max: 60 } } },
+        }),
         text: text('Opinión', 300, { multiline: true }),
-        rating: fields.integer({ label: 'Estrellas (1 a 5)', defaultValue: 5, validation: { min: 1, max: 5, isRequired: true } }),
+        rating: fields.integer({
+          label: 'Estrellas (1 a 5)',
+          defaultValue: 5,
+          validation: { min: 1, max: 5, isRequired: true },
+        }),
         order,
       },
     }),
@@ -315,6 +354,7 @@ Expected: all green (the adapter doesn't change the static output in `dist/`).
 - [ ] **Step 5: E2E guard that the admin never reaches the static output**
 
 `tests/e2e/cms.spec.ts`:
+
 ```ts
 import { test, expect } from '@playwright/test';
 import { existsSync } from 'node:fs';
@@ -348,10 +388,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 2: "Abierto ahora" badge
 
 **Files:**
+
 - Modify: `src/components/sections/Location.astro`
 - Create: `tests/e2e/conversion.spec.ts`
 
 **Interfaces:**
+
 - Consumes: `isOpenAt`, `OpeningHours`, `DAY_IDS` (Part 1 Task 6); the `<p data-open-status hidden>` placeholder from Part 1 Task 12
 - Produces: badge text `Abierto ahora` / `Cerrado ahora`; hidden when there are no hours
 
@@ -389,7 +431,9 @@ test.describe('open-now badge', () => {
   test('shows Cerrado ahora at closing time', async ({ page }) => {
     test.skip(hours.length === 0, 'no hours yet');
     const first = hours[0];
-    const sameDayLater = hours.some((h: { day: string; open: string }) => h.day === first.day && h.open >= first.close);
+    const sameDayLater = hours.some(
+      (h: { day: string; open: string }) => h.day === first.day && h.open >= first.close,
+    );
     test.skip(sameDayLater, 'split shift starts right at close');
     await page.clock.setFixedTime(utcFor(first.day, first.close));
     await page.goto('/');
@@ -400,26 +444,29 @@ test.describe('open-now badge', () => {
 
 Run: `npm run test:e2e -- conversion`
 Expected: with seed data (no hours) the "hidden" test passes and the others skip. To see the failing path, temporarily add to `site/index.yaml`:
+
 ```yaml
 hours:
   - { day: lunes, open: '10:00', close: '19:00' }
 ```
+
 Expected: "shows Abierto ahora" FAILS (badge stays hidden). Keep this temporary edit until Step 3.
 
 - [ ] **Step 2: Implement in `Location.astro`**
 
 Replace the placeholder `<p data-open-status …>` with:
+
 ```astro
 <p
   data-open-status
   data-hours={JSON.stringify(site.hours)}
   hidden
   class="mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold"
->
-</p>
+></p>
 ```
 
 Add this second `<script>` at the end of the file:
+
 ```astro
 <script>
   import { isOpenAt, type OpeningHours } from '../../lib/hours';
@@ -431,7 +478,9 @@ Add this second `<script>` at the end of the file:
   if (badge && hours.length > 0) {
     const open = isOpenAt(hours, new Date());
     badge.textContent = open ? 'Abierto ahora' : 'Cerrado ahora';
-    badge.classList.add(...(open ? ['bg-green-100', 'text-green-800'] : ['bg-plum-100', 'text-plum-700']));
+    badge.classList.add(
+      ...(open ? ['bg-green-100', 'text-green-800'] : ['bg-plum-100', 'text-plum-700']),
+    );
     badge.hidden = false;
   }
 </script>
@@ -459,10 +508,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 3: Promotions with automatic expiry
 
 **Files:**
+
 - Modify: `src/lib/content-schema.ts`, `src/lib/content-schema.test.ts`, `src/content.config.ts`, `keystatic.config.ts`, `src/pages/index.astro`, `tests/e2e/conversion.spec.ts`
 - Create: `src/lib/promotions.ts`, `src/lib/promotions.test.ts`, `src/components/sections/PromoBanner.astro`, `src/content/promotions/.gitkeep`
 
 **Interfaces:**
+
 - Consumes: `SALON_TIME_ZONE` (Part 1 Task 6), `whatsappUrl` (Part 1 Task 4)
 - Produces:
   - `dateOnlySchema` (accepts `'YYYY-MM-DD'` or a YAML-parsed `Date`, outputs `'YYYY-MM-DD'`)
@@ -575,12 +626,20 @@ export function localDate(date: Date, timeZone: string = SALON_TIME_ZONE): strin
 }
 
 // Inclusivo en ambos extremos; las cadenas AAAA-MM-DD se comparan correctamente como texto
-export function isPromotionActive(p: PromotionWindow, now: Date, timeZone: string = SALON_TIME_ZONE): boolean {
+export function isPromotionActive(
+  p: PromotionWindow,
+  now: Date,
+  timeZone: string = SALON_TIME_ZONE,
+): boolean {
   const today = localDate(now, timeZone);
   return p.startDate <= today && today <= p.endDate;
 }
 
-export function isPromotionExpired(p: PromotionWindow, now: Date, timeZone: string = SALON_TIME_ZONE): boolean {
+export function isPromotionExpired(
+  p: PromotionWindow,
+  now: Date,
+  timeZone: string = SALON_TIME_ZONE,
+): boolean {
   return localDate(now, timeZone) > p.endDate;
 }
 ```
@@ -591,6 +650,7 @@ Expected: PASS.
 - [ ] **Step 5: Collection + admin**
 
 In `src/content.config.ts`, add `dateOnlySchema` to the `./lib/content-schema` import and add:
+
 ```ts
 const promotions = defineCollection({
   loader: yamlIn('promotions'),
@@ -616,6 +676,7 @@ touch src/content/promotions/.gitkeep
 ```
 
 In `keystatic.config.ts`, add to `collections`:
+
 ```ts
     promotions: collection({
       label: 'Promociones',
@@ -648,28 +709,26 @@ const { promos, whatsapp } = Astro.props;
 ---
 
 <div class="bg-plum-900 text-sm text-white">
-  {
-    promos.map((promo) => (
-      <p
-        data-promo
-        data-start={promo.startDate}
-        data-end={promo.endDate}
-        hidden
-        class="mx-auto max-w-6xl px-4 py-2 text-center"
+  {promos.map((promo) => (
+    <p
+      data-promo
+      data-start={promo.startDate}
+      data-end={promo.endDate}
+      hidden
+      class="mx-auto max-w-6xl px-4 py-2 text-center"
+    >
+      <strong class="font-semibold">{promo.title}:</strong> {promo.text}{' '}
+      <a
+        href={whatsappUrl(whatsapp, `Hola, me interesa la promoción: ${promo.title}`)}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-umami-event="whatsapp-promo"
+        class="font-semibold underline underline-offset-2"
       >
-        <strong class="font-semibold">{promo.title}:</strong> {promo.text}{' '}
-        <a
-          href={whatsappUrl(whatsapp, `Hola, me interesa la promoción: ${promo.title}`)}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-umami-event="whatsapp-promo"
-          class="font-semibold underline underline-offset-2"
-        >
-          Aprovéchala
-        </a>
-      </p>
-    ))
-  }
+        Aprovéchala
+      </a>
+    </p>
+  ))}
 </div>
 
 <script>
@@ -687,12 +746,14 @@ const { promos, whatsapp } = Astro.props;
 - [ ] **Step 7: Wire into `src/pages/index.astro`**
 
 Imports:
+
 ```astro
-import PromoBanner from '../components/sections/PromoBanner.astro';
-import { isPromotionExpired } from '../lib/promotions';
+import PromoBanner from '../components/sections/PromoBanner.astro'; import {isPromotionExpired} from
+'../lib/promotions';
 ```
 
 Frontmatter (after the other collections):
+
 ```ts
 // Las vencidas se excluyen en el build; las futuras se muestran solas al llegar su fecha
 const promotions = (await getCollection('promotions'))
@@ -702,8 +763,9 @@ const promotions = (await getCollection('promotions'))
 ```
 
 Markup, directly before `<Header …/>`:
+
 ```astro
-  {promotions.length > 0 && <PromoBanner promos={promotions} whatsapp={site.whatsapp} />}
+{promotions.length > 0 && <PromoBanner promos={promotions} whatsapp={site.whatsapp} />}
 ```
 
 - [ ] **Step 8: E2E with a temporary promo** (append to `tests/e2e/conversion.spec.ts`)
@@ -728,6 +790,7 @@ test('promotion banner respects dates in salon time', async ({ page }) => {
 ```
 
 Create a temporary promo:
+
 ```bash
 cat > src/content/promotions/prueba.yaml <<'EOF'
 title: Prueba
@@ -760,10 +823,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 2. "¿Quieres reservas en línea (Fresha, AgendaPro, Booksy) o seguimos solo con WhatsApp?" If **WhatsApp only**, nothing to do: Part 1 already gives every service its own pre-filled WhatsApp link. If they pick a tool, record the choice in `docs/astro-migration-plan.md` and write a separate follow-up plan: it needs an optional `bookingUrl` in the `site` schema and in Keystatic, plus a CTA swap in Header/Hero/Services, and the tool's account must be set up first. Don't reintroduce Calendly.
 
 **Files:**
+
 - Create: `src/env.d.ts`, `src/components/sections/ContactForm.astro`, `src/pages/gracias.astro`, `.env.example`
 - Modify: `src/components/sections/Contact.astro`, `tests/e2e/conversion.spec.ts`
 
 **Interfaces:**
+
 - Consumes: `BaseLayout` (Part 1), env `PUBLIC_WEB3FORMS_KEY`
 - Produces: `<ContactForm accessKey: string siteName: string>`; page `/gracias/` (noindex)
 
@@ -808,6 +873,7 @@ interface ImportMeta {
 ```
 
 `.env.example`:
+
 ```dotenv
 # Formulario de contacto (Web3Forms). Vacío = sin formulario
 PUBLIC_WEB3FORMS_KEY=
@@ -830,13 +896,24 @@ const redirectUrl = new URL('/gracias/', Astro.site).href;
 const FIELD = 'w-full rounded-2xl border border-plum-200 bg-white px-4 py-3 focus:border-plum-500';
 ---
 
-<form action="https://api.web3forms.com/submit" method="POST" class="mx-auto mt-10 grid max-w-3xl gap-4 rounded-3xl bg-white p-6 shadow-sm sm:grid-cols-2">
+<form
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  class="mx-auto mt-10 grid max-w-3xl gap-4 rounded-3xl bg-white p-6 shadow-sm sm:grid-cols-2"
+>
   <input type="hidden" name="access_key" value={accessKey} />
   <input type="hidden" name="subject" value={`Nuevo mensaje desde el sitio de ${siteName}`} />
   <input type="hidden" name="from_name" value={siteName} />
   <input type="hidden" name="redirect" value={redirectUrl} />
   <!-- Trampa para bots: las personas no la ven -->
-  <input type="checkbox" name="botcheck" class="hidden" style="display: none" tabindex="-1" autocomplete="off" />
+  <input
+    type="checkbox"
+    name="botcheck"
+    class="hidden"
+    style="display: none"
+    tabindex="-1"
+    autocomplete="off"
+  />
 
   <label class="grid gap-1 text-sm font-medium">
     Nombre
@@ -844,13 +921,25 @@ const FIELD = 'w-full rounded-2xl border border-plum-200 bg-white px-4 py-3 focu
   </label>
   <label class="grid gap-1 text-sm font-medium">
     Teléfono
-    <input name="phone" type="tel" required maxlength="25" autocomplete="tel" inputmode="tel" class={FIELD} />
+    <input
+      name="phone"
+      type="tel"
+      required
+      maxlength="25"
+      autocomplete="tel"
+      inputmode="tel"
+      class={FIELD}
+    />
   </label>
   <label class="grid gap-1 text-sm font-medium sm:col-span-2">
     Mensaje
     <textarea name="message" required maxlength="1000" rows="4" class={FIELD}></textarea>
   </label>
-  <button type="submit" class="rounded-full bg-plum-500 px-6 py-3 text-sm font-semibold text-white hover:bg-plum-600 sm:col-span-2 sm:justify-self-start" data-umami-event="contact-form">
+  <button
+    type="submit"
+    class="rounded-full bg-plum-500 px-6 py-3 text-sm font-semibold text-white hover:bg-plum-600 sm:col-span-2 sm:justify-self-start"
+    data-umami-event="contact-form"
+  >
     Enviar mensaje
   </button>
 </form>
@@ -859,14 +948,16 @@ const FIELD = 'w-full rounded-2xl border border-plum-200 bg-white px-4 py-3 focu
 - [ ] **Step 4: Render it in `Contact.astro`** (after the `</ul>`)
 
 Frontmatter addition:
+
 ```ts
 import ContactForm from './ContactForm.astro';
 const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 ```
 
 Markup:
+
 ```astro
-  {formKey && <ContactForm accessKey={formKey} siteName={site.name} />}
+{formKey && <ContactForm accessKey={formKey} siteName={site.name} />}
 ```
 
 - [ ] **Step 5: `src/pages/gracias.astro`**
@@ -885,7 +976,9 @@ const site = await getSite();
     <div>
       <h1 class="text-5xl font-semibold text-plum-900">¡Gracias por escribirnos!</h1>
       <p class="mt-4 text-muted">Te responderemos lo antes posible en horario de atención.</p>
-      <Button href="/" class="mt-8">Volver al inicio</Button>
+      <Button href="/" class="mt-8">
+        Volver al inicio
+      </Button>
     </div>
   </main>
 </BaseLayout>
@@ -912,10 +1005,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 5: SEO: meta, Open Graph, JSON-LD, sitemap, robots
 
 **Files:**
+
 - Create: `src/lib/seo.ts`, `src/lib/seo.test.ts`, `src/pages/robots.txt.ts`, `scripts/make-og-image.mjs`, `public/og.jpg`, `tests/e2e/seo.spec.ts`
 - Modify: `src/layouts/BaseLayout.astro`, `src/pages/index.astro`, `astro.config.ts`, `package.json`
 
 **Interfaces:**
+
 - Consumes: `normalizeMxPhone` (Part 1), `OpeningHours`, `DayId`
 - Produces:
   - `interface LocalBusinessInput { name; intro; phone; email?; address: {street; neighborhood; city; region; postalCode?}; geo: {lat; lng}; hours: OpeningHours[]; instagram?; facebook? }` (`SiteData` satisfies it)
@@ -933,7 +1028,12 @@ const SITE: LocalBusinessInput = {
   name: 'Belyni',
   intro: 'Salón de belleza en Veracruz.',
   phone: '229 225 8060',
-  address: { street: 'Juan Enríquez 431', neighborhood: 'Ricardo Flores Magón', city: 'Veracruz', region: 'Veracruz' },
+  address: {
+    street: 'Juan Enríquez 431',
+    neighborhood: 'Ricardo Flores Magón',
+    city: 'Veracruz',
+    region: 'Veracruz',
+  },
   geo: { lat: 19.18, lng: -96.12 },
   hours: [
     { day: 'lunes', open: '10:00', close: '19:00' },
@@ -960,15 +1060,29 @@ describe('buildLocalBusinessJsonLd', () => {
 
   it('maps opening hours to schema.org days', () => {
     expect(ld.openingHoursSpecification).toEqual([
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: 'https://schema.org/Monday', opens: '10:00', closes: '19:00' },
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: 'https://schema.org/Saturday', opens: '09:00', closes: '14:00' },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: 'https://schema.org/Monday',
+        opens: '10:00',
+        closes: '19:00',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: 'https://schema.org/Saturday',
+        opens: '09:00',
+        closes: '14:00',
+      },
     ]);
   });
 
   it('lists only existing social profiles and omits empty hours/email', () => {
     expect(ld.sameAs).toEqual(['https://www.instagram.com/belynisalon/']);
     expect(ld).not.toHaveProperty('email');
-    const noHours = buildLocalBusinessJsonLd({ ...SITE, hours: [], instagram: undefined }, 'https://belyni.mx/', 'x');
+    const noHours = buildLocalBusinessJsonLd(
+      { ...SITE, hours: [], instagram: undefined },
+      'https://belyni.mx/',
+      'x',
+    );
     expect(noHours).not.toHaveProperty('openingHoursSpecification');
     expect(noHours).not.toHaveProperty('sameAs');
   });
@@ -997,7 +1111,13 @@ export interface LocalBusinessInput {
   intro: string;
   phone: string;
   email?: string;
-  address: { street: string; neighborhood: string; city: string; region: string; postalCode?: string };
+  address: {
+    street: string;
+    neighborhood: string;
+    city: string;
+    region: string;
+    postalCode?: string;
+  };
   geo: { lat: number; lng: number };
   hours: OpeningHours[];
   instagram?: string;
@@ -1069,7 +1189,9 @@ import sharp from 'sharp';
 const WIDTH = 1200;
 const HEIGHT = 630;
 
-const hero = await sharp('src/assets/img/site/hero.png').resize(HEIGHT, HEIGHT, { fit: 'cover' }).toBuffer();
+const hero = await sharp('src/assets/img/site/hero.png')
+  .resize(HEIGHT, HEIGHT, { fit: 'cover' })
+  .toBuffer();
 const logo = await sharp('src/assets/img/logo-name.png').resize({ width: 460 }).toBuffer();
 const { height: logoHeight = 0 } = await sharp(logo).metadata();
 
@@ -1089,6 +1211,7 @@ npm install -D sharp
 npm pkg set scripts.og="node scripts/make-og-image.mjs"
 npm run og
 ```
+
 Expected: `public/og.jpg` exists, 1200×630, < 150 KB. Open it and check the logo sits on the left over blush, with the photo on the right. (If the owner changes the hero photo in the admin, rerun `npm run og`; the owner guide mentions it.)
 
 - [ ] **Step 4: Sitemap + robots**
@@ -1098,6 +1221,7 @@ npm install @astrojs/sitemap@^3.7.4
 ```
 
 `astro.config.ts`: add `import sitemap from '@astrojs/sitemap';` and extend integrations:
+
 ```ts
   integrations: [
     icon({ include: ICON_INCLUDE }),
@@ -1108,6 +1232,7 @@ npm install @astrojs/sitemap@^3.7.4
 ```
 
 `src/pages/robots.txt.ts`:
+
 ```ts
 import type { APIRoute } from 'astro';
 
@@ -1131,7 +1256,10 @@ test('meta, Open Graph and canonical are present', async ({ page }) => {
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /^https:\/\//);
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\.jpg$/);
   await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'es_MX');
-  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+    'content',
+    'summary_large_image',
+  );
 });
 
 test('JSON-LD is valid BeautySalon data', async ({ page }) => {
@@ -1218,8 +1346,9 @@ const imageUrl = new URL(image, Astro.site).href;
     <a
       href="#contenido"
       class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow"
-      >Saltar al contenido</a
     >
+      Saltar al contenido
+    </a>
     <slot />
   </body>
 </html>
@@ -1228,6 +1357,7 @@ const imageUrl = new URL(image, Astro.site).href;
 - [ ] **Step 7: Pass JSON-LD from `src/pages/index.astro`**
 
 Frontmatter:
+
 ```ts
 import { buildLocalBusinessJsonLd } from '../lib/seo';
 
@@ -1236,6 +1366,7 @@ const jsonLd = buildLocalBusinessJsonLd(site, pageUrl, new URL('/og.jpg', Astro.
 ```
 
 Layout tag:
+
 ```astro
 <BaseLayout
   title={`${site.name} | Salón de belleza en ${site.address.city}`}
@@ -1265,9 +1396,11 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 6: Privacy-friendly analytics (Umami, optional)
 
 **Files:**
+
 - Modify: `src/layouts/BaseLayout.astro`, `tests/e2e/seo.spec.ts`
 
 **Interfaces:**
+
 - Consumes: `PUBLIC_UMAMI_WEBSITE_ID`; the `data-umami-event` attributes already placed in Part 1 (header, hero, FAB, services, directions, contact) and Tasks 3–4
 - Produces: Umami script only when the env var is set
 
@@ -1277,7 +1410,9 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 test('analytics script only when configured', async ({ page }) => {
   await page.goto('/');
   const expected = process.env.PUBLIC_UMAMI_WEBSITE_ID ? 1 : 0;
-  await expect(page.locator('script[src="https://cloud.umami.is/script.js"]')).toHaveCount(expected);
+  await expect(page.locator('script[src="https://cloud.umami.is/script.js"]')).toHaveCount(
+    expected,
+  );
 });
 
 test('conversion links are tagged for analytics', async ({ page }) => {
@@ -1294,16 +1429,14 @@ Expected: "analytics script" FAILS.
 - [ ] **Step 2: Add to `<head>` in `BaseLayout.astro`** (just before `<slot name="head" />`)
 
 ```astro
-    {
-      import.meta.env.PUBLIC_UMAMI_WEBSITE_ID && (
-        <script
-          is:inline
-          defer
-          src="https://cloud.umami.is/script.js"
-          data-website-id={import.meta.env.PUBLIC_UMAMI_WEBSITE_ID}
-        />
-      )
-    }
+{import.meta.env.PUBLIC_UMAMI_WEBSITE_ID && (
+  <script
+    is:inline
+    defer
+    src="https://cloud.umami.is/script.js"
+    data-website-id={import.meta.env.PUBLIC_UMAMI_WEBSITE_ID}
+  />
+)}
 ```
 
 - [ ] **Step 3: Run and commit**
@@ -1323,10 +1456,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 7: Production-data gate
 
 **Files:**
+
 - Create: `src/lib/production-gate.ts`, `src/lib/production-gate.test.ts`, `scripts/check-production-data.mjs`, `netlify.toml`
 - Modify: `package.json`
 
 **Interfaces:**
+
 - Produces:
   - `interface ContentFile { path: string; content: string }`
   - `findPendingMarkers(files: readonly ContentFile[]): string[]` → `"path:line: text"`
@@ -1340,16 +1475,21 @@ import { describe, expect, it } from 'vitest';
 import { findPendingMarkers, productionProblems } from './production-gate';
 
 const files = [
-  { path: 'src/content/site/index.yaml', content: 'name: Belyni\nphone: 229 # PENDIENTE: confirmar\n' },
+  {
+    path: 'src/content/site/index.yaml',
+    content: 'name: Belyni\nphone: 229 # PENDIENTE: confirmar\n',
+  },
   { path: 'src/content/services/corte.yaml', content: 'name: Corte\n' },
 ];
 
 describe('findPendingMarkers', () => {
   it('reports file and line of every PENDIENTE (case-insensitive)', () => {
-    expect(findPendingMarkers([...files, { path: 'x.yaml', content: 'a\nb # pendiente' }])).toEqual([
-      'src/content/site/index.yaml:2: phone: 229 # PENDIENTE: confirmar',
-      'x.yaml:2: b # pendiente',
-    ]);
+    expect(findPendingMarkers([...files, { path: 'x.yaml', content: 'a\nb # pendiente' }])).toEqual(
+      [
+        'src/content/site/index.yaml:2: phone: 229 # PENDIENTE: confirmar',
+        'x.yaml:2: b # pendiente',
+      ],
+    );
   });
   it('returns [] when everything is confirmed', () => {
     expect(findPendingMarkers([files[1]])).toEqual([]);
@@ -1367,7 +1507,9 @@ describe('productionProblems', () => {
     expect(productionProblems([files[1]], { hours: [{ day: 'lunes' }] })).toEqual([]);
   });
   it('lists pending markers as problems', () => {
-    expect(productionProblems(files, { hours: [{}] })[0]).toMatch(/^Dato sin confirmar → src\/content\/site/);
+    expect(productionProblems(files, { hours: [{}] })[0]).toMatch(
+      /^Dato sin confirmar → src\/content\/site/,
+    );
   });
 });
 ```
@@ -1431,7 +1573,9 @@ const site = parse(readFileSync(join(contentDir, 'site', 'index.yaml'), 'utf8'))
 const problems = productionProblems(files, site);
 
 if (problems.length > 0) {
-  console.error('❌ El sitio no está listo para producción:\n' + problems.map((p) => `  - ${p}`).join('\n'));
+  console.error(
+    '❌ El sitio no está listo para producción:\n' + problems.map((p) => `  - ${p}`).join('\n'),
+  );
   process.exit(1);
 }
 console.log('✅ Datos de producción confirmados');
@@ -1441,6 +1585,7 @@ console.log('✅ Datos de producción confirmados');
 npm pkg set scripts.check:production="node scripts/check-production-data.mjs"
 npm run check:production
 ```
+
 Expected (with seed data): exit 1, listing every `PENDIENTE` line plus the missing hours.
 
 - [ ] **Step 4: `netlify.toml`** (production runs the gate; deploy previews don't)
@@ -1483,10 +1628,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 8: CI with Lighthouse budgets
 
 **Files:**
+
 - Create: `.github/workflows/ci.yml`, `lighthouserc.json`
 - Modify: `package.json`
 
 **Interfaces:**
+
 - Consumes: `npm run test:coverage`, `npm run test:e2e`, `npm run serve:dist`
 - Produces: required PR check "CI / test"
 
@@ -1498,6 +1645,7 @@ npm pkg set scripts.lhci="lhci autorun"
 ```
 
 `lighthouserc.json`:
+
 ```json
 {
   "ci": {
@@ -1572,6 +1720,7 @@ gh pr create --draft --title "feat: migrate site to Astro + Tailwind with Keysta
 🤖 Generated with [Claude Code](https://claude.com/claude-code)"
 gh pr checks --watch
 ```
+
 Expected: "CI / test" passes. Then in GitHub → Settings → Branches, protect `main` and require "CI / test".
 
 ---
@@ -1579,10 +1728,12 @@ Expected: "CI / test" passes. Then in GitHub → Settings → Branches, protect 
 ### Task 9: Deploy to Netlify, Keystatic GitHub mode, domain, nightly rebuild
 
 **Files:**
+
 - Modify: `keystatic.config.ts`, `.env.example`
 - Create: `.github/workflows/nightly-rebuild.yml`
 
 **Interfaces:**
+
 - Consumes: `netlify.toml` (Task 7), CI (Task 8)
 - Produces: production site, deploy previews per PR, owner-accessible `/keystatic` in production
 
@@ -1598,6 +1749,7 @@ export default config({
 ```
 
 Append to `.env.example`:
+
 ```dotenv
 # Keystatic (modo GitHub, solo en producción). Los genera el asistente de /keystatic
 KEYSTATIC_GITHUB_CLIENT_ID=
@@ -1636,6 +1788,7 @@ Expected: Netlify deploy fails with `Teléfono inválido: usa 10 dígitos…`, t
 Netlify → Build hooks → create "nightly". Save its URL as GitHub secret `NETLIFY_BUILD_HOOK`.
 
 `.github/workflows/nightly-rebuild.yml`:
+
 ```yaml
 name: Nightly rebuild
 
@@ -1677,6 +1830,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 10: Owner guide (Spanish) and handoff
 
 **Files:**
+
 - Create: `docs/guia-del-propietario.md`
 - Modify: `docs/astro-migration-plan.md` (tick Phases 2–7), `CLAUDE.md`
 
@@ -1735,18 +1889,19 @@ Cada vez que guardas, el sitio se actualiza solo en **1 a 2 minutos**.
 
 ## Cuentas que son tuyas
 
-| Servicio | Para qué |
-|---|---|
-| GitHub | Guardar el contenido del sitio |
-| Netlify | Publicar el sitio |
-| Dominio (ej. belyni.mx) | La dirección del sitio |
-| Google Business Profile | Aparecer en Google Maps |
-| Web3Forms / Umami (si aplica) | Formulario y estadísticas |
+| Servicio                      | Para qué                       |
+| ----------------------------- | ------------------------------ |
+| GitHub                        | Guardar el contenido del sitio |
+| Netlify                       | Publicar el sitio              |
+| Dominio (ej. belyni.mx)       | La dirección del sitio         |
+| Google Business Profile       | Aparecer en Google Maps        |
+| Web3Forms / Umami (si aplica) | Formulario y estadísticas      |
 ```
 
 - [ ] **Step 2: Handoff session (30 min, with the owner)**
 
 Checklist to run through together, with the owner driving:
+
 - [ ] Sign in to `/keystatic` from their own phone
 - [ ] Change a price and see it live
 - [ ] Create and delete a test promotion

@@ -13,20 +13,18 @@ const { members } = Astro.props;
 <Section id="equipo" class="bg-white">
   <SectionHeading id="equipo-titulo" eyebrow="Equipo" title="Manos expertas" />
   <ul class="flex flex-wrap justify-center gap-8">
-    {
-      members.map((m) => (
-        <li class="w-full max-w-xs text-center">
-          <Image
-            src={m.photo}
-            alt={m.photoAlt ?? m.name}
-            widths={[320, 640]}
-            sizes="320px"
-            class="aspect-[3/4] w-full rounded-3xl object-cover"
-          />
-          <p class="mt-4 font-display text-2xl font-semibold text-plum-900">{m.name}</p>
-          <p class="text-muted">{m.role}</p>
-        </li>
-      ))
-    }
+    {members.map((m) => (
+      <li class="w-full max-w-xs text-center">
+        <Image
+          src={m.photo}
+          alt={m.photoAlt ?? m.name}
+          widths={[320, 640]}
+          sizes="320px"
+          class="aspect-[3/4] w-full rounded-3xl object-cover"
+        />
+        <p class="mt-4 font-display text-2xl font-semibold text-plum-900">{m.name}</p>
+        <p class="text-muted">{m.role}</p>
+      </li>
+    ))}
   </ul>
 </Section>

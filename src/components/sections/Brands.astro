@@ -8,24 +8,23 @@ interface Props {
   items: CollectionEntry<'brands'>['data'][];
 }
 const { items } = Astro.props;
-const LOGO_CLASS = 'h-14 w-auto opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0';
+const LOGO_CLASS =
+  'h-14 w-auto opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0';
 ---
 
 <Section id="marcas" class="bg-white">
   <SectionHeading id="marcas-titulo" eyebrow="Marcas" title="Trabajamos con" />
   <ul class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-    {
-      items.map((brand) => (
-        <li>
-          {brand.url ? (
-            <a href={brand.url} target="_blank" rel="noopener noreferrer">
-              <Image src={brand.logo} alt={brand.name} height={56} class={LOGO_CLASS} />
-            </a>
-          ) : (
+    {items.map((brand) => (
+      <li>
+        {brand.url ? (
+          <a href={brand.url} target="_blank" rel="noopener noreferrer">
             <Image src={brand.logo} alt={brand.name} height={56} class={LOGO_CLASS} />
-          )}
-        </li>
-      ))
-    }
+          </a>
+        ) : (
+          <Image src={brand.logo} alt={brand.name} height={56} class={LOGO_CLASS} />
+        )}
+      </li>
+    ))}
   </ul>
 </Section>

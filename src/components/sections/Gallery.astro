@@ -13,18 +13,16 @@ const { items } = Astro.props;
 <Section id="galeria">
   <SectionHeading id="galeria-titulo" eyebrow="Galería" title="Nuestro trabajo" />
   <ul class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-    {
-      items.map((item) => (
-        <li>
-          <Image
-            src={item.image}
-            alt={item.alt}
-            widths={[300, 600]}
-            sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-            class="aspect-square w-full rounded-2xl object-cover"
-          />
-        </li>
-      ))
-    }
+    {items.map((item) => (
+      <li>
+        <Image
+          src={item.image}
+          alt={item.alt}
+          widths={[300, 600]}
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+          class="aspect-square w-full rounded-2xl object-cover"
+        />
+      </li>
+    ))}
   </ul>
 </Section>

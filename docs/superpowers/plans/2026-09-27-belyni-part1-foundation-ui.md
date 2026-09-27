@@ -105,12 +105,14 @@ legacy/                            # Task 1 (old site, deleted in Task 13)
 ### Task 1: Scaffold Astro + Tailwind, move the old site aside
 
 **Files:**
+
 - Create: `.gitignore`, `.prettierrc`, `astro.config.ts`, `tsconfig.json`, `src/pages/index.astro`, `src/styles/global.css` (stub), `public/favicon.png`
 - Replace: `package.json`
 - Move: `index.html`, `script.js`, `resources/` → `legacy/`; selected images → `src/assets/img/`
 - Delete: `package-lock.json`, `node_modules/` (both untracked)
 
 **Interfaces:**
+
 - Produces: `npm run dev|build|check`; image paths under `src/assets/img/` used by Tasks 7 and 9.
 
 - [ ] **Step 1: Create the branch**
@@ -186,6 +188,7 @@ npm install -D @astrojs/check typescript prettier prettier-plugin-astro prettier
 - [ ] **Step 6: Add `astro.config.ts`, `tsconfig.json`, `.prettierrc`**
 
 `astro.config.ts`:
+
 ```ts
 // @ts-check
 import { defineConfig } from 'astro/config';
@@ -201,6 +204,7 @@ export default defineConfig({
 ```
 
 `tsconfig.json`:
+
 ```json
 {
   "extends": "astro/tsconfigs/strict",
@@ -210,6 +214,7 @@ export default defineConfig({
 ```
 
 `.prettierrc`:
+
 ```json
 {
   "singleQuote": true,
@@ -223,11 +228,13 @@ export default defineConfig({
 - [ ] **Step 7: Stub stylesheet and page**
 
 `src/styles/global.css`:
+
 ```css
 @import 'tailwindcss';
 ```
 
 `src/pages/index.astro`:
+
 ```astro
 ---
 import '../styles/global.css';
@@ -268,10 +275,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 2: Test harness (Vitest + Playwright)
 
 **Files:**
+
 - Create: `vitest.config.ts`, `playwright.config.ts`, `tests/e2e/content.ts`, `tests/e2e/smoke.spec.ts`
 - Modify: `package.json` (scripts)
 
 **Interfaces:**
+
 - Produces: `npm test` (unit), `npm run test:coverage`, `npm run test:e2e`; helpers `readSite(): Record<string, any>` and `countEntries(collection: string): number` in `tests/e2e/content.ts` for later E2E tasks.
 
 - [ ] **Step 1: Install**
@@ -402,11 +411,13 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 3: Design tokens, fonts, base layout, UI primitives
 
 **Files:**
+
 - Modify: `src/styles/global.css`, `astro.config.ts`, `src/pages/index.astro`
 - Create: `src/lib/icons.ts`, `src/layouts/BaseLayout.astro`, `src/components/ui/Button.astro`, `src/components/ui/Section.astro`, `src/components/ui/SectionHeading.astro`
 - Test: `tests/e2e/smoke.spec.ts`
 
 **Interfaces:**
+
 - Produces:
   - Tailwind tokens: `plum-{50,100,200,500,600,700,900}`, `blush-{50,100,300}`, `ink`, `muted`, `font-display`, `font-sans`
   - `HIGHLIGHT_ICONS` (readonly tuple of lucide names) and `HighlightIcon` type from `src/lib/icons.ts`
@@ -418,6 +429,7 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 - [ ] **Step 1: Extend the smoke test (failing)**
 
 Append to `tests/e2e/smoke.spec.ts`:
+
 ```ts
 test('brand fonts and skip link', async ({ page }) => {
   await page.goto('/');
@@ -489,17 +501,36 @@ Expected: FAIL (body font is the default sans; no skip link).
 
 ```ts
 // Íconos que la dueña puede elegir para los "highlights" (Por qué Belyni)
-export const HIGHLIGHT_ICONS = ['sparkles', 'leaf', 'shield-check', 'heart', 'award', 'gem'] as const;
+export const HIGHLIGHT_ICONS = [
+  'sparkles',
+  'leaf',
+  'shield-check',
+  'heart',
+  'award',
+  'gem',
+] as const;
 export type HighlightIcon = (typeof HIGHLIGHT_ICONS)[number];
 
 // Todos los íconos usados en el sitio, por set de Iconify
 export const ICON_INCLUDE = {
-  lucide: [...HIGHLIGHT_ICONS, 'menu', 'x', 'phone', 'mail', 'map-pin', 'clock', 'navigation', 'map', 'star'],
+  lucide: [
+    ...HIGHLIGHT_ICONS,
+    'menu',
+    'x',
+    'phone',
+    'mail',
+    'map-pin',
+    'clock',
+    'navigation',
+    'map',
+    'star',
+  ],
   'simple-icons': ['whatsapp', 'instagram', 'facebook'],
 };
 ```
 
 Update `astro.config.ts`:
+
 ```ts
 // @ts-check
 import { defineConfig } from 'astro/config';
@@ -544,8 +575,9 @@ const { title, description } = Astro.props;
     <a
       href="#contenido"
       class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow"
-      >Saltar al contenido</a
     >
+      Saltar al contenido
+    </a>
     <slot />
   </body>
 </html>
@@ -554,6 +586,7 @@ const { title, description } = Astro.props;
 - [ ] **Step 5: UI primitives**
 
 `src/components/ui/Button.astro`:
+
 ```astro
 ---
 import type { HTMLAttributes } from 'astro/types';
@@ -582,11 +615,14 @@ const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' 
     className,
   ]}
   {...externalAttrs}
-  {...rest}><slot /></a
+  {...rest}
 >
+  <slot />
+</a>
 ```
 
 `src/components/ui/Section.astro`:
+
 ```astro
 ---
 interface Props {
@@ -604,6 +640,7 @@ const { id, class: className } = Astro.props;
 ```
 
 `src/components/ui/SectionHeading.astro`:
+
 ```astro
 ---
 interface Props {
@@ -616,8 +653,12 @@ const { id, title, eyebrow, intro } = Astro.props;
 ---
 
 <header class="mx-auto mb-10 max-w-2xl text-center">
-  {eyebrow && <p class="mb-2 text-xs font-semibold tracking-[0.2em] text-plum-600 uppercase">{eyebrow}</p>}
-  <h2 id={id} class="text-4xl font-semibold text-plum-900 sm:text-5xl">{title}</h2>
+  {eyebrow && (
+    <p class="mb-2 text-xs font-semibold tracking-[0.2em] text-plum-600 uppercase">{eyebrow}</p>
+  )}
+  <h2 id={id} class="text-4xl font-semibold text-plum-900 sm:text-5xl">
+    {title}
+  </h2>
   {intro && <p class="mt-4 text-muted">{intro}</p>}
 </header>
 ```
@@ -655,9 +696,11 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 4: Phone normalization + WhatsApp links (TDD)
 
 **Files:**
+
 - Create: `src/lib/phone.ts`, `src/lib/phone.test.ts`, `src/lib/whatsapp.ts`, `src/lib/whatsapp.test.ts`
 
 **Interfaces:**
+
 - Produces:
   - `normalizeMxPhone(raw: string): string` (10 digits; throws `Error` with a Spanish message if invalid)
   - `isValidMxPhone(raw: string): boolean`
@@ -786,7 +829,9 @@ describe('whatsappUrl', () => {
 
 describe('bookingMessage', () => {
   it('returns the base message when there is no service', () => {
-    expect(bookingMessage('  Hola, quiero agendar una cita. ')).toBe('Hola, quiero agendar una cita.');
+    expect(bookingMessage('  Hola, quiero agendar una cita. ')).toBe(
+      'Hola, quiero agendar una cita.',
+    );
   });
   it('appends the service name', () => {
     expect(bookingMessage('Hola, quiero agendar una cita.', 'Corte Dama')).toBe(
@@ -839,9 +884,11 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 5: Price and duration formatting (TDD)
 
 **Files:**
+
 - Create: `src/lib/format.ts`, `src/lib/format.test.ts`
 
 **Interfaces:**
+
 - Produces: `formatPrice(mxn: number): string` → `"$1,500"`; `formatDuration(minutes: number): string` → `"1 h 30 min"`
 
 - [ ] **Step 1: Write failing tests `src/lib/format.test.ts`**
@@ -920,9 +967,11 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 6: Opening hours in salon time (TDD)
 
 **Files:**
+
 - Create: `src/lib/hours.ts`, `src/lib/hours.test.ts`
 
 **Interfaces:**
+
 - Produces:
   - `DAYS` (readonly `{ id, label }[]`, Monday first), `DayId`, `DAY_IDS: [DayId, ...DayId[]]`
   - `interface OpeningHours { day: DayId; open: string; close: string }` (`"HH:MM"`, 24 h)
@@ -1049,7 +1098,8 @@ function localDayAndMinutes(date: Date, timeZone: string): { day: DayId; minutes
     minute: '2-digit',
     hourCycle: 'h23',
   }).formatToParts(date);
-  const get = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? '';
+  const get = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((p) => p.type === type)?.value ?? '';
   return {
     day: WEEKDAY_TO_DAY[get('weekday')],
     minutes: Number(get('hour')) * 60 + Number(get('minute')),
@@ -1072,9 +1122,7 @@ export function weeklySchedule(hours: readonly OpeningHours[]): HoursRow[] {
     const shifts = hours
       .filter((h) => h.day === id)
       .toSorted((a, b) => toMinutes(a.open) - toMinutes(b.open));
-    const text = shifts.length
-      ? shifts.map((s) => `${s.open} – ${s.close}`).join(', ')
-      : 'Cerrado';
+    const text = shifts.length ? shifts.map((s) => `${s.open} – ${s.close}`).join(', ') : 'Cerrado';
     return { day: id, label, text };
   });
 }
@@ -1099,10 +1147,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 7: Content schemas + seed content
 
 **Files:**
+
 - Create: `src/lib/categories.ts`, `src/lib/content-schema.ts`, `src/lib/content-schema.test.ts`, `src/content.config.ts`
 - Create: `src/content/site/index.yaml`, `src/content/services/{corte-dama,manicura,masajes,tratamientos}.yaml`, `src/content/team/nieves-munoz.yaml`, `src/content/{gallery,brands,reviews}/.gitkeep`
 
 **Interfaces:**
+
 - Consumes: `DAY_IDS` (Task 6), `isValidMxPhone` (Task 4), `HIGHLIGHT_ICONS` (Task 3)
 - Produces:
   - `CATEGORIES`, `CategoryId`, `CATEGORY_IDS` from `src/lib/categories.ts`
@@ -1191,7 +1241,9 @@ describe('timeSchema / openingHoursSchema', () => {
     expect(result.error?.issues[0].message).toMatch(/cierre/);
   });
   it('rejects unknown days', () => {
-    expect(openingHoursSchema.safeParse({ day: 'monday', open: '10:00', close: '19:00' }).success).toBe(false);
+    expect(
+      openingHoursSchema.safeParse({ day: 'monday', open: '10:00', close: '19:00' }).success,
+    ).toBe(false);
   });
 });
 ```
@@ -1214,7 +1266,10 @@ export const emptyToUndefined = (value: unknown): unknown =>
 
 export const optionalText = z.preprocess(emptyToUndefined, z.string().optional());
 export const optionalUrl = z.preprocess(emptyToUndefined, z.url().optional());
-export const optionalInt = z.preprocess(emptyToUndefined, z.number().int().nonnegative().optional());
+export const optionalInt = z.preprocess(
+  emptyToUndefined,
+  z.number().int().nonnegative().optional(),
+);
 
 export const phoneSchema = z
   .string()
@@ -1398,6 +1453,7 @@ servicesNote: Precios de referencia; el costo final puede variar según el largo
 Service copy comes from the pre-Bulma site (commit `8a8a2b5`) and the current modal (Corte Dama $500).
 
 `src/content/services/corte-dama.yaml`:
+
 ```yaml
 name: Corte Dama
 category: cabello
@@ -1411,6 +1467,7 @@ featured: true
 ```
 
 `src/content/services/manicura.yaml`:
+
 ```yaml
 name: Manicura
 category: unas
@@ -1424,6 +1481,7 @@ featured: true
 ```
 
 `src/content/services/masajes.yaml`:
+
 ```yaml
 name: Masajes
 category: masajes
@@ -1437,6 +1495,7 @@ featured: false
 ```
 
 `src/content/services/tratamientos.yaml`:
+
 ```yaml
 name: Tratamientos capilares
 category: tratamientos
@@ -1450,6 +1509,7 @@ featured: false
 ```
 
 `src/content/team/nieves-munoz.yaml`:
+
 ```yaml
 name: Nieves Muñoz
 role: Estilista Senior # PENDIENTE: confirmar cargo
@@ -1486,9 +1546,11 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 8: Data access helpers: site, ordering, service grouping, nav (TDD)
 
 **Files:**
+
 - Create: `src/lib/order.ts`, `src/lib/services.ts`, `src/lib/services.test.ts`, `src/lib/nav.ts`, `src/lib/nav.test.ts`, `src/lib/site.ts`
 
 **Interfaces:**
+
 - Consumes: `CATEGORIES`, `CategoryId` (Task 7)
 - Produces:
   - `byOrder<T extends { order: number }>(a: T, b: T): number`
@@ -1502,11 +1564,19 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 import { describe, expect, it } from 'vitest';
 import { groupServices } from './services';
 
-const s = (name: string, category: 'cabello' | 'unas' | 'masajes', order = 100) => ({ name, category, order });
+const s = (name: string, category: 'cabello' | 'unas' | 'masajes', order = 100) => ({
+  name,
+  category,
+  order,
+});
 
 describe('groupServices', () => {
   it('groups in CATEGORIES order and drops empty categories', () => {
-    const groups = groupServices([s('Masaje', 'masajes'), s('Manicura', 'unas'), s('Corte', 'cabello')]);
+    const groups = groupServices([
+      s('Masaje', 'masajes'),
+      s('Manicura', 'unas'),
+      s('Corte', 'cabello'),
+    ]);
     expect(groups.map((g) => g.id)).toEqual(['cabello', 'unas', 'masajes']);
     expect(groups[1].label).toBe('Uñas');
   });
@@ -1534,6 +1604,7 @@ describe('groupServices', () => {
 ```
 
 `src/lib/nav.test.ts`:
+
 ```ts
 import { describe, expect, it } from 'vitest';
 import { navItems } from './nav';
@@ -1562,12 +1633,14 @@ Expected: FAIL, unresolved imports.
 - [ ] **Step 3: Implement**
 
 `src/lib/order.ts`:
+
 ```ts
 // Orden manual definido por la dueña (menor primero)
 export const byOrder = <T extends { order: number }>(a: T, b: T): number => a.order - b.order;
 ```
 
 `src/lib/services.ts`:
+
 ```ts
 import { CATEGORIES, type CategoryId } from './categories';
 
@@ -1583,7 +1656,9 @@ export interface ServiceGroup<T> {
   items: T[];
 }
 
-export function groupServices<T extends GroupableService>(services: readonly T[]): ServiceGroup<T>[] {
+export function groupServices<T extends GroupableService>(
+  services: readonly T[],
+): ServiceGroup<T>[] {
   const compare = (a: T, b: T) => a.order - b.order || a.name.localeCompare(b.name, 'es');
   return CATEGORIES.map(({ id, label }) => ({
     id,
@@ -1594,6 +1669,7 @@ export function groupServices<T extends GroupableService>(services: readonly T[]
 ```
 
 `src/lib/nav.ts`:
+
 ```ts
 export interface NavSection {
   id: string;
@@ -1613,6 +1689,7 @@ export function navItems(sections: readonly NavSection[]): NavItem[] {
 ```
 
 `src/lib/site.ts`:
+
 ```ts
 import { getEntry, type CollectionEntry } from 'astro:content';
 
@@ -1644,10 +1721,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 9: Page shell: header + mobile menu, footer, WhatsApp button
 
 **Files:**
+
 - Create: `src/components/layout/Header.astro`, `src/components/layout/Footer.astro`, `src/components/layout/WhatsAppFab.astro`, `tests/e2e/layout.spec.ts`
 - Modify: `src/pages/index.astro`
 
 **Interfaces:**
+
 - Consumes: `getSite`, `SiteData`, `navItems`, `NavItem`, `whatsappUrl`, `telHref`, `formatMxPhone`, `Button`
 - Produces:
   - `<Header items: NavItem[] bookingHref: string siteName: string>`
@@ -1670,7 +1749,10 @@ test('floating WhatsApp button uses the configured number and is labelled', asyn
   await page.goto('/');
   const fab = page.getByRole('link', { name: 'Escríbenos por WhatsApp' });
   await expect(fab).toBeVisible();
-  await expect(fab).toHaveAttribute('href', new RegExp(`^https://wa\\.me/52${digits(readSite().whatsapp)}`));
+  await expect(fab).toHaveAttribute(
+    'href',
+    new RegExp(`^https://wa\\.me/52${digits(readSite().whatsapp)}`),
+  );
   await expect(fab).toHaveAttribute('rel', /noopener/);
 });
 
@@ -1684,7 +1766,10 @@ test('mobile menu: toggles, closes on link tap and on Escape', async ({ page, is
   await expect(menu).toBeHidden();
 
   await toggle.click();
-  await expect(page.getByRole('button', { name: 'Cerrar menú' })).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.getByRole('button', { name: 'Cerrar menú' })).toHaveAttribute(
+    'aria-expanded',
+    'true',
+  );
   await expect(menu).toBeVisible();
 
   await menu.getByRole('link', { name: 'Contacto' }).click();
@@ -1700,7 +1785,9 @@ test('mobile menu: toggles, closes on link tap and on Escape', async ({ page, is
 test('desktop nav is visible without a menu button', async ({ page, isMobile }) => {
   test.skip(isMobile, 'desktop only');
   await page.goto('/');
-  await expect(page.getByRole('navigation', { name: 'Principal' }).getByRole('link', { name: 'Servicios' })).toBeVisible();
+  await expect(
+    page.getByRole('navigation', { name: 'Principal' }).getByRole('link', { name: 'Servicios' }),
+  ).toBeVisible();
   await expect(page.getByRole('button', { name: 'Abrir menú' })).toBeHidden();
 });
 
@@ -1709,7 +1796,10 @@ test('footer shows social links from content with safe rel', async ({ page }) =>
   const footer = page.locator('footer');
   const site = readSite();
   if (site.instagram) {
-    await expect(footer.getByRole('link', { name: 'Instagram' })).toHaveAttribute('href', site.instagram);
+    await expect(footer.getByRole('link', { name: 'Instagram' })).toHaveAttribute(
+      'href',
+      site.instagram,
+    );
   }
   for (const link of await footer.locator('a[target="_blank"]').all()) {
     await expect(link).toHaveAttribute('rel', /noopener/);
@@ -1739,15 +1829,29 @@ const { items, bookingHref, siteName } = Astro.props;
 ---
 
 <header class="sticky top-0 z-40 border-b border-plum-100 bg-blush-50/90 backdrop-blur">
-  <nav aria-label="Principal" class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+  <nav
+    aria-label="Principal"
+    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3"
+  >
     <a href="#inicio" class="shrink-0">
       <Image src={logo} alt={siteName} width={140} class="h-10 w-auto" loading="eager" />
     </a>
     <ul class="hidden items-center gap-6 text-sm font-medium md:flex">
-      {items.map((item) => <li><a href={item.href} class="hover:text-plum-600">{item.label}</a></li>)}
+      {items.map((item) => (
+        <li>
+          <a href={item.href} class="hover:text-plum-600">
+            {item.label}
+          </a>
+        </li>
+      ))}
     </ul>
     <div class="flex items-center gap-2">
-      <Button href={bookingHref} external class="hidden sm:inline-flex" data-umami-event="whatsapp-header">
+      <Button
+        href={bookingHref}
+        external
+        class="hidden sm:inline-flex"
+        data-umami-event="whatsapp-header"
+      >
         Agendar cita
       </Button>
       <button
@@ -1757,17 +1861,31 @@ const { items, bookingHref, siteName } = Astro.props;
         aria-controls="menu-movil"
         data-menu-toggle
       >
-        <span class="sr-only" data-menu-label>Abrir menú</span>
-        <span data-icon-open><Icon name="lucide:menu" class="size-6" aria-hidden="true" /></span>
-        <span data-icon-close class="hidden"><Icon name="lucide:x" class="size-6" aria-hidden="true" /></span>
+        <span class="sr-only" data-menu-label>
+          Abrir menú
+        </span>
+        <span data-icon-open>
+          <Icon name="lucide:menu" class="size-6" aria-hidden="true" />
+        </span>
+        <span data-icon-close class="hidden">
+          <Icon name="lucide:x" class="size-6" aria-hidden="true" />
+        </span>
       </button>
     </div>
   </nav>
   <div id="menu-movil" class="hidden border-t border-plum-100 md:hidden" data-menu>
     <ul class="flex flex-col px-4 py-2">
-      {items.map((item) => <li><a href={item.href} class="block py-3 text-lg">{item.label}</a></li>)}
+      {items.map((item) => (
+        <li>
+          <a href={item.href} class="block py-3 text-lg">
+            {item.label}
+          </a>
+        </li>
+      ))}
       <li class="py-3">
-        <Button href={bookingHref} external class="w-full" data-umami-event="whatsapp-menu">Agendar cita</Button>
+        <Button href={bookingHref} external class="w-full" data-umami-event="whatsapp-menu">
+          Agendar cita
+        </Button>
       </li>
     </ul>
   </div>
@@ -1853,30 +1971,42 @@ const year = new Date().getFullYear();
       <p class="mt-2">{site.tagline}</p>
     </div>
     <address class="not-italic">
-      <p>{site.address.street}, {site.address.neighborhood}</p>
-      <p>{site.address.city}, {site.address.region}</p>
-      <p class="mt-2"><a href={telHref(site.phone)} class="hover:text-white">{formatMxPhone(site.phone)}</a></p>
-      {site.email && <p><a href={`mailto:${site.email}`} class="hover:text-white">{site.email}</a></p>}
+      <p>
+        {site.address.street}, {site.address.neighborhood}
+      </p>
+      <p>
+        {site.address.city}, {site.address.region}
+      </p>
+      <p class="mt-2">
+        <a href={telHref(site.phone)} class="hover:text-white">
+          {formatMxPhone(site.phone)}
+        </a>
+      </p>
+      {site.email && (
+        <p>
+          <a href={`mailto:${site.email}`} class="hover:text-white">
+            {site.email}
+          </a>
+        </p>
+      )}
     </address>
-    {
-      socials.length > 0 && (
-        <ul class="flex gap-3 sm:justify-end">
-          {socials.map((s) => (
-            <li>
-              <a
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={s.label}
-                class="grid size-10 place-items-center rounded-full bg-plum-700 hover:bg-plum-500"
-              >
-                <Icon name={s.icon} class="size-5" aria-hidden="true" />
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
+    {socials.length > 0 && (
+      <ul class="flex gap-3 sm:justify-end">
+        {socials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              class="grid size-10 place-items-center rounded-full bg-plum-700 hover:bg-plum-500"
+            >
+              <Icon name={s.icon} class="size-5" aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
   </div>
   <p class="mx-auto mt-10 max-w-6xl border-t border-plum-700 pt-6 text-xs text-plum-200">
     © {year} {site.name}. Todos los derechos reservados.
@@ -1918,7 +2048,10 @@ const nav = navItems([
 ]);
 ---
 
-<BaseLayout title={`${site.name} | Salón de belleza en ${site.address.city}`} description={site.intro}>
+<BaseLayout
+  title={`${site.name} | Salón de belleza en ${site.address.city}`}
+  description={site.intro}
+>
   <Header items={nav} bookingHref={bookingHref} siteName={site.name} />
   <main id="contenido">
     <!-- Secciones: Tareas 10–12 (este h1 temporal lo reemplaza el Hero) -->
@@ -1953,10 +2086,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 10: Hero + Services sections
 
 **Files:**
+
 - Create: `src/components/sections/Hero.astro`, `src/components/sections/Services.astro`, `tests/e2e/sections.spec.ts`
 - Modify: `src/pages/index.astro`
 
 **Interfaces:**
+
 - Consumes: `SiteData`, `groupServices`, `formatPrice`, `formatDuration`, `whatsappUrl`, `bookingMessage`, `Button`, `Section`, `SectionHeading`
 - Produces: `<Hero site: SiteData bookingHref: string>`, `<Services services: ServiceData[] whatsapp: string whatsappMessage: string note?: string>` where `ServiceData = CollectionEntry<'services'>['data']`
 
@@ -1980,11 +2115,15 @@ test('hero has the single h1 and a WhatsApp CTA', async ({ page }) => {
   await expect(cta).toHaveAttribute('href', /^https:\/\/wa\.me\/52\d{10}\?text=/);
 });
 
-test('every service from content is rendered with price or "Precio a consultar"', async ({ page }) => {
+test('every service from content is rendered with price or "Precio a consultar"', async ({
+  page,
+}) => {
   await page.goto('/');
   const section = page.locator('#servicios');
   for (const s of services) {
-    const card = section.locator('[data-service]', { has: page.getByRole('heading', { name: s.name, exact: true }) });
+    const card = section.locator('[data-service]', {
+      has: page.getByRole('heading', { name: s.name, exact: true }),
+    });
     await expect(card).toHaveCount(1);
     if (typeof s.priceFrom === 'number') {
       await expect(card).toContainText('Desde $');
@@ -1999,7 +2138,9 @@ test('every service from content is rendered with price or "Precio a consultar"'
 test('services without image render no <img> and no broken image', async ({ page }) => {
   await page.goto('/');
   for (const s of services.filter((x) => !x.image)) {
-    const card = page.locator('[data-service]', { has: page.getByRole('heading', { name: s.name, exact: true }) });
+    const card = page.locator('[data-service]', {
+      has: page.getByRole('heading', { name: s.name, exact: true }),
+    });
     await expect(card.locator('img')).toHaveCount(0);
   }
 });
@@ -2037,7 +2178,9 @@ const { site, bookingHref } = Astro.props;
           <Icon name="simple-icons:whatsapp" class="size-5" aria-hidden="true" />
           Agenda por WhatsApp
         </Button>
-        <Button href="#servicios" variant="secondary">Ver servicios</Button>
+        <Button href="#servicios" variant="secondary">
+          Ver servicios
+        </Button>
       </div>
     </div>
     <Picture
@@ -2078,68 +2221,79 @@ const groups = groupServices(services);
 ---
 
 <Section id="servicios" class="bg-white">
-  <SectionHeading id="servicios-titulo" eyebrow="Lo que hacemos" title="Nuestros servicios" intro={note} />
+  <SectionHeading
+    id="servicios-titulo"
+    eyebrow="Lo que hacemos"
+    title="Nuestros servicios"
+    intro={note}
+  />
 
-  {
-    groups.length > 1 && (
-      <nav aria-label="Categorías de servicios" class="mb-10 flex gap-2 overflow-x-auto pb-2 md:justify-center">
-        {groups.map((g) => (
-          <a
-            href={`#servicios-${g.id}`}
-            class="shrink-0 rounded-full border border-plum-200 px-4 py-2 text-sm font-medium text-plum-700 hover:bg-plum-50"
-          >
-            {g.label}
-          </a>
-        ))}
-      </nav>
-    )
-  }
+  {groups.length > 1 && (
+    <nav
+      aria-label="Categorías de servicios"
+      class="mb-10 flex gap-2 overflow-x-auto pb-2 md:justify-center"
+    >
+      {groups.map((g) => (
+        <a
+          href={`#servicios-${g.id}`}
+          class="shrink-0 rounded-full border border-plum-200 px-4 py-2 text-sm font-medium text-plum-700 hover:bg-plum-50"
+        >
+          {g.label}
+        </a>
+      ))}
+    </nav>
+  )}
 
   <div class="space-y-14">
-    {
-      groups.map((group) => (
-        <div id={`servicios-${group.id}`} class="scroll-mt-24">
-          <h3 class="mb-6 text-3xl font-semibold text-plum-900">{group.label}</h3>
-          <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {group.items.map((service) => (
-              <li class="flex flex-col overflow-hidden rounded-3xl border border-plum-100 bg-blush-50" data-service>
-                {service.image && (
-                  <Image
-                    src={service.image}
-                    alt={service.imageAlt ?? service.name}
-                    widths={[400, 800]}
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    class="aspect-[4/3] w-full object-cover"
-                  />
-                )}
-                <div class="flex flex-1 flex-col gap-3 p-6">
-                  <h4 class="font-display text-2xl font-semibold break-words text-plum-900">{service.name}</h4>
-                  <p class="text-muted">{service.description}</p>
-                  <p class="mt-auto flex flex-wrap items-baseline gap-x-2 text-sm">
-                    <span class="text-lg font-semibold text-plum-700">
-                      {service.priceFrom !== undefined ? `Desde ${formatPrice(service.priceFrom)}` : 'Precio a consultar'}
-                    </span>
-                    {service.durationMin !== undefined && (
-                      <span class="text-muted">· {formatDuration(service.durationMin)}</span>
-                    )}
-                  </p>
-                  <a
-                    href={whatsappUrl(whatsapp, bookingMessage(whatsappMessage, service.name))}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-umami-event="whatsapp-service"
-                    class="inline-flex items-center gap-2 self-start text-sm font-semibold text-plum-600 hover:text-plum-700"
-                  >
-                    <Icon name="simple-icons:whatsapp" class="size-4" aria-hidden="true" />
-                    Agendar<span class="sr-only"> {service.name}</span>
-                  </a>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))
-    }
+    {groups.map((group) => (
+      <div id={`servicios-${group.id}`} class="scroll-mt-24">
+        <h3 class="mb-6 text-3xl font-semibold text-plum-900">{group.label}</h3>
+        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {group.items.map((service) => (
+            <li
+              class="flex flex-col overflow-hidden rounded-3xl border border-plum-100 bg-blush-50"
+              data-service
+            >
+              {service.image && (
+                <Image
+                  src={service.image}
+                  alt={service.imageAlt ?? service.name}
+                  widths={[400, 800]}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  class="aspect-[4/3] w-full object-cover"
+                />
+              )}
+              <div class="flex flex-1 flex-col gap-3 p-6">
+                <h4 class="font-display text-2xl font-semibold break-words text-plum-900">
+                  {service.name}
+                </h4>
+                <p class="text-muted">{service.description}</p>
+                <p class="mt-auto flex flex-wrap items-baseline gap-x-2 text-sm">
+                  <span class="text-lg font-semibold text-plum-700">
+                    {service.priceFrom !== undefined
+                      ? `Desde ${formatPrice(service.priceFrom)}`
+                      : 'Precio a consultar'}
+                  </span>
+                  {service.durationMin !== undefined && (
+                    <span class="text-muted">· {formatDuration(service.durationMin)}</span>
+                  )}
+                </p>
+                <a
+                  href={whatsappUrl(whatsapp, bookingMessage(whatsappMessage, service.name))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-umami-event="whatsapp-service"
+                  class="inline-flex items-center gap-2 self-start text-sm font-semibold text-plum-600 hover:text-plum-700"
+                >
+                  <Icon name="simple-icons:whatsapp" class="size-4" aria-hidden="true" />
+                  Agendar<span class="sr-only"> {service.name}</span>
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </div>
 </Section>
 ```
@@ -2147,28 +2301,28 @@ const groups = groupServices(services);
 - [ ] **Step 4: Wire into `src/pages/index.astro`**
 
 Add imports:
+
 ```astro
-import Hero from '../components/sections/Hero.astro';
-import Services from '../components/sections/Services.astro';
+import Hero from '../components/sections/Hero.astro'; import Services from
+'../components/sections/Services.astro';
 ```
 
 Replace the `<main>` body:
+
 ```astro
-  <main id="contenido">
-    <Hero site={site} bookingHref={bookingHref} />
-    {
-      services.length > 0 && (
-        <Services
-          services={services}
-          whatsapp={site.whatsapp}
-          whatsappMessage={site.whatsappMessage}
-          note={site.servicesNote}
-        />
-      )
-    }
-    <section id="ubicacion" class="min-h-screen"></section>
-    <section id="contacto" class="min-h-screen"></section>
-  </main>
+<main id="contenido">
+  <Hero site={site} bookingHref={bookingHref} />
+  {services.length > 0 && (
+    <Services
+      services={services}
+      whatsapp={site.whatsapp}
+      whatsappMessage={site.whatsappMessage}
+      note={site.servicesNote}
+    />
+  )}
+  <section id="ubicacion" class="min-h-screen"></section>
+  <section id="contacto" class="min-h-screen"></section>
+</main>
 ```
 
 - [ ] **Step 5: Run E2E**
@@ -2194,10 +2348,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 11: Highlights, Team, Gallery, Brands, Reviews (hidden when empty)
 
 **Files:**
+
 - Create: `src/components/sections/{Highlights,Team,Gallery,Brands,Reviews}.astro`
 - Modify: `src/pages/index.astro`, `tests/e2e/sections.spec.ts`
 
 **Interfaces:**
+
 - Consumes: collections data from Task 9's `index.astro`; `HighlightIcon`
 - Produces: `<Highlights items: SiteData['highlights']>`, `<Team members: TeamData[]>`, `<Gallery items: GalleryData[]>`, `<Brands items: BrandData[]>`, `<Reviews items: ReviewData[]>` (each `XData = CollectionEntry<'x'>['data']`)
 
@@ -2220,7 +2376,9 @@ for (const section of OPTIONAL_SECTIONS) {
     const hasContent = section.count() > 0;
     await expect(page.locator(`#${section.id}`)).toHaveCount(hasContent ? 1 : 0);
     if (section.label && !isMobile) {
-      const navLink = page.getByRole('navigation', { name: 'Principal' }).getByRole('link', { name: section.label });
+      const navLink = page
+        .getByRole('navigation', { name: 'Principal' })
+        .getByRole('link', { name: section.label });
       await expect(navLink).toHaveCount(hasContent ? 1 : 0);
     }
   });
@@ -2255,17 +2413,15 @@ const { items } = Astro.props;
 <Section id="nosotros">
   <SectionHeading id="nosotros-titulo" eyebrow="Nosotros" title="¿Por qué Belyni?" />
   <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-    {
-      items.map((item) => (
-        <li class="rounded-3xl bg-white p-6 text-center shadow-sm">
-          <span class="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-plum-50 text-plum-600">
-            <Icon name={`lucide:${item.icon}`} class="size-6" aria-hidden="true" />
-          </span>
-          <h3 class="text-2xl font-semibold text-plum-900">{item.title}</h3>
-          <p class="mt-2 text-sm text-muted">{item.text}</p>
-        </li>
-      ))
-    }
+    {items.map((item) => (
+      <li class="rounded-3xl bg-white p-6 text-center shadow-sm">
+        <span class="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-plum-50 text-plum-600">
+          <Icon name={`lucide:${item.icon}`} class="size-6" aria-hidden="true" />
+        </span>
+        <h3 class="text-2xl font-semibold text-plum-900">{item.title}</h3>
+        <p class="mt-2 text-sm text-muted">{item.text}</p>
+      </li>
+    ))}
   </ul>
 </Section>
 ```
@@ -2288,21 +2444,19 @@ const { members } = Astro.props;
 <Section id="equipo" class="bg-white">
   <SectionHeading id="equipo-titulo" eyebrow="Equipo" title="Manos expertas" />
   <ul class="flex flex-wrap justify-center gap-8">
-    {
-      members.map((m) => (
-        <li class="w-full max-w-xs text-center">
-          <Image
-            src={m.photo}
-            alt={m.photoAlt ?? m.name}
-            widths={[320, 640]}
-            sizes="320px"
-            class="aspect-[3/4] w-full rounded-3xl object-cover"
-          />
-          <p class="mt-4 font-display text-2xl font-semibold text-plum-900">{m.name}</p>
-          <p class="text-muted">{m.role}</p>
-        </li>
-      ))
-    }
+    {members.map((m) => (
+      <li class="w-full max-w-xs text-center">
+        <Image
+          src={m.photo}
+          alt={m.photoAlt ?? m.name}
+          widths={[320, 640]}
+          sizes="320px"
+          class="aspect-[3/4] w-full rounded-3xl object-cover"
+        />
+        <p class="mt-4 font-display text-2xl font-semibold text-plum-900">{m.name}</p>
+        <p class="text-muted">{m.role}</p>
+      </li>
+    ))}
   </ul>
 </Section>
 ```
@@ -2325,19 +2479,17 @@ const { items } = Astro.props;
 <Section id="galeria">
   <SectionHeading id="galeria-titulo" eyebrow="Galería" title="Nuestro trabajo" />
   <ul class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-    {
-      items.map((item) => (
-        <li>
-          <Image
-            src={item.image}
-            alt={item.alt}
-            widths={[300, 600]}
-            sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-            class="aspect-square w-full rounded-2xl object-cover"
-          />
-        </li>
-      ))
-    }
+    {items.map((item) => (
+      <li>
+        <Image
+          src={item.image}
+          alt={item.alt}
+          widths={[300, 600]}
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+          class="aspect-square w-full rounded-2xl object-cover"
+        />
+      </li>
+    ))}
   </ul>
 </Section>
 ```
@@ -2355,25 +2507,24 @@ interface Props {
   items: CollectionEntry<'brands'>['data'][];
 }
 const { items } = Astro.props;
-const LOGO_CLASS = 'h-14 w-auto opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0';
+const LOGO_CLASS =
+  'h-14 w-auto opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0';
 ---
 
 <Section id="marcas" class="bg-white">
   <SectionHeading id="marcas-titulo" eyebrow="Marcas" title="Trabajamos con" />
   <ul class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-    {
-      items.map((brand) => (
-        <li>
-          {brand.url ? (
-            <a href={brand.url} target="_blank" rel="noopener noreferrer">
-              <Image src={brand.logo} alt={brand.name} height={56} class={LOGO_CLASS} />
-            </a>
-          ) : (
+    {items.map((brand) => (
+      <li>
+        {brand.url ? (
+          <a href={brand.url} target="_blank" rel="noopener noreferrer">
             <Image src={brand.logo} alt={brand.name} height={56} class={LOGO_CLASS} />
-          )}
-        </li>
-      ))
-    }
+          </a>
+        ) : (
+          <Image src={brand.logo} alt={brand.name} height={56} class={LOGO_CLASS} />
+        )}
+      </li>
+    ))}
   </ul>
 </Section>
 ```
@@ -2394,21 +2545,23 @@ const { items } = Astro.props;
 ---
 
 <Section id="opiniones">
-  <SectionHeading id="opiniones-titulo" eyebrow="Opiniones" title="Lo que dicen nuestras clientas" />
+  <SectionHeading
+    id="opiniones-titulo"
+    eyebrow="Opiniones"
+    title="Lo que dicen nuestras clientas"
+  />
   <ul class="grid gap-6 md:grid-cols-3">
-    {
-      items.map((review) => (
-        <li class="flex flex-col rounded-3xl bg-white p-6 shadow-sm">
-          <p class="flex gap-1 text-plum-500" aria-label={`${review.rating} de 5 estrellas`}>
-            {Array.from({ length: review.rating }, () => (
-              <Icon name="lucide:star" class="size-4 fill-current" aria-hidden="true" />
-            ))}
-          </p>
-          <blockquote class="mt-4 flex-1 text-ink">“{review.text}”</blockquote>
-          <p class="mt-4 text-sm font-semibold text-plum-700">{review.author}</p>
-        </li>
-      ))
-    }
+    {items.map((review) => (
+      <li class="flex flex-col rounded-3xl bg-white p-6 shadow-sm">
+        <p class="flex gap-1 text-plum-500" aria-label={`${review.rating} de 5 estrellas`}>
+          {Array.from({ length: review.rating }, () => (
+            <Icon name="lucide:star" class="size-4 fill-current" aria-hidden="true" />
+          ))}
+        </p>
+        <blockquote class="mt-4 flex-1 text-ink">“{review.text}”</blockquote>
+        <p class="mt-4 text-sm font-semibold text-plum-700">{review.author}</p>
+      </li>
+    ))}
   </ul>
 </Section>
 ```
@@ -2416,21 +2569,22 @@ const { items } = Astro.props;
 - [ ] **Step 7: Wire into `src/pages/index.astro`** (after `<Services …/>`)
 
 Imports:
+
 ```astro
-import Highlights from '../components/sections/Highlights.astro';
-import Team from '../components/sections/Team.astro';
-import Gallery from '../components/sections/Gallery.astro';
-import Brands from '../components/sections/Brands.astro';
-import Reviews from '../components/sections/Reviews.astro';
+import Highlights from '../components/sections/Highlights.astro'; import Team from
+'../components/sections/Team.astro'; import Gallery from '../components/sections/Gallery.astro';
+import Brands from '../components/sections/Brands.astro'; import Reviews from
+'../components/sections/Reviews.astro';
 ```
 
 Markup:
+
 ```astro
-    {site.highlights.length > 0 && <Highlights items={site.highlights} />}
-    {team.length > 0 && <Team members={team} />}
-    {gallery.length > 0 && <Gallery items={gallery} />}
-    {brands.length > 0 && <Brands items={brands} />}
-    {reviews.length > 0 && <Reviews items={reviews} />}
+{site.highlights.length > 0 && <Highlights items={site.highlights} />}
+{team.length > 0 && <Team members={team} />}
+{gallery.length > 0 && <Gallery items={gallery} />}
+{brands.length > 0 && <Brands items={brands} />}
+{reviews.length > 0 && <Reviews items={reviews} />}
 ```
 
 - [ ] **Step 8: Run E2E**
@@ -2448,7 +2602,9 @@ order: 1
 EOF
 npm run test:e2e -- sections
 ```
+
 Expected: PASS (the test now expects `#galeria` to exist, and it does). Then delete it:
+
 ```bash
 rm src/content/gallery/prueba.yaml
 ```
@@ -2467,10 +2623,12 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 12: Location & hours (click-to-load map) + Contact
 
 **Files:**
+
 - Create: `src/components/sections/Location.astro`, `src/components/sections/Contact.astro`
 - Modify: `src/pages/index.astro`, `tests/e2e/sections.spec.ts`
 
 **Interfaces:**
+
 - Consumes: `weeklySchedule`, `telHref`, `formatMxPhone`, `whatsappUrl`, `SiteData`
 - Produces: `<Location site: SiteData>` (Part 2 adds the open-now badge inside it via `data-open-status`), `<Contact site: SiteData bookingHref: string>`
 
@@ -2490,10 +2648,9 @@ test('map loads only after the visitor asks for it', async ({ page }) => {
 
 test('directions link opens Google Maps', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('#ubicacion').getByRole('link', { name: 'Cómo llegar' })).toHaveAttribute(
-    'href',
-    /google\.com\/maps/,
-  );
+  await expect(
+    page.locator('#ubicacion').getByRole('link', { name: 'Cómo llegar' }),
+  ).toHaveAttribute('href', /google\.com\/maps/);
 });
 
 test('schedule: 7-day table when hours exist, WhatsApp hint otherwise', async ({ page }) => {
@@ -2510,8 +2667,14 @@ test('schedule: 7-day table when hours exist, WhatsApp hint otherwise', async ({
 test('contact offers WhatsApp and phone with valid links', async ({ page }) => {
   await page.goto('/');
   const section = page.locator('#contacto');
-  await expect(section.getByRole('link', { name: /WhatsApp/ })).toHaveAttribute('href', /^https:\/\/wa\.me\/52\d{10}/);
-  await expect(section.getByRole('link', { name: /Llamar/ })).toHaveAttribute('href', /^tel:\+52\d{10}$/);
+  await expect(section.getByRole('link', { name: /WhatsApp/ })).toHaveAttribute(
+    'href',
+    /^https:\/\/wa\.me\/52\d{10}/,
+  );
+  await expect(section.getByRole('link', { name: /Llamar/ })).toHaveAttribute(
+    'href',
+    /^tel:\+52\d{10}$/,
+  );
 });
 ```
 
@@ -2545,7 +2708,9 @@ const schedule = site.hours.length > 0 ? weeklySchedule(site.hours) : [];
         <address class="not-italic">
           <p class="font-semibold">{site.address.street}</p>
           <p>{site.address.neighborhood}</p>
-          <p>{site.address.city}, {site.address.region} {site.address.postalCode}</p>
+          <p>
+            {site.address.city}, {site.address.region} {site.address.postalCode}
+          </p>
         </address>
       </div>
 
@@ -2553,24 +2718,30 @@ const schedule = site.hours.length > 0 ? weeklySchedule(site.hours) : [];
         <Icon name="lucide:clock" class="mt-1 size-5 shrink-0 text-plum-500" aria-hidden="true" />
         <div class="w-full">
           <!-- Parte 2: indicador "Abierto ahora" -->
-          <p data-open-status hidden class="mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold"></p>
-          {
-            schedule.length > 0 ? (
-              <table class="w-full max-w-sm text-sm">
-                <caption class="sr-only">Horario de atención</caption>
-                <tbody>
-                  {schedule.map((row) => (
-                    <tr class="border-b border-plum-100 last:border-0">
-                      <th scope="row" class="py-2 text-left font-medium">{row.label}</th>
-                      <td class:list={['py-2 text-right', row.text === 'Cerrado' && 'text-muted']}>{row.text}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p class="text-muted">Escríbenos para confirmar el horario de atención.</p>
-            )
-          }
+          <p
+            data-open-status
+            hidden
+            class="mb-3 inline-flex rounded-full px-3 py-1 text-xs font-semibold"
+          ></p>
+          {schedule.length > 0 ? (
+            <table class="w-full max-w-sm text-sm">
+              <caption class="sr-only">Horario de atención</caption>
+              <tbody>
+                {schedule.map((row) => (
+                  <tr class="border-b border-plum-100 last:border-0">
+                    <th scope="row" class="py-2 text-left font-medium">
+                      {row.label}
+                    </th>
+                    <td class:list={['py-2 text-right', row.text === 'Cerrado' && 'text-muted']}>
+                      {row.text}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p class="text-muted">Escríbenos para confirmar el horario de atención.</p>
+          )}
         </div>
       </div>
 
@@ -2640,11 +2811,58 @@ interface Channel {
   event: string;
 }
 const channels: Channel[] = [
-  { label: 'WhatsApp', detail: formatMxPhone(site.whatsapp), href: bookingHref, icon: 'simple-icons:whatsapp', external: true, event: 'whatsapp-contact' },
-  { label: 'Llamar', detail: formatMxPhone(site.phone), href: telHref(site.phone), icon: 'lucide:phone', external: false, event: 'call' },
-  ...(site.instagram ? [{ label: 'Instagram', detail: 'Síguenos', href: site.instagram, icon: 'simple-icons:instagram', external: true, event: 'instagram' }] : []),
-  ...(site.facebook ? [{ label: 'Facebook', detail: 'Síguenos', href: site.facebook, icon: 'simple-icons:facebook', external: true, event: 'facebook' }] : []),
-  ...(site.email ? [{ label: 'Correo', detail: site.email, href: `mailto:${site.email}`, icon: 'lucide:mail', external: false, event: 'email' }] : []),
+  {
+    label: 'WhatsApp',
+    detail: formatMxPhone(site.whatsapp),
+    href: bookingHref,
+    icon: 'simple-icons:whatsapp',
+    external: true,
+    event: 'whatsapp-contact',
+  },
+  {
+    label: 'Llamar',
+    detail: formatMxPhone(site.phone),
+    href: telHref(site.phone),
+    icon: 'lucide:phone',
+    external: false,
+    event: 'call',
+  },
+  ...(site.instagram
+    ? [
+        {
+          label: 'Instagram',
+          detail: 'Síguenos',
+          href: site.instagram,
+          icon: 'simple-icons:instagram',
+          external: true,
+          event: 'instagram',
+        },
+      ]
+    : []),
+  ...(site.facebook
+    ? [
+        {
+          label: 'Facebook',
+          detail: 'Síguenos',
+          href: site.facebook,
+          icon: 'simple-icons:facebook',
+          external: true,
+          event: 'facebook',
+        },
+      ]
+    : []),
+  ...(site.email
+    ? [
+        {
+          label: 'Correo',
+          detail: site.email,
+          href: `mailto:${site.email}`,
+          icon: 'lucide:mail',
+          external: false,
+          event: 'email',
+        },
+      ]
+    : []),
 ];
 ---
 
@@ -2656,26 +2874,24 @@ const channels: Channel[] = [
     intro="La forma más rápida es por WhatsApp; te respondemos en horario de atención."
   />
   <ul class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
-    {
-      channels.map((c) => (
-        <li>
-          <a
-            href={c.href}
-            data-umami-event={c.event}
-            {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            class="flex items-center gap-4 rounded-3xl bg-white p-5 shadow-sm transition hover:shadow-md"
-          >
-            <span class="grid size-12 shrink-0 place-items-center rounded-full bg-plum-50 text-plum-600">
-              <Icon name={c.icon} class="size-6" aria-hidden="true" />
-            </span>
-            <span class="min-w-0">
-              <span class="block font-semibold text-plum-900">{c.label}</span>
-              <span class="block truncate text-sm text-muted">{c.detail}</span>
-            </span>
-          </a>
-        </li>
-      ))
-    }
+    {channels.map((c) => (
+      <li>
+        <a
+          href={c.href}
+          data-umami-event={c.event}
+          {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          class="flex items-center gap-4 rounded-3xl bg-white p-5 shadow-sm transition hover:shadow-md"
+        >
+          <span class="grid size-12 shrink-0 place-items-center rounded-full bg-plum-50 text-plum-600">
+            <Icon name={c.icon} class="size-6" aria-hidden="true" />
+          </span>
+          <span class="min-w-0">
+            <span class="block font-semibold text-plum-900">{c.label}</span>
+            <span class="block truncate text-sm text-muted">{c.detail}</span>
+          </span>
+        </a>
+      </li>
+    ))}
   </ul>
 </Section>
 ```
@@ -2683,15 +2899,17 @@ const channels: Channel[] = [
 - [ ] **Step 4: Wire into `src/pages/index.astro`**
 
 Imports:
+
 ```astro
-import Location from '../components/sections/Location.astro';
-import Contact from '../components/sections/Contact.astro';
+import Location from '../components/sections/Location.astro'; import Contact from
+'../components/sections/Contact.astro';
 ```
 
 Replace the two placeholder sections with:
+
 ```astro
-    <Location site={site} />
-    <Contact site={site} bookingHref={bookingHref} />
+<Location site={site} />
+<Contact site={site} bookingHref={bookingHref} />
 ```
 
 - [ ] **Step 5: Run all tests**
@@ -2713,11 +2931,13 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 13: Quality gate, cleanup, owner sign-off
 
 **Files:**
+
 - Create: `tests/e2e/quality.spec.ts`
 - Modify: `CLAUDE.md`, `docs/astro-migration-plan.md` (tick Phase 0–1 boxes)
 - Delete: `legacy/`
 
 **Interfaces:**
+
 - Consumes: the whole page.
 - Produces: a green `npm test && npm run test:e2e && npm run build`, and an updated `CLAUDE.md` that Part 2 builds on.
 
@@ -2728,7 +2948,9 @@ import { test, expect } from '@playwright/test';
 
 test('no horizontal scroll', async ({ page }) => {
   await page.goto('/');
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - window.innerWidth,
+  );
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
@@ -2776,9 +2998,10 @@ test('first-load transfer stays under 1 MB', async ({ page }) => {
 
 Run: `npm run test:e2e -- quality`
 Expected: PASS. Likely failure: horizontal overflow from the category chip row or a long email in Contact. The chip row already uses `overflow-x-auto` and the contact detail uses `truncate`; if something else overflows, find it with:
+
 ```js
 // en la consola del navegador a 375px
-[...document.querySelectorAll('*')].filter(e => e.getBoundingClientRect().right > innerWidth)
+[...document.querySelectorAll('*')].filter((e) => e.getBoundingClientRect().right > innerWidth);
 ```
 
 - [ ] **Step 3: Lighthouse check (manual, mobile)**
@@ -2788,6 +3011,7 @@ npm run build && npm run serve:dist
 npx lighthouse http://localhost:4321 --preset=perf --form-factor=mobile --screenEmulation.mobile --view
 npx lighthouse http://localhost:4321 --only-categories=accessibility,best-practices,seo --view
 ```
+
 Expected: ≥ 90 in all four categories. (Part 2 automates this with Lighthouse CI.)
 
 Also open the site on a real low-end Android phone and an iPhone (Safari) on the same Wi-Fi (`npx serve dist -l 4321` then `http://<your-LAN-IP>:4321`). Check menu, WhatsApp links (they should open the app), and map loading.
@@ -2800,7 +3024,7 @@ git rm -r legacy
 
 - [ ] **Step 5: Update `CLAUDE.md`** by replacing the "Running", "Architecture" and "Known state / gotchas" sections with:
 
-```markdown
+````markdown
 ## Running
 
 Requires Node ≥ 22.12.
@@ -2813,6 +3037,7 @@ npm test               # Vitest unit tests (src/lib)
 npm run test:coverage  # coverage, 80% threshold on src/lib
 npm run test:e2e       # Playwright against the built dist/ (mobile + desktop)
 ```
+````
 
 ## Architecture
 
@@ -2830,7 +3055,8 @@ Astro 7 static site + Tailwind 4 (`@tailwindcss/vite`, tokens in `src/styles/glo
 - Fields marked `# PENDIENTE` in `src/content/` are unconfirmed with the owner.
 - Empty optional fields may be `''` or `null` (Keystatic's convention); schemas treat both as missing.
 - E2E tests read the YAML content to build their expectations, so they follow content edits.
-```
+
+````
 
 - [ ] **Step 6: Tick Phases 0–1 in `docs/astro-migration-plan.md`**, changing `- [ ]` to `- [x]` for the completed items in Phase 0 and Phase 1.5, except "Owner approves the look" (leave it until the owner does).
 
@@ -2846,7 +3072,7 @@ git add -A
 git commit -m "chore: add quality E2E checks, remove legacy site, update CLAUDE.md
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
-```
+````
 
 - [ ] **Step 9: Owner sign-off**
 

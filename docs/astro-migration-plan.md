@@ -4,12 +4,12 @@ _Date: 2026-09-27. Follows [enhacement.md](./enhacement.md)._
 
 ## Decisions
 
-| Topic | Decision |
-|---|---|
-| Framework | **Astro** (option B), static output, zero client JS by default |
-| Styling | **Tailwind CSS v4**; Bulma, Font Awesome, and `script.js` are removed |
+| Topic                 | Decision                                                                                                                                |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework             | **Astro** (option B), static output, zero client JS by default                                                                          |
+| Styling               | **Tailwind CSS v4**; Bulma, Font Awesome, and `script.js` are removed                                                                   |
 | Who maintains content | **The salon owner**, so every text, price, photo, and contact detail must be editable without touching code (a git-based CMS, option F) |
-| Order | **UI first**, then content editing, conversion features, SEO/perf, deploy, handoff |
+| Order                 | **UI first**, then content editing, conversion features, SEO/perf, deploy, handoff                                                      |
 
 ## Guiding principles
 
@@ -81,20 +81,20 @@ Built on the brand assets that already exist:
 Draft tokens (`src/styles/global.css`):
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-plum-50:  #fbf4f8;
+  --color-plum-50: #fbf4f8;
   --color-plum-100: #f5e4ee;
-  --color-plum-500: #a44c7e;   /* marca: logo */
-  --color-plum-600: #8c3f6b;   /* hover */
+  --color-plum-500: #a44c7e; /* marca: logo */
+  --color-plum-600: #8c3f6b; /* hover */
   --color-plum-900: #3d1a2f;
   --color-blush-100: #fbeceb;
-  --color-blush-300: #edb7b4;  /* marca: fondo del banner */
-  --color-ink:       #1f1a1d;
+  --color-blush-300: #edb7b4; /* marca: fondo del banner */
+  --color-ink: #1f1a1d;
 
-  --font-display: "Cormorant Garamond", ui-serif, serif;  /* títulos */
-  --font-sans:    "Manrope", ui-sans-serif, system-ui, sans-serif; /* texto */
+  --font-display: 'Cormorant Garamond', ui-serif, serif; /* títulos */
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif; /* texto */
 }
 ```
 
@@ -108,19 +108,19 @@ Draft tokens (`src/styles/global.css`):
 
 ### 1.2 Page structure (single page, mobile-first)
 
-| # | Section | Content | Notes |
-|---|---|---|---|
-| 1 | **Header** | Logo, anchor links, "Agendar" button | Sticky, turns solid on scroll; mobile menu via `<details>` or a tiny script; `aria-expanded` handled |
-| 2 | **Hero** | `<h1>` headline, one-line value prop, primary CTA (WhatsApp), secondary CTA (Ver servicios), photo | Replaces the 8 MB GIF with an optimized still image (or short MP4 with poster). Text is real HTML, not baked into the image |
-| 3 | **Servicios** | Categories (Cabello, Uñas, Tratamientos…) as tabs or chips; each service: name, short description, duration, "desde $X", photo | Replaces cards + modals + the separate mobile image grid. Details via native `<dialog>` only if descriptions are long |
-| 4 | **Por qué Belyni** | 3–4 highlights (products, experience, hygiene, location) | Short, icon + text |
-| 5 | **Galería** | Grid of real work (before/after) | Lazy-loaded, optimized; lightbox optional (later) |
-| 6 | **Marcas** | Brand logos (Olaplex, …) | Grayscale → color on hover |
-| 7 | **Opiniones** | 3 curated reviews | Phase 5 can connect Google reviews |
-| 8 | **Ubicación y horario** | Address, hours table, "Cómo llegar" button, map | Map as a **static image facade** linking to Google Maps (no iframe on load) |
-| 9 | **Contacto** | WhatsApp, click-to-call, email, socials; optional form | The form is only kept if Phase 3 connects it to a service |
-| 10 | **Footer** | Logo, socials, hours, copyright | |
-| — | **WhatsApp FAB** | Floating button | `aria-label`, doesn't cover content on mobile |
+| #   | Section                 | Content                                                                                                                        | Notes                                                                                                                       |
+| --- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Header**              | Logo, anchor links, "Agendar" button                                                                                           | Sticky, turns solid on scroll; mobile menu via `<details>` or a tiny script; `aria-expanded` handled                        |
+| 2   | **Hero**                | `<h1>` headline, one-line value prop, primary CTA (WhatsApp), secondary CTA (Ver servicios), photo                             | Replaces the 8 MB GIF with an optimized still image (or short MP4 with poster). Text is real HTML, not baked into the image |
+| 3   | **Servicios**           | Categories (Cabello, Uñas, Tratamientos…) as tabs or chips; each service: name, short description, duration, "desde $X", photo | Replaces cards + modals + the separate mobile image grid. Details via native `<dialog>` only if descriptions are long       |
+| 4   | **Por qué Belyni**      | 3–4 highlights (products, experience, hygiene, location)                                                                       | Short, icon + text                                                                                                          |
+| 5   | **Galería**             | Grid of real work (before/after)                                                                                               | Lazy-loaded, optimized; lightbox optional (later)                                                                           |
+| 6   | **Marcas**              | Brand logos (Olaplex, …)                                                                                                       | Grayscale → color on hover                                                                                                  |
+| 7   | **Opiniones**           | 3 curated reviews                                                                                                              | Phase 5 can connect Google reviews                                                                                          |
+| 8   | **Ubicación y horario** | Address, hours table, "Cómo llegar" button, map                                                                                | Map as a **static image facade** linking to Google Maps (no iframe on load)                                                 |
+| 9   | **Contacto**            | WhatsApp, click-to-call, email, socials; optional form                                                                         | The form is only kept if Phase 3 connects it to a service                                                                   |
+| 10  | **Footer**              | Logo, socials, hours, copyright                                                                                                |                                                                                                                             |
+| —   | **WhatsApp FAB**        | Floating button                                                                                                                | `aria-label`, doesn't cover content on mobile                                                                               |
 
 ### 1.3 Components to build
 
@@ -169,6 +169,7 @@ Goal: the owner changes prices, services, photos, hours, and promotions from a w
 laptop, with no code, and the site rebuilds automatically.
 
 **Recommended: [Keystatic](https://keystatic.com).**
+
 - Built for Astro; the schemas mirror the Zod collections from Phase 1
 - Content stays in this git repo as Markdown/JSON, so there's no external database and no monthly cost
 - Images uploaded by the owner land in the repo and still go through Astro's optimization
@@ -182,6 +183,7 @@ and a free tier, but content lives outside the repo and needs a rebuild webhook)
 **Pages CMS** (free, GitHub-based, no adapter needed).
 
 Tasks:
+
 - [ ] Install Keystatic + adapter; mirror `services`, `brands`, `reviews`, `gallery`, `site`
       as Keystatic collections/singletons with Spanish labels and help text
 - [ ] Field validation so the owner can't break the layout (max lengths, required images, price ≥ 0)
@@ -272,17 +274,17 @@ Needed before or during Phase 1:
 
 ## Timeline estimate
 
-| Phase | Effort |
-|---|---|
-| 0 Setup | ½ day |
-| 1 UI | 3–5 days (depends on owner feedback + content) |
-| 2 CMS | 1–2 days |
-| 3 Conversion | 1–2 days |
-| 4 SEO/perf | 1 day |
-| 5 Testing | 1 day (+ ongoing) |
-| 6 Deploy | ½ day |
-| 7 Handoff | ½ day |
-| **Total** | **≈ 2 weeks part-time** |
+| Phase        | Effort                                         |
+| ------------ | ---------------------------------------------- |
+| 0 Setup      | ½ day                                          |
+| 1 UI         | 3–5 days (depends on owner feedback + content) |
+| 2 CMS        | 1–2 days                                       |
+| 3 Conversion | 1–2 days                                       |
+| 4 SEO/perf   | 1 day                                          |
+| 5 Testing    | 1 day (+ ongoing)                              |
+| 6 Deploy     | ½ day                                          |
+| 7 Handoff    | ½ day                                          |
+| **Total**    | **≈ 2 weeks part-time**                        |
 
 ## Owner feedback
 
@@ -290,25 +292,25 @@ _Pending: walk the owner through the preview and record their feedback here._
 
 Checklist of every `# PENDIENTE` item in `src/content/` that needs an answer before Part 2's production gate:
 
-| File | Field | Note |
-|---|---|---|
-| `src/content/site/index.yaml` | `intro` | validar texto con la dueña |
-| `src/content/site/index.yaml` | `phone` | confirmar número para llamadas (tomado del WhatsApp del sitio anterior) |
-| `src/content/site/index.yaml` | `whatsapp` | confirmar (sitio anterior, abril 2025) |
-| `src/content/site/index.yaml` | `address.postalCode` | código postal |
-| `src/content/site/index.yaml` | `geo.lat` | verificar contra Google Business Profile |
-| `src/content/site/index.yaml` | `instagram` | confirmar |
-| `src/content/site/index.yaml` | `facebook` | confirmar |
-| `src/content/site/index.yaml` | `hours` | horario real (lista de `{ day, open, close }`) |
-| `src/content/site/index.yaml` | `highlights` | validar textos con la dueña |
-| `src/content/site/index.yaml` | `servicesNote` | validar |
-| `src/content/team/nieves-munoz.yaml` | `role` | confirmar cargo |
-| `src/content/services/corte-dama.yaml` | `durationMin` | duración |
-| `src/content/services/manicura.yaml` | `priceFrom` | precio |
-| `src/content/services/manicura.yaml` | `durationMin` | duración |
-| `src/content/services/masajes.yaml` | `priceFrom` | precio |
-| `src/content/services/masajes.yaml` | `durationMin` | duración |
-| `src/content/services/masajes.yaml` | `image` | falta foto |
-| `src/content/services/tratamientos.yaml` | `priceFrom` | precio |
-| `src/content/services/tratamientos.yaml` | `durationMin` | duración |
-| `src/content/services/tratamientos.yaml` | `image` | falta foto |
+| File                                     | Field                | Note                                                                    |
+| ---------------------------------------- | -------------------- | ----------------------------------------------------------------------- |
+| `src/content/site/index.yaml`            | `intro`              | validar texto con la dueña                                              |
+| `src/content/site/index.yaml`            | `phone`              | confirmar número para llamadas (tomado del WhatsApp del sitio anterior) |
+| `src/content/site/index.yaml`            | `whatsapp`           | confirmar (sitio anterior, abril 2025)                                  |
+| `src/content/site/index.yaml`            | `address.postalCode` | código postal                                                           |
+| `src/content/site/index.yaml`            | `geo.lat`            | verificar contra Google Business Profile                                |
+| `src/content/site/index.yaml`            | `instagram`          | confirmar                                                               |
+| `src/content/site/index.yaml`            | `facebook`           | confirmar                                                               |
+| `src/content/site/index.yaml`            | `hours`              | horario real (lista de `{ day, open, close }`)                          |
+| `src/content/site/index.yaml`            | `highlights`         | validar textos con la dueña                                             |
+| `src/content/site/index.yaml`            | `servicesNote`       | validar                                                                 |
+| `src/content/team/nieves-munoz.yaml`     | `role`               | confirmar cargo                                                         |
+| `src/content/services/corte-dama.yaml`   | `durationMin`        | duración                                                                |
+| `src/content/services/manicura.yaml`     | `priceFrom`          | precio                                                                  |
+| `src/content/services/manicura.yaml`     | `durationMin`        | duración                                                                |
+| `src/content/services/masajes.yaml`      | `priceFrom`          | precio                                                                  |
+| `src/content/services/masajes.yaml`      | `durationMin`        | duración                                                                |
+| `src/content/services/masajes.yaml`      | `image`              | falta foto                                                              |
+| `src/content/services/tratamientos.yaml` | `priceFrom`          | precio                                                                  |
+| `src/content/services/tratamientos.yaml` | `durationMin`        | duración                                                                |
+| `src/content/services/tratamientos.yaml` | `image`              | falta foto                                                              |

@@ -38,20 +38,21 @@ const nav = navItems([
 ]);
 ---
 
-<BaseLayout title={`${site.name} | Salón de belleza en ${site.address.city}`} description={site.intro}>
+<BaseLayout
+  title={`${site.name} | Salón de belleza en ${site.address.city}`}
+  description={site.intro}
+>
   <Header items={nav} bookingHref={bookingHref} siteName={site.name} />
   <main id="contenido">
     <Hero site={site} bookingHref={bookingHref} />
-    {
-      services.length > 0 && (
-        <Services
-          services={services}
-          whatsapp={site.whatsapp}
-          whatsappMessage={site.whatsappMessage}
-          note={site.servicesNote}
-        />
-      )
-    }
+    {services.length > 0 && (
+      <Services
+        services={services}
+        whatsapp={site.whatsapp}
+        whatsappMessage={site.whatsappMessage}
+        note={site.servicesNote}
+      />
+    )}
     {site.highlights.length > 0 && <Highlights items={site.highlights} siteName={site.name} />}
     {team.length > 0 && <Team members={team} />}
     {gallery.length > 0 && <Gallery items={gallery} />}

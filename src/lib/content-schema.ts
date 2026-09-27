@@ -15,7 +15,10 @@ export const optionalText = z.preprocess(
   z.string().optional(),
 );
 export const optionalUrl = z.preprocess(emptyToUndefined, z.url().optional());
-export const optionalInt = z.preprocess(emptyToUndefined, z.number().int().nonnegative().optional());
+export const optionalInt = z.preprocess(
+  emptyToUndefined,
+  z.number().int().nonnegative().optional(),
+);
 
 export const phoneSchema = z.preprocess(
   numberToString,
