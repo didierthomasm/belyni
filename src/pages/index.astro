@@ -4,6 +4,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import WhatsAppFab from '../components/layout/WhatsAppFab.astro';
+import Hero from '../components/sections/Hero.astro';
+import Services from '../components/sections/Services.astro';
 import { getSite } from '../lib/site';
 import { byOrder } from '../lib/order';
 import { navItems } from '../lib/nav';
@@ -32,9 +34,17 @@ const nav = navItems([
 <BaseLayout title={`${site.name} | Salón de belleza en ${site.address.city}`} description={site.intro}>
   <Header items={nav} bookingHref={bookingHref} siteName={site.name} />
   <main id="contenido">
-    <!-- Secciones: Tareas 10–12 (este h1 temporal lo reemplaza el Hero) -->
-    <h1 class="p-8 text-5xl font-semibold text-plum-900">{site.name}</h1>
-    <section id="servicios" class="min-h-screen"></section>
+    <Hero site={site} bookingHref={bookingHref} />
+    {
+      services.length > 0 && (
+        <Services
+          services={services}
+          whatsapp={site.whatsapp}
+          whatsappMessage={site.whatsappMessage}
+          note={site.servicesNote}
+        />
+      )
+    }
     <section id="ubicacion" class="min-h-screen"></section>
     <section id="contacto" class="min-h-screen"></section>
   </main>

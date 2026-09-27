@@ -1,0 +1,41 @@
+---
+import { Picture } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import Button from '../ui/Button.astro';
+import type { SiteData } from '../../lib/site';
+
+interface Props {
+  site: SiteData;
+  bookingHref: string;
+}
+const { site, bookingHref } = Astro.props;
+---
+
+<section id="inicio" class="overflow-hidden bg-blush-100">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 md:grid-cols-2 md:py-20">
+    <div class="text-center md:text-left">
+      <p class="mb-3 text-xs font-semibold tracking-[0.2em] text-plum-600 uppercase">
+        {site.name} · Salón de belleza en {site.address.city}
+      </p>
+      <h1 class="text-5xl leading-tight font-semibold text-plum-900 sm:text-6xl">{site.tagline}</h1>
+      <p class="mx-auto mt-5 max-w-md text-lg text-muted md:mx-0">{site.intro}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center md:justify-start">
+        <Button href={bookingHref} external data-umami-event="whatsapp-hero">
+          <Icon name="simple-icons:whatsapp" class="size-5" aria-hidden="true" />
+          Agenda por WhatsApp
+        </Button>
+        <Button href="#servicios" variant="secondary">Ver servicios</Button>
+      </div>
+    </div>
+    <Picture
+      src={site.heroImage}
+      alt={site.heroImageAlt}
+      formats={['avif', 'webp']}
+      widths={[480, 768, 1024]}
+      sizes="(min-width: 768px) 50vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="aspect-square w-full rounded-[2rem] object-cover shadow-xl"
+    />
+  </div>
+</section>
