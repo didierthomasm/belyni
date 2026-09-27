@@ -1,0 +1,9 @@
+name: Manicura
+category: unas
+description: Manos elegantes con productos de alta calidad.
+priceFrom: null # PENDIENTE: precio
+durationMin: null
+image: ../../assets/img/services/manicure.jpg
+imageAlt: Manicurista limando las uñas de una clienta
+order: 1
+featured: true

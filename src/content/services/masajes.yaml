@@ -1,0 +1,9 @@
+name: Masajes
+category: masajes
+description: Masajes diseñados para liberar el estrés y revitalizar tu cuerpo.
+priceFrom: null # PENDIENTE: precio
+durationMin: null
+image: ''
+imageAlt: ''
+order: 1
+featured: false

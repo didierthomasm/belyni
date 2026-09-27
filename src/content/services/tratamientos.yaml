@@ -1,0 +1,9 @@
+name: Tratamientos capilares
+category: tratamientos
+description: Cuida tu cabello con tratamientos personalizados.
+priceFrom: null # PENDIENTE: precio
+durationMin: null
+image: ''
+imageAlt: ''
+order: 1
+featured: false

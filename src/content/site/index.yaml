@@ -1,0 +1,34 @@
+name: Belyni
+tagline: Tu belleza en manos expertas
+intro: Salón de belleza en Veracruz. Cortes, color, uñas y tratamientos con productos profesionales y atención personalizada. # PENDIENTE: validar texto con la dueña
+heroImage: ../../assets/img/hero.png
+heroImageAlt: Mujer con corte bob ondulado sobre fondo rosa
+phone: 229 225 8060 # PENDIENTE: confirmar número para llamadas (tomado del WhatsApp del sitio anterior)
+whatsapp: 229 225 8060 # PENDIENTE: confirmar (sitio anterior, abril 2025)
+whatsappMessage: Hola, me gustaría agendar una cita en Belyni.
+email: ''
+address:
+  street: Juan Enríquez 431
+  neighborhood: Ricardo Flores Magón
+  city: Veracruz
+  region: Veracruz
+  postalCode: '' # PENDIENTE: código postal
+geo:
+  lat: 19.1863473 # PENDIENTE: verificar contra Google Business Profile
+  lng: -96.1289616
+mapsUrl: https://www.google.com/maps/search/?api=1&query=Belyni%2C%20Juan%20Enr%C3%ADquez%20431%2C%20Veracruz
+mapsEmbedUrl: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3640.633225233502!2d-96.1289616249451!3d19.18634728204117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85c346cc65298d87%3A0xbfc4904f9770a6ac!2sBelyni!5e1!3m2!1ses-419!2sus!4v1745218076842!5m2!1ses-419!2sus
+instagram: https://www.instagram.com/belynisalon/ # PENDIENTE: confirmar
+facebook: https://www.facebook.com/salonbelyni # PENDIENTE: confirmar
+hours: [] # PENDIENTE: horario real (lista de { day, open, close })
+highlights: # PENDIENTE: validar textos con la dueña
+  - icon: sparkles
+    title: Productos profesionales
+    text: Trabajamos con marcas profesionales para cuidar tu cabello, piel y uñas.
+  - icon: heart
+    title: Atención personalizada
+    text: Escuchamos lo que buscas y te recomendamos lo que mejor va contigo.
+  - icon: shield-check
+    title: Higiene y cuidado
+    text: Herramientas desinfectadas y un espacio limpio en cada cita.
+servicesNote: Precios de referencia; el costo final puede variar según el largo y tipo de cabello. # PENDIENTE: validar
