@@ -30,18 +30,18 @@ _Date: 2026-09-27. Follows [enhacement.md](./enhacement.md)._
 Goal: an empty Astro + Tailwind site running in this repo, with the old site still available
 for reference until the switch.
 
-- [ ] Create branch `feat/astro-migration`
-- [ ] Add `.gitignore` (`node_modules/`, `dist/`, `.astro/`, `.DS_Store`, `.idea/`, `.env*`)
-- [ ] Move the current site to `legacy/` (`index.html`, `script.js`, `resources/css/`) so it can
+- [x] Create branch `feat/astro-migration`
+- [x] Add `.gitignore` (`node_modules/`, `dist/`, `.astro/`, `.DS_Store`, `.idea/`, `.env*`)
+- [x] Move the current site to `legacy/` (`index.html`, `script.js`, `resources/css/`) so it can
       be compared side by side; it gets deleted at the end of Phase 1
-- [ ] Scaffold Astro in the repo root: `npm create astro@latest .` (minimal template, TypeScript strict)
-- [ ] Add Tailwind: `npx astro add tailwind` (sets up Tailwind v4 via `@tailwindcss/vite`,
+- [x] Scaffold Astro in the repo root: `npm create astro@latest .` (minimal template, TypeScript strict)
+- [x] Add Tailwind: `npx astro add tailwind` (sets up Tailwind v4 via `@tailwindcss/vite`,
       configured in CSS with `@theme`, with no `tailwind.config.js`)
-- [ ] Add Prettier with `prettier-plugin-astro` and `prettier-plugin-tailwindcss` (class sorting)
-- [ ] Move images to `src/assets/img/` so Astro's `<Image>`/`<Picture>` optimizes them
+- [x] Add Prettier with `prettier-plugin-astro` and `prettier-plugin-tailwindcss` (class sorting)
+- [x] Move images to `src/assets/img/` so Astro's `<Image>`/`<Picture>` optimizes them
       (AVIF/WebP, `srcset`, width/height). Move the favicon source to `public/`
-- [ ] Remove `swiper` from `package.json`
-- [ ] Update `CLAUDE.md` with the new commands (`npm run dev`, `npm run build`, `npm run preview`)
+- [x] Remove `swiper` from `package.json`
+- [x] Update `CLAUDE.md` with the new commands (`npm run dev`, `npm run build`, `npm run preview`)
 
 Target structure:
 
@@ -153,13 +153,13 @@ are clearly marked** until the owner provides the real list (see [Open questions
 
 ### 1.5 Phase 1 done when
 
-- [ ] Every section above renders from content files, with no hard-coded copy in components
-- [ ] Looks right at 375px, 768px, 1280px; no horizontal scroll
-- [ ] Keyboard-navigable; visible focus; one `<h1>`; images have `alt`
-- [ ] Lighthouse mobile ≥ 90 in all four categories
-- [ ] Page weight < 1 MB on first load; no client JS except the menu (if needed)
+- [x] Every section above renders from content files, with no hard-coded copy in components
+- [x] Looks right at 375px, 768px, 1280px; no horizontal scroll
+- [x] Keyboard-navigable; visible focus; one `<h1>`; images have `alt`
+- [x] Lighthouse mobile ≥ 90 in all four categories
+- [x] Page weight < 1 MB on first load; no client JS except the menu (if needed)
 - [ ] Owner approves the look
-- [ ] `legacy/` deleted
+- [x] `legacy/` deleted
 
 ---
 
@@ -283,3 +283,32 @@ Needed before or during Phase 1:
 | 6 Deploy | ½ day |
 | 7 Handoff | ½ day |
 | **Total** | **≈ 2 weeks part-time** |
+
+## Owner feedback
+
+_Pending: walk the owner through the preview and record their feedback here._
+
+Checklist of every `# PENDIENTE` item in `src/content/` that needs an answer before Part 2's production gate:
+
+| File | Field | Note |
+|---|---|---|
+| `src/content/site/index.yaml` | `intro` | validar texto con la dueña |
+| `src/content/site/index.yaml` | `phone` | confirmar número para llamadas (tomado del WhatsApp del sitio anterior) |
+| `src/content/site/index.yaml` | `whatsapp` | confirmar (sitio anterior, abril 2025) |
+| `src/content/site/index.yaml` | `address.postalCode` | código postal |
+| `src/content/site/index.yaml` | `geo.lat` | verificar contra Google Business Profile |
+| `src/content/site/index.yaml` | `instagram` | confirmar |
+| `src/content/site/index.yaml` | `facebook` | confirmar |
+| `src/content/site/index.yaml` | `hours` | horario real (lista de `{ day, open, close }`) |
+| `src/content/site/index.yaml` | `highlights` | validar textos con la dueña |
+| `src/content/site/index.yaml` | `servicesNote` | validar |
+| `src/content/team/nieves-munoz.yaml` | `role` | confirmar cargo |
+| `src/content/services/corte-dama.yaml` | `durationMin` | duración |
+| `src/content/services/manicura.yaml` | `priceFrom` | precio |
+| `src/content/services/manicura.yaml` | `durationMin` | duración |
+| `src/content/services/masajes.yaml` | `priceFrom` | precio |
+| `src/content/services/masajes.yaml` | `durationMin` | duración |
+| `src/content/services/masajes.yaml` | `image` | falta foto |
+| `src/content/services/tratamientos.yaml` | `priceFrom` | precio |
+| `src/content/services/tratamientos.yaml` | `durationMin` | duración |
+| `src/content/services/tratamientos.yaml` | `image` | falta foto |
