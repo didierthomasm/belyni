@@ -29,6 +29,9 @@ describe('empty values written by the CMS', () => {
     expect(optionalInt.safeParse(-5).success).toBe(false);
     expect(optionalInt.safeParse(1.5).success).toBe(false);
   });
+  it('optionalText accepts YAML-parsed numeric digits (e.g. a postal code)', () => {
+    expect(optionalText.parse(91700)).toBe('91700');
+  });
 });
 
 describe('phoneSchema', () => {
@@ -37,6 +40,9 @@ describe('phoneSchema', () => {
     const result = phoneSchema.safeParse('229 000');
     expect(result.success).toBe(false);
     expect(result.error?.issues[0].message).toMatch(/10 dígitos/);
+  });
+  it('accepts YAML-parsed numeric digits (owner typed digits with no quotes)', () => {
+    expect(phoneSchema.parse(2292258060)).toBe('2292258060');
   });
 });
 
