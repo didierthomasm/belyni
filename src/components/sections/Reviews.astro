@@ -16,10 +16,11 @@ const { items } = Astro.props;
     {
       items.map((review) => (
         <li class="flex flex-col rounded-3xl bg-white p-6 shadow-sm">
-          <p class="flex gap-1 text-plum-500" aria-label={`${review.rating} de 5 estrellas`}>
+          <p class="flex gap-1 text-plum-500">
             {Array.from({ length: review.rating }, () => (
               <Icon name="lucide:star" class="size-4 fill-current" aria-hidden="true" />
             ))}
+            <span class="sr-only">{review.rating} de 5 estrellas</span>
           </p>
           <blockquote class="mt-4 flex-1 text-ink">“{review.text}”</blockquote>
           <p class="mt-4 text-sm font-semibold text-plum-700">{review.author}</p>

@@ -52,7 +52,7 @@ const nav = navItems([
         />
       )
     }
-    {site.highlights.length > 0 && <Highlights items={site.highlights} />}
+    {site.highlights.length > 0 && <Highlights items={site.highlights} siteName={site.name} />}
     {team.length > 0 && <Team members={team} />}
     {gallery.length > 0 && <Gallery items={gallery} />}
     {brands.length > 0 && <Brands items={brands} />}
