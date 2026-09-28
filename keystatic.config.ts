@@ -35,7 +35,10 @@ const order = fields.integer({
 const TIME_HELP = 'Formato 24 h: HH:MM, por ejemplo 09:30 o 19:00';
 
 export default config({
-  storage: { kind: 'local' },
+  // Local en desarrollo; en producción cada guardado es un commit en GitHub
+  storage: import.meta.env.PROD
+    ? { kind: 'github', repo: 'didierthomasm/belyni' }
+    : { kind: 'local' },
   ui: { brand: { name: 'Belyni' } },
   singletons: {
     site: singleton({
