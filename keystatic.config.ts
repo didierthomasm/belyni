@@ -35,10 +35,12 @@ const order = fields.integer({
 const TIME_HELP = 'Formato 24 h: HH:MM, por ejemplo 09:30 o 19:00';
 
 export default config({
-  // Local en desarrollo; en producción cada guardado es un commit en GitHub
-  storage: import.meta.env.PROD
-    ? { kind: 'github', repo: 'didierthomasm/belyni' }
-    : { kind: 'local' },
+  // Local en desarrollo; en producción cada guardado es un commit en GitHub.
+  // PUBLIC_KEYSTATIC_STORAGE=github permite correr el asistente de la GitHub App en local.
+  storage:
+    import.meta.env.PROD || import.meta.env.PUBLIC_KEYSTATIC_STORAGE === 'github'
+      ? { kind: 'github', repo: 'didierthomasm/belyni' }
+      : { kind: 'local' },
   ui: { brand: { name: 'Belyni' } },
   singletons: {
     site: singleton({

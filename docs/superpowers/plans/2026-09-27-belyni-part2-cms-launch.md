@@ -1769,9 +1769,9 @@ Expected: the PR's deploy preview builds (the gate doesn't run on previews).
 
 - [ ] **Step 3: Create the Keystatic GitHub App**
 
-1. Locally, set `SITE_URL` to the Netlify URL, run `npm run build && npx netlify dev` (or deploy a preview), open `/keystatic`, and follow the "Create GitHub App" wizard. It writes the four `KEYSTATIC_*` values into `.env`.
+1. Locally, run `PUBLIC_KEYSTATIC_STORAGE=github npm run dev` and open `http://localhost:4321/keystatic`, then follow the "Create GitHub App" wizard. It writes the four `KEYSTATIC_*` values into `.env`.
 2. Copy those four values into Netlify environment variables. **Never commit `.env`** (it's gitignored since Part 1).
-3. In the GitHub App settings, set the callback URL to `https://<site>/api/keystatic/github/oauth/callback`.
+3. In the GitHub App settings, set the callback URL to `http://localhost:4321/api/keystatic/github/oauth/callback` for this local setup run; once the site is deployed, add (or switch it to) the production callback URL `https://<site>/api/keystatic/github/oauth/callback`.
 4. Add the owner's GitHub account as a collaborator on the repo (write access) and install the app on the repo.
 
 Verify: in an incognito window, `https://<site>/keystatic` asks for GitHub sign-in (Review Focus 5). After signing in as the owner, editing `tagline` creates a commit on `main` and Netlify redeploys within ~2 minutes.
