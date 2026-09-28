@@ -40,3 +40,18 @@ test('thank-you page is noindex', async ({ page }) => {
   test.skip(res?.status() === 404, 'contact form not enabled');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
 });
+
+test('analytics script only when configured', async ({ page }) => {
+  await page.goto('/');
+  const expected = process.env.PUBLIC_UMAMI_WEBSITE_ID ? 1 : 0;
+  await expect(page.locator('script[src="https://cloud.umami.is/script.js"]')).toHaveCount(
+    expected,
+  );
+});
+
+test('conversion links are tagged for analytics', async ({ page }) => {
+  await page.goto('/');
+  for (const event of ['whatsapp-fab', 'whatsapp-hero', 'directions', 'call']) {
+    await expect(page.locator(`[data-umami-event="${event}"]`).first()).toBeAttached();
+  }
+});
