@@ -1721,7 +1721,7 @@ gh pr create --draft --title "feat: migrate site to Astro + Tailwind with Keysta
 gh pr checks --watch
 ```
 
-Expected: "CI / test" passes. Then in GitHub → Settings → Branches, protect `main` and require "CI / test".
+Expected: "CI / test" passes. Then in GitHub → Settings → Branches: don't require status checks on `main` (Keystatic's GitHub storage mode commits directly to `main` when the owner saves, and a required check would reject those commits); optionally protect `main` against force-push and deletion only.
 
 ---
 
@@ -1810,7 +1810,7 @@ Verify: Actions → "Nightly rebuild" → Run workflow. Expected: a new Netlify 
 
 - [ ] **Step 6: Go live**
 
-1. Resolve every `PENDIENTE` with the owner (in the admin or YAML) and add the real hours. `npm run check:production` exits 0.
+1. Resolve every `PENDIENTE` with the owner **by editing the YAML files directly** (NOT via the admin: saving a file in Keystatic strips all YAML comments in that file, including the other `# PENDIENTE` markers) and add the real hours. `npm run check:production` exits 0.
 2. Merge the PR. The production deploy runs the gate and succeeds.
 3. Custom domain: Netlify → Domain management → add the owner's domain (e.g. `belyni.mx`), follow the DNS instructions, enable HTTPS, and set `SITE_URL` to the final domain, then redeploy.
 4. Google Business Profile: make sure name, address, phone, hours and website URL match the site exactly.
