@@ -1,6 +1,5 @@
-import { readdirSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
-import { readSite } from './content';
+import { readSite, firstNonExpiredPromotion } from './content';
 
 const DAY_IDS = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
 // Lunes 28 sep 2026 como base; Veracruz = UTC-6 todo el año
@@ -40,19 +39,25 @@ test.describe('open-now badge', () => {
   });
 });
 
-const hasPromos = () => readdirSync('src/content/promotions').some((f) => f.endsWith('.yaml'));
+// Mediodía en Veracruz (UTC-6 todo el año) para una fecha AAAA-MM-DD, con un
+// desplazamiento de días opcional (para probar el día siguiente a endDate).
+const veracruzNoonUtc = (isoDate: string, dayOffset = 0): Date => {
+  const [year, month, day] = isoDate.split('-').map(Number);
+  return new Date(Date.UTC(year, month - 1, day + dayOffset, 18, 0));
+};
 
 test('promotion banner respects dates in salon time', async ({ page }) => {
-  test.skip(!hasPromos(), 'no promotions in content');
-  const promoText = page.locator('[data-promo]:visible');
+  const promo = firstNonExpiredPromotion();
+  test.skip(!promo, 'no non-expired promotion in content');
+  const promoLocator = page.locator('[data-promo]:visible');
 
-  await page.clock.setFixedTime(new Date('2099-12-31T12:00:00Z'));
+  await page.clock.setFixedTime(veracruzNoonUtc(promo!.startDate));
   await page.goto('/');
-  await expect(promoText).toHaveCount(1);
+  await expect(promoLocator).toHaveCount(1);
 
-  await page.clock.setFixedTime(new Date('2100-01-01T12:00:00Z'));
+  await page.clock.setFixedTime(veracruzNoonUtc(promo!.endDate, 1));
   await page.goto('/');
-  await expect(promoText).toHaveCount(0);
+  await expect(promoLocator).toHaveCount(0);
 });
 
 test.describe('contact form', () => {
