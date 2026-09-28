@@ -38,3 +38,8 @@ Astro 7 static site + Tailwind 4 (`@tailwindcss/vite`, tokens in `src/styles/glo
 - Empty optional fields may be `''` or `null` (Keystatic's convention); schemas treat both as missing.
 - E2E tests read the YAML content to build their expectations, so they follow content edits.
 - Images must live at `src/assets/img/<folder>/<slug>/<field>.<ext>` (singleton: `src/assets/img/site/<field>.<ext>`) or Keystatic won't show them in the admin and a save will drop the reference.
+- Saving in the Keystatic admin (dev or production) strips all YAML comments in that file, including `# PENDIENTE`: resolve markers by editing the YAML files directly until `npm run check:production` passes.
+- Production deploys run `npm run check:production`, which fails the build when a `# PENDIENTE` marker remains or opening hours are empty.
+- A nightly GitHub Action (`.github/workflows/nightly-rebuild.yml`) triggers a Netlify rebuild so date-dependent content (promotions, the footer year) stays fresh even without a new commit.
+- `docs/guia-del-propietario.md` must stay in sync with the field labels in `keystatic.config.ts`.
+- To create the Keystatic GitHub App locally, run `PUBLIC_KEYSTATIC_STORAGE=github npm run dev` and open `/keystatic`.

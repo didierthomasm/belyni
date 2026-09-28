@@ -20,9 +20,13 @@ test('JSON-LD is valid BeautySalon data', async ({ page }) => {
   expect(ld.telephone).toMatch(/^\+52\d{10}$/);
 });
 
-test('robots.txt blocks admin and points to the sitemap', async ({ request }) => {
+test('robots.txt blocks admin and API, allows the thank-you page, and points to the sitemap', async ({
+  request,
+}) => {
   const body = await (await request.get('/robots.txt')).text();
   expect(body).toContain('Disallow: /keystatic');
+  expect(body).toContain('Disallow: /api/');
+  expect(body).not.toContain('Disallow: /gracias');
   expect(body).toMatch(/Sitemap: https:\/\/.+\/sitemap-index\.xml/);
 });
 

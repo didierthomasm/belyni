@@ -1,5 +1,12 @@
 # Guía para administrar el sitio de Belyni
 
+## Antes de empezar: crea tu cuenta de GitHub
+
+El panel se abre con una cuenta de GitHub (es gratis y es donde se guarda el contenido del sitio).
+
+1. Ve a **github.com** → **Sign up** y crea tu cuenta (con tu correo).
+2. Avísale a tu desarrollador el nombre de usuario que elegiste: tiene que agregarte como colaboradora del repositorio antes de que puedas entrar al panel.
+
 ## Entrar al panel
 
 1. Abre **https://<tu-dominio>/keystatic** desde tu computadora o celular.
@@ -57,3 +64,5 @@ Cada vez que guardas, el sitio se actualiza solo en **1 a 2 minutos**.
 | Dominio (ej. belyni.mx)       | La dirección del sitio         |
 | Google Business Profile       | Aparecer en Google Maps        |
 | Web3Forms / Umami (si aplica) | Formulario y estadísticas      |
+
+> **Nota:** por ahora el repositorio de GitHub vive en la cuenta de tu desarrollador. Antes de que el proyecto quede completamente en tus manos, debe transferirse a tu propia cuenta de GitHub (o a una organización de la que tú seas dueña).

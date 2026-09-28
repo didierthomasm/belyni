@@ -5,6 +5,8 @@ on:
     - cron: '0 7 * * *' # 01:00 en Veracruz
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   rebuild:
     runs-on: ubuntu-latest
