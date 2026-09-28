@@ -1,0 +1,57 @@
+---
+interface Props {
+  accessKey: string;
+  siteName: string;
+}
+const { accessKey, siteName } = Astro.props;
+const redirectUrl = new URL('/gracias/', Astro.site).href;
+const FIELD = 'w-full rounded-2xl border border-plum-200 bg-white px-4 py-3 focus:border-plum-500';
+---
+
+<form
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  class="mx-auto mt-10 grid max-w-3xl gap-4 rounded-3xl bg-white p-6 shadow-sm sm:grid-cols-2"
+>
+  <input type="hidden" name="access_key" value={accessKey} />
+  <input type="hidden" name="subject" value={`Nuevo mensaje desde el sitio de ${siteName}`} />
+  <input type="hidden" name="from_name" value={siteName} />
+  <input type="hidden" name="redirect" value={redirectUrl} />
+  <!-- Trampa para bots: las personas no la ven -->
+  <input
+    type="checkbox"
+    name="botcheck"
+    class="hidden"
+    style="display: none"
+    tabindex="-1"
+    autocomplete="off"
+  />
+
+  <label class="grid gap-1 text-sm font-medium">
+    Nombre
+    <input name="name" required maxlength="80" autocomplete="name" class={FIELD} />
+  </label>
+  <label class="grid gap-1 text-sm font-medium">
+    Teléfono
+    <input
+      name="phone"
+      type="tel"
+      required
+      maxlength="25"
+      autocomplete="tel"
+      inputmode="tel"
+      class={FIELD}
+    />
+  </label>
+  <label class="grid gap-1 text-sm font-medium sm:col-span-2">
+    Mensaje
+    <textarea name="message" required maxlength="1000" rows="4" class={FIELD}></textarea>
+  </label>
+  <button
+    type="submit"
+    class="rounded-full bg-plum-500 px-6 py-3 text-sm font-semibold text-white hover:bg-plum-600 sm:col-span-2 sm:justify-self-start"
+    data-umami-event="contact-form"
+  >
+    Enviar mensaje
+  </button>
+</form>

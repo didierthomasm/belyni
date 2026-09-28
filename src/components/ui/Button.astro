@@ -1,0 +1,31 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Variant = 'primary' | 'secondary' | 'ghost';
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+  variant?: Variant;
+  external?: boolean;
+}
+const { href, variant = 'primary', external = false, class: className, ...rest } = Astro.props;
+
+const VARIANTS: Record<Variant, string> = {
+  primary: 'bg-plum-500 text-white shadow-sm hover:bg-plum-600',
+  secondary: 'border border-plum-500 text-plum-700 hover:bg-plum-50',
+  ghost: 'text-plum-700 hover:bg-plum-50',
+};
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors',
+    VARIANTS[variant],
+    className,
+  ]}
+  {...externalAttrs}
+  {...rest}
+>
+  <slot />
+</a>

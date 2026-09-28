@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import WhatsAppFab from '../components/layout/WhatsAppFab.astro';
+import Hero from '../components/sections/Hero.astro';
+import Services from '../components/sections/Services.astro';
+import Highlights from '../components/sections/Highlights.astro';
+import Team from '../components/sections/Team.astro';
+import Gallery from '../components/sections/Gallery.astro';
+import Brands from '../components/sections/Brands.astro';
+import Reviews from '../components/sections/Reviews.astro';
+import Location from '../components/sections/Location.astro';
+import Contact from '../components/sections/Contact.astro';
+import PromoBanner from '../components/sections/PromoBanner.astro';
+import { getSite } from '../lib/site';
+import { byOrder } from '../lib/order';
+import { navItems } from '../lib/nav';
+import { whatsappUrl } from '../lib/whatsapp';
+import { isPromotionExpired } from '../lib/promotions';
+import { buildLocalBusinessJsonLd } from '../lib/seo';
+
+const site = await getSite();
+const services = (await getCollection('services')).map((e) => e.data);
+const team = (await getCollection('team')).map((e) => e.data).toSorted(byOrder);
+const gallery = (await getCollection('gallery')).map((e) => e.data).toSorted(byOrder);
+const brands = (await getCollection('brands')).map((e) => e.data).toSorted(byOrder);
+const reviews = (await getCollection('reviews')).map((e) => e.data).toSorted(byOrder);
+// Las vencidas se excluyen en el build; las futuras se muestran solas al llegar su fecha
+const promotions = (await getCollection('promotions'))
+  .map((e) => e.data)
+  .filter((p) => !isPromotionExpired(p, new Date()))
+  .toSorted((a, b) => a.startDate.localeCompare(b.startDate) || a.order - b.order);
+
+const bookingHref = whatsappUrl(site.whatsapp, site.whatsappMessage);
+
+const pageUrl = new URL('/', Astro.site).href;
+const jsonLd = buildLocalBusinessJsonLd(site, pageUrl, new URL('/og.jpg', Astro.site).href);
+
+const nav = navItems([
+  { id: 'servicios', label: 'Servicios', visible: services.length > 0 },
+  { id: 'nosotros', label: 'Nosotros', visible: site.highlights.length > 0 },
+  { id: 'equipo', label: 'Equipo', visible: team.length > 0 },
+  { id: 'galeria', label: 'Galería', visible: gallery.length > 0 },
+  { id: 'opiniones', label: 'Opiniones', visible: reviews.length > 0 },
+  { id: 'ubicacion', label: 'Ubicación', visible: true },
+  { id: 'contacto', label: 'Contacto', visible: true },
+]);
+---
+
+<BaseLayout
+  title={`${site.name} | Salón de belleza en ${site.address.city}`}
+  description={site.intro}
+  jsonLd={jsonLd}
+>
+  {promotions.length > 0 && <PromoBanner promos={promotions} whatsapp={site.whatsapp} />}
+  <Header items={nav} bookingHref={bookingHref} siteName={site.name} />
+  <main id="contenido">
+    <Hero site={site} bookingHref={bookingHref} />
+    {services.length > 0 && (
+      <Services
+        services={services}
+        whatsapp={site.whatsapp}
+        whatsappMessage={site.whatsappMessage}
+        note={site.servicesNote}
+      />
+    )}
+    {site.highlights.length > 0 && <Highlights items={site.highlights} siteName={site.name} />}
+    {team.length > 0 && <Team members={team} />}
+    {gallery.length > 0 && <Gallery items={gallery} />}
+    {brands.length > 0 && <Brands items={brands} />}
+    {reviews.length > 0 && <Reviews items={reviews} />}
+    <Location site={site} />
+    <Contact site={site} bookingHref={bookingHref} />
+  </main>
+  <Footer site={site} />
+  <WhatsAppFab href={bookingHref} />
+</BaseLayout>
