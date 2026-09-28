@@ -17,7 +17,8 @@
     "test:e2e": "playwright test",
     "format": "prettier --write .",
     "og": "node scripts/make-og-image.mjs",
-    "check:production": "node scripts/check-production-data.mjs"
+    "check:production": "node scripts/check-production-data.mjs",
+    "lhci": "lhci autorun"
   },
   "dependencies": {
     "@astrojs/netlify": "^8.2.6",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
