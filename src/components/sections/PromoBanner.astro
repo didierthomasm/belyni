@@ -1,21 +1,25 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { whatsappUrl } from '../../lib/whatsapp';
+import { isPromotionActive } from '../../lib/promotions';
 
 interface Props {
   promos: CollectionEntry<'promotions'>['data'][];
   whatsapp: string;
 }
 const { promos, whatsapp } = Astro.props;
+// Muestra ya en el HTML la promoción vigente al momento del build (evita CLS
+// y que sea invisible sin JS); el script del cliente la vuelve a evaluar.
+const buildActiveIndex = promos.findIndex((promo) => isPromotionActive(promo, new Date()));
 ---
 
 <div class="bg-plum-900 text-sm text-white">
-  {promos.map((promo) => (
+  {promos.map((promo, index) => (
     <p
       data-promo
       data-start={promo.startDate}
       data-end={promo.endDate}
-      hidden
+      hidden={index !== buildActiveIndex}
       class="mx-auto max-w-6xl px-4 py-2 text-center"
     >
       <strong class="font-semibold">{promo.title}:</strong> {promo.text}{' '}
@@ -35,10 +39,15 @@ const { promos, whatsapp } = Astro.props;
 <script>
   import { isPromotionActive } from '../../lib/promotions';
 
-  // Muestra solo la primera promoción vigente hoy (hora de Veracruz)
+  // Vuelve a evaluar en el cliente por si el HTML quedó desactualizado (cambio
+  // de día en un build viejo): muestra solo la primera promoción vigente hoy
+  // (hora de Veracruz) y oculta el resto.
   const now = new Date();
-  const active = Array.from(document.querySelectorAll<HTMLElement>('[data-promo]')).find((el) =>
+  const promoElements = Array.from(document.querySelectorAll<HTMLElement>('[data-promo]'));
+  const activeIndex = promoElements.findIndex((el) =>
     isPromotionActive({ startDate: el.dataset.start ?? '', endDate: el.dataset.end ?? '' }, now),
   );
-  if (active) active.hidden = false;
+  promoElements.forEach((el, index) => {
+    el.hidden = index !== activeIndex;
+  });
 </script>
