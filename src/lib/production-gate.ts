@@ -8,7 +8,7 @@ export function findPendingMarkers(files: readonly ContentFile[]): string[] {
     file.content
       .split('\n')
       .map((line, index) => ({ line, number: index + 1 }))
-      .filter(({ line }) => /PENDIENTE/i.test(line))
+      .filter(({ line }) => /(^|\s)#\s*PENDIENTE\b/i.test(line))
       .map(({ line, number }) => `${file.path}:${number}: ${line.trim()}`),
   );
 }

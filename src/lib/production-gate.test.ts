@@ -21,6 +21,13 @@ describe('findPendingMarkers', () => {
   it('returns [] when everything is confirmed', () => {
     expect(findPendingMarkers([files[1]])).toEqual([]);
   });
+  it('does not flag ordinary Spanish prose containing "pendiente"', () => {
+    expect(
+      findPendingMarkers([
+        { path: 'x.yaml', content: 'text: Colocación de pendientes gratis con tu corte' },
+      ]),
+    ).toEqual([]);
+  });
 });
 
 describe('productionProblems', () => {
