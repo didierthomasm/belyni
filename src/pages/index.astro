@@ -19,6 +19,7 @@ import { byOrder } from '../lib/order';
 import { navItems } from '../lib/nav';
 import { whatsappUrl } from '../lib/whatsapp';
 import { isPromotionExpired } from '../lib/promotions';
+import { buildLocalBusinessJsonLd } from '../lib/seo';
 
 const site = await getSite();
 const services = (await getCollection('services')).map((e) => e.data);
@@ -34,6 +35,9 @@ const promotions = (await getCollection('promotions'))
 
 const bookingHref = whatsappUrl(site.whatsapp, site.whatsappMessage);
 
+const pageUrl = new URL('/', Astro.site).href;
+const jsonLd = buildLocalBusinessJsonLd(site, pageUrl, new URL('/og.jpg', Astro.site).href);
+
 const nav = navItems([
   { id: 'servicios', label: 'Servicios', visible: services.length > 0 },
   { id: 'nosotros', label: 'Nosotros', visible: site.highlights.length > 0 },
@@ -48,6 +52,7 @@ const nav = navItems([
 <BaseLayout
   title={`${site.name} | Salón de belleza en ${site.address.city}`}
   description={site.intro}
+  jsonLd={jsonLd}
 >
   {promotions.length > 0 && <PromoBanner promos={promotions} whatsapp={site.whatsapp} />}
   <Header items={nav} bookingHref={bookingHref} siteName={site.name} />

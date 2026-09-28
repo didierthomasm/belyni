@@ -5,6 +5,7 @@ import icon from 'astro-icon';
 import netlify from '@astrojs/netlify';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
+import sitemap from '@astrojs/sitemap';
 import { ICON_INCLUDE } from './src/lib/icons';
 
 export default defineConfig({
@@ -18,6 +19,11 @@ export default defineConfig({
     imageCDN: false,
     devFeatures: { images: true, environmentVariables: false, edgeFunctions: false },
   }),
-  integrations: [icon({ include: ICON_INCLUDE }), react(), keystatic()],
+  integrations: [
+    icon({ include: ICON_INCLUDE }),
+    react(),
+    keystatic(),
+    sitemap({ filter: (page) => !page.includes('/gracias') && !page.includes('/keystatic') }),
+  ],
   vite: { plugins: [tailwindcss()] },
 });
